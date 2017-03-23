@@ -3,12 +3,12 @@
 
 using namespace std;
 
-Canvas::void canvas_resize (int width, int height)
+void Canvas::canvas_resize (int width, int height)
 {
     canvas.resize(width*height);
 }
 
-Canvas::void box_shift_up (int topLeft, int botRight)
+void Canvas::box_shift_up (int topLeft, int botRight)
 {
     topRight = botright % width + topleft - topleft % width
 	lines = botRight % height - topLeft % height // how many lines to shift after shifting first									line
@@ -32,7 +32,7 @@ Canvas::void box_shift_up (int topLeft, int botRight)
 	}
 }
 
-Canvas::void box_shift_down (int topLeft, int botRight)
+void Canvas::box_shift_down (int topLeft, int botRight)
 {
    //topRight = botRight % width + topLeft - topLeft % width
 	lines = botRight % height - topLeft % height // how many lines to shift after shifting first line
@@ -58,7 +58,7 @@ Canvas::void box_shift_down (int topLeft, int botRight)
 	}
 }
 
-Canvas::void box_shift_right (int topLeft, int botRight)
+void Canvas::box_shift_right (int topLeft, int botRight)
 {
     //topRight = botRight % width + topLeft - topLeft % width
 	lines = botRight % height - topLeft % height // how many lines to shift after shifting first line
@@ -84,7 +84,7 @@ Canvas::void box_shift_right (int topLeft, int botRight)
 	}
 }
 
-Canvas::void box_shift_left (int topLeft, int botRight)
+void Canvas::box_shift_left (int topLeft, int botRight)
 {
     topRight = botright % width + topleft - topleft % width
 	lines = botRight % height - topLeft % height // how many lines to shift after shifting first									line
@@ -108,7 +108,7 @@ Canvas::void box_shift_left (int topLeft, int botRight)
 	}
 }
 
-Canvas::void box_color(int topLeft, int botRight, rgb color)
+void Canvas::box_color(int topLeft, int botRight, rgb color)
 {
 	topRight = botright % width + topleft - topleft % width
 	lines = botRight % height - topLeft % height // how many lines to shift after shifting first									line
