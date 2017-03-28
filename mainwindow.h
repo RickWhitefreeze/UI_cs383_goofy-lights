@@ -21,18 +21,10 @@
 #include <QFileDialog>
 #include <QStandardPaths>
 
-namespace Ui {
-	class MainWindow;
-}
-
-class MainWindow : public QMainWindow
+class Ui_MainWindow : public QMainWindow
 {
-    Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();	
-
     QAction *actionOpen;
     QAction *actionExit;
     QWidget *centralWidget;
@@ -49,9 +41,19 @@ public:
     QMenuBar *menuBar;
     QMenu *menuFile;
 
+    Ui_MainWindow(){
+        setupUi(this);
+    }
+
 private:
-    Ui::MainWindow *ui;
+    void setupUi(QMainWindow *MainWindow);
+    void retranslateUi(QMainWindow *MainWindow);
     void openFile();
+
 };
+
+namespace Ui {
+    class MainWindow : public Ui_MainWindow {};
+}
 
 #endif // MAINWINDOW_H

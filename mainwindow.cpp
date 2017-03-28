@@ -1,13 +1,12 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
 
-void MainWindow::openFile(){
+void Ui_MainWindow::openFile(){
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
                                                     QStandardPaths::displayName(QStandardPaths::DocumentsLocation),
                                                     tr("Text files (*.txt)"));
 }
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
+void Ui_MainWindow::setupUi(QMainWindow *MainWindow)
 {
 	resize(640, 480);
 	setMinimumSize(QSize(640, 480));
@@ -122,16 +121,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	menuFile->addAction(actionOpen);
 	menuFile->addAction(actionExit);
 	
-    setWindowTitle(QApplication::translate("MainWindow", "Goofy Lights Editor", Q_NULLPTR));
+    MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Goofy Lights Editor", Q_NULLPTR));
     actionOpen->setText(QApplication::translate("MainWindow", "O&pen File", Q_NULLPTR));
-	actionOpen->setShortcut(QApplication::translate("MainWindow", "Ctrl+O", Q_NULLPTR));
-    connect(actionOpen, &QAction::triggered, this, &MainWindow::openFile);
+    actionOpen->setShortcut(QApplication::translate("MainWindow", "Ctrl+O", Q_NULLPTR));
+    connect(actionOpen, &QAction::triggered, this, &Ui_MainWindow::openFile);
 
     actionExit->setText(QApplication::translate("MainWindow", "E&xit", Q_NULLPTR));
     actionExit->setShortcuts(QKeySequence::Quit);
-	connect(actionExit, &QAction::triggered, this, &QWidget::close);
-	
-	toolBox->setTitle(QString());
+    connect(actionExit, &QAction::triggered, this, &QWidget::close);
+
+    toolBox->setTitle(QString());
 #ifndef QT_NO_TOOLTIP
         toolBrush->setToolTip(QApplication::translate("MainWindow", "<html><head/><body><p>Paint</p></body></html>", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
@@ -149,9 +148,4 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 #endif // QT_NO_TOOLTIP
         toolColor->setText(QString());
         menuFile->setTitle(QApplication::translate("MainWindow", "File", Q_NULLPTR));
-}
-
-MainWindow::~MainWindow()
-{
-    delete ui;
 }
