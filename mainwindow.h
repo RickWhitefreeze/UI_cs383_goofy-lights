@@ -18,26 +18,38 @@
 #include <QtWidgets/QToolButton>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+
 #include <QFileDialog>
 #include <QStandardPaths>
+#include <QColorDialog>
+#include <QRect>
 
 class Ui_MainWindow : public QMainWindow
 {
 
 public:
     QAction *actionOpen;
+    QAction *actionNew;
+    QAction *actionSave;
     QAction *actionExit;
+    QAction *actionSetColor;
+
+    QColor drawColor;
+
     QWidget *centralWidget;
     QHBoxLayout *horizontalLayout;
+
     QGroupBox *toolBox;
     QToolButton *toolBrush;
     QToolButton *toolWrite;
     QToolButton *toolSelect;
     QToolButton *toolColor;
+
     QGroupBox *viewer;
     QVBoxLayout *verticalLayout;
     QGraphicsView *canvas;
     QColumnView *timeline;
+
     QMenuBar *menuBar;
     QMenu *menuFile;
 
@@ -49,6 +61,10 @@ private:
     void setupUi(QMainWindow *MainWindow);
     void retranslateUi(QMainWindow *MainWindow);
     void openFile();
+    void createFile();
+    void saveFile();
+
+    void setDrawColor();
 
 };
 

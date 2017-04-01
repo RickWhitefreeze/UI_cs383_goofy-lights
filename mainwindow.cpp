@@ -6,14 +6,37 @@ void Ui_MainWindow::openFile(){
                                                     tr("Text files (*.txt)"));
 }
 
+void Ui_MainWindow::createFile(){
+
+}
+
+void Ui_MainWindow::saveFile(){
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
+                                                    QStandardPaths::displayName(QStandardPaths::DocumentsLocation),
+                                                    tr("Text files (*.txt)"));
+}
+
+void Ui_MainWindow::setDrawColor(){
+    drawColor = QColorDialog::getColor(Qt::black, this, QString("Select Color."));
+    toolColor->setStyleSheet(QString("background-color: %1; border: 2px inset grey;").arg(drawColor.name()));
+}
+
 void Ui_MainWindow::setupUi(QMainWindow *MainWindow)
 {
 	resize(640, 480);
 	setMinimumSize(QSize(640, 480));
+
     actionOpen = new QAction(this);
 	actionOpen->setObjectName(QStringLiteral("actionOpen"));
+    actionNew = new QAction(this);
+    actionNew->setObjectName(QStringLiteral("actionNew"));
+    actionSave = new QAction(this);
+    actionSave->setObjectName(QStringLiteral("actionSave"));
     actionExit = new QAction(this);
 	actionExit->setObjectName(QStringLiteral("actionExit"));
+    actionSetColor = new QAction(this);
+    actionSetColor->setObjectName(QStringLiteral("actionSetColor"));
+
     centralWidget = new QWidget(this);
 	centralWidget->setObjectName(QStringLiteral("centralWidget"));
 	horizontalLayout = new QHBoxLayout(centralWidget);
@@ -22,8 +45,8 @@ void Ui_MainWindow::setupUi(QMainWindow *MainWindow)
 	horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
 	horizontalLayout->setSizeConstraint(QLayout::SetDefaultConstraint);
 	horizontalLayout->setContentsMargins(0, 0, 0, 0);
-	toolBox = new QGroupBox(centralWidget);
-	toolBox->setObjectName(QStringLiteral("toolBox"));
+    toolBox = new QGroupBox(centralWidget);
+    toolBox->setObjectName(QStringLiteral("toolBox"));
 	toolBox->setEnabled(true);
 	QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	sizePolicy.setHorizontalStretch(0);
@@ -34,6 +57,7 @@ void Ui_MainWindow::setupUi(QMainWindow *MainWindow)
 	toolBox->setMaximumSize(QSize(48, 16777215));
 	toolBox->setAlignment(Qt::AlignCenter);
 	toolBox->setFlat(true);
+    toolBox->setStyleSheet("background-color: #D3D3D3");
 	toolBrush = new QToolButton(toolBox);
 	toolBrush->setObjectName(QStringLiteral("toolBrush"));
 	toolBrush->setGeometry(QRect(4, 10, 40, 40));
@@ -61,15 +85,21 @@ void Ui_MainWindow::setupUi(QMainWindow *MainWindow)
 	toolSelect->setIconSize(QSize(32, 24));
 	toolSelect->setCheckable(false);
 	toolSelect->setAutoExclusive(false);
-	toolColor = new QToolButton(toolBox);
+
+    toolColor = new QToolButton(toolBox);
 	toolColor->setObjectName(QStringLiteral("toolColor"));
 	toolColor->setGeometry(QRect(4, 160, 40, 40));
-	QIcon icon3;
-	icon3.addFile(QStringLiteral(":/images/icons/color.png"), QSize(), QIcon::Normal, QIcon::Off);
-	toolColor->setIcon(icon3);
-	toolColor->setIconSize(QSize(32, 24));
+
+    //QIcon icon3;
+    //icon3.addFile(QStringLiteral(":/images/icons/color.png"), QSize(), QIcon::Normal, QIcon::Off);
+    //actionSetColor->setIcon(icon3);
+    //toolColor->setIcon(icon3);
+    //toolColor->setIconSize(QSize(32, 24));
+    toolColor->setStyleSheet("background-color:black; border: 2px inset grey;");
+
 	toolColor->setCheckable(false);
 	toolColor->setAutoExclusive(false);
+    toolColor->setDefaultAction(actionSetColor);
 
 	horizontalLayout->addWidget(toolBox);
 
@@ -119,16 +149,28 @@ void Ui_MainWindow::setupUi(QMainWindow *MainWindow)
 
 	menuBar->addAction(menuFile->menuAction());
 	menuFile->addAction(actionOpen);
+    menuFile->addAction(actionNew);
+    menuFile->addAction(actionSave);
 	menuFile->addAction(actionExit);
 	
     MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Goofy Lights Editor", Q_NULLPTR));
-    actionOpen->setText(QApplication::translate("MainWindow", "O&pen File", Q_NULLPTR));
+    actionOpen->setText(QApplication::translate("MainWindow", "Open", Q_NULLPTR));
     actionOpen->setShortcut(QApplication::translate("MainWindow", "Ctrl+O", Q_NULLPTR));
     connect(actionOpen, &QAction::triggered, this, &Ui_MainWindow::openFile);
+
+    actionNew->setText(QApplication::translate("MainWindow", "New", Q_NULLPTR));
+    actionNew->setShortcut(QApplication::translate("MainWindow", "Ctrl+N", Q_NULLPTR));
+    connect(actionNew, &QAction::triggered, this, &Ui_MainWindow::createFile);
+
+    actionSave->setText(QApplication::translate("MainWindow", "Save As...", Q_NULLPTR));
+    actionSave->setShortcut(QApplication::translate("MainWindow", "Ctrl+S", Q_NULLPTR));
+    connect(actionSave, &QAction::triggered, this, &Ui_MainWindow::saveFile);
 
     actionExit->setText(QApplication::translate("MainWindow", "E&xit", Q_NULLPTR));
     actionExit->setShortcuts(QKeySequence::Quit);
     connect(actionExit, &QAction::triggered, this, &QWidget::close);
+
+    connect(actionSetColor, &QAction::triggered, this, &Ui_MainWindow::setDrawColor);
 
     toolBox->setTitle(QString());
 #ifndef QT_NO_TOOLTIP
