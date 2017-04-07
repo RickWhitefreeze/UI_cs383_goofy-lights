@@ -1,0 +1,21 @@
+meeting 2.5
+
+features
+	user specified grid size
+	automated scrolling
+		maybe done with a large image and the ouput window scrolls
+	automatic translation from ascii to output
+		all caps
+	variable frame length
+		to match w/ bpm of music
+	full rbg allowed + on/off
+		maybe smooth gradient transition b/t frames
+		use color wheel to choose color possibly
+	output in TAN format or whatever format you want
+	save project, open/close files
+	warnings/errors
+	timeline scroller
+		allows you see frames in succession
+	preset transitions b/t images
+	maybe save animations to use across projects
+	
