@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2017-03-24T23:31:46
+# Project created by QtCreator 2017-04-06T15:19:17
 #
 #-------------------------------------------------
 
@@ -23,13 +23,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 
-SOURCES += main.cpp \
-    mainwindow.cpp
+SOURCES += main.cpp\
+        mainwindow.cpp \
+    newfiledialog.cpp \
+    cell.cpp
 
-HEADERS  += \
-    mainwindow.h
+HEADERS  += mainwindow.h \
+    newfiledialog.h \
+    cell.h
 
-FORMS    +=
+FORMS    += mainwindow.ui \
+    newfiledialog.ui
 
 RESOURCES += \
     resources.qrc
