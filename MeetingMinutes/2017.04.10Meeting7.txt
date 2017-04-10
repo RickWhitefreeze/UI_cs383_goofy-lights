@@ -1,0 +1,24 @@
+meeting 7 4/10/2017
+
+group checkin
+	lance & nick - grid is created in the GUI, you can select and draw colors on the active frame, you can make a new project and have it populate with a default color
+	Ruth and Micheal - working on it tonight (both were busy all weekend and needed lance and nick's part to begin work)
+	Joey and Jocelyn - Save load and export all working
+
+We decided:
+	left click = draw 
+	rick click = select (for box selection and things like that) one click, then another top left and bottom right
+	sizeX and sizeY returned by loadProject are the X and Y of the whole project canvas (3x the size of the final exported frame size)
+
+Jocelyn is printing:
+	design specs
+	meeting notes
+	all the code (without .ui files)
+	screenshot of GUI (with labels for things on the GUI)
+
+
+
+Goals for next meeting (wednsday at 3:30)
+	Lance and Nick: work on timeline
+	Ruth and Micheal: implement previous functions into GUI, and try to implement QList 
+	Joey and Jocelyn: begin working on save and load stamps
