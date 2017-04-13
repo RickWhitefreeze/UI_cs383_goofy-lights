@@ -1,0 +1,30 @@
+meeting notes 4/13/2017
+
+Micheal is sick, which is why he's been mia for a bit
+
+we decided to update the design specs with all the new functions
+
+things that we want in the final project:
+	(done, needs implementation) box shift
+	(done, needs implementation) box color
+	(needs to be started)) add and delete frames from anywhere in the project
+	(done, needs implementation) save/load/export project
+	(needs to be started) save/load stamps
+	(done) color wheel
+	(done) interactable grid
+	(needs to be started) timeline
+	(needs to be started) selection tool (right click)
+	(done) paint tool (left click)
+	(needs to be started) frame duration setting
+	(needs to be started) notifications
+		do you want to save before exiting?
+		do you want to overwrite this file?
+		do you want to save before loading a new project?
+	(needs to be started) text to image (drawing on stamp function)
+	
+We will be using a long QList 
+
+Homework (next meeting wednsday 3:30)
+	j&j - stamp tools
+	nick and lance - timeline & notifications & selection tool
+	ruth and michael - implementing box shift and color	
