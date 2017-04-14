@@ -2,58 +2,49 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
-#include <QtCore/QVariant>
-#include <QtWidgets/QAction>
-#include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QColumnView>
-#include <QtWidgets/QGraphicsView>
-#include <QtWidgets/QGroupBox>
-#include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QHeaderView>
-#include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenu>
-#include <QtWidgets/QMenuBar>
-#include <QtWidgets/QToolButton>
-#include <QtWidgets/QVBoxLayout>
-#include <QtWidgets/QWidget>
 #include <QFileDialog>
 #include <QStandardPaths>
+#include <QVector2D>
+#include <QMessageBox>
+#include <QColorDialog>
+#include <QVector>
+#include <QSignalMapper>
 
-class Ui_MainWindow : public QMainWindow
-{
-
-public:
-    QAction *actionOpen;
-    QAction *actionExit;
-    QWidget *centralWidget;
-    QHBoxLayout *horizontalLayout;
-    QGroupBox *toolBox;
-    QToolButton *toolBrush;
-    QToolButton *toolWrite;
-    QToolButton *toolSelect;
-    QToolButton *toolColor;
-    QGroupBox *viewer;
-    QVBoxLayout *verticalLayout;
-    QGraphicsView *canvas;
-    QColumnView *timeline;
-    QMenuBar *menuBar;
-    QMenu *menuFile;
-
-    Ui_MainWindow(){
-        setupUi(this);
-    }
-
-private:
-    void setupUi(QMainWindow *MainWindow);
-    void retranslateUi(QMainWindow *MainWindow);
-    void openFile();
-
-};
+#include "newfiledialog.h"
+#include "cell.h"
 
 namespace Ui {
-    class MainWindow : public Ui_MainWindow {};
+class MainWindow;
 }
+
+class MainWindow : public QMainWindow
+{
+    Q_OBJECT
+
+public:
+    explicit MainWindow(QWidget *parent = 0);
+    ~MainWindow();
+
+public slots:
+    void setDrawColor();
+    void setCellColor(QVector2D pos);
+
+    void newFile();
+    void openFile();
+    void saveFile();
+
+private slots:
+    void on_toolButton_3_clicked();  //we can also just make it a tool and set up the mouse to have a bool for what tool it is
+
+
+private:
+    Ui::MainWindow *ui;
+    QVector2D frameDim;
+    QColor drawColor;
+    QVector< Cell* > canvasCells;
+
+    void renderCanvas();
+
+};
 
 #endif // MAINWINDOW_H
