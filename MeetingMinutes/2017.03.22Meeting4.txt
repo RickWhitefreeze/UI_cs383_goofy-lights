@@ -1,0 +1,22 @@
+meeting 3.22.2017
+
+how will we divy it up?
+
+functions
+	large image (possibly dynamic)
+	movable export frame
+	movable image (maybe?)
+		wrapping/no wrapping?
+	box selection/moving (select certain boxes and move them)
+		save "pictures" of selections option
+	
+
+each pair does what?
+	Jocely Joey : I/O and File types (exported file, project file, stamp file), stretch goal: Load
+	Nick Lance  : GUI (Canvas/Currentframe image, timeline, filebar, placeholders, colorwheel)
+	Ruth Michael: functions (box shift(direction/number frames) box color
+
+Homework (by meeting 5:30 Monday):
+	A good start/hopefully finish what you're assigned
+	come with any questions
+	bring idea of rought timeline for your part	

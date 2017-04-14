@@ -12,9 +12,9 @@ void Canvas::canvas_resize (int width, int height)
 void Canvas::box_shift_up (int topLeft, int botRight)
 {
     //The top right position of the box selected
-    topRight = botright % width + topleft - topleft % width;
+    topRight = botright % width + topleft - topleft % width
     //The number of rows in the box selected
-	lines = botRight % height - topLeft % height; // how many lines to shift after shifting first									line
+	lines = botRight % height - topLeft % height // how many lines to shift after shifting first									line
     //Traversing the matrix defined by the box selected by user
 	for(int i = 0; i <= lines; i++)
 	{
@@ -39,7 +39,7 @@ void Canvas::box_shift_up (int topLeft, int botRight)
 void Canvas::box_shift_down (int topLeft, int botRight)
 {
     //The number of rows in the box selected
-	lines = botRight % height - topLeft % height;
+	lines = botRight % height - topLeft % height
 	//The bottom left position of the box selected
 	botLeft = topLeft + lines * width;
     //Traversing the matrix defined by the box selected by user
@@ -66,7 +66,7 @@ void Canvas::box_shift_down (int topLeft, int botRight)
 void Canvas::box_shift_right (int topLeft, int botRight)
 {
     //The number of rows in the box selected
-	lines = botRight % height - topLeft % height;
+	lines = botRight % height - topLeft % height
 	//The bottom left position of the box selected
 	botLeft = topLeft + lines * width;
     //Traversing the matrix defined by the box selected by user
@@ -93,9 +93,9 @@ void Canvas::box_shift_right (int topLeft, int botRight)
 void Canvas::box_shift_left (int topLeft, int botRight)
 {
     //The top right position of the box selected
-    topRight = botright % width + topleft - topleft % width;
+    topRight = botright % width + topleft - topleft % width
     //The number of rows in the box selected
-	lines = botRight % height - topLeft % height;
+	lines = botRight % height - topLeft % height
     //Traversing the matrix defined by the box selected by user
 	for(int i = 0; i <= lines; i++)
 	{
@@ -119,9 +119,9 @@ void Canvas::box_shift_left (int topLeft, int botRight)
 void Canvas::box_color(int topLeft, int botRight, rgb color)
 {
     //The top right position of the box selected
-	topRight = botright % width + topleft - topleft % width;
+	topRight = botright % width + topleft - topleft % width
 	//The number of rows in the box selected
-	lines = botRight % height - topLeft % height;
+	lines = botRight % height - topLeft % height
 	//Traversing the matrix defined by the box selected by user
 	for(int i = 0; i <= lines; i++)
 	{
