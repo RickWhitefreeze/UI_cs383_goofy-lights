@@ -9,7 +9,9 @@
 #include <QColorDialog>
 #include <QVector>
 #include <QSignalMapper>
+#include <QLinkedList>
 
+#include "timelineframe.h"
 #include "newfiledialog.h"
 #include "cell.h"
 
@@ -33,13 +35,20 @@ public slots:
     void openFile();
     void saveFile();
 
+    void newCanvas();
+    void loadCanvas(TimelineFrame *tf);
+
 private:
     Ui::MainWindow *ui;
     QVector2D frameDim;
     QColor drawColor;
     QVector< Cell* > canvasCells;
+    QLinkedList<QVector<QColor>> timeline;
 
-    void renderCanvas();
+    TimelineFrame *current_tf = NULL;
+
+    void populateCanvas();
+    void saveCanvas(QVector<QColor> &canvas);
 
 };
 

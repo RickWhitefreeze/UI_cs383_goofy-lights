@@ -9,6 +9,9 @@ void MainWindow::setCellColor(QVector2D pos){
     }else{
         canvasCells[pos.x() + pos.y() * frameDim.x() * 3]->setStyleSheet(QString("background-color: rgba(%1,%2,%3,25%);").arg(drawColor.red()).arg(drawColor.green()).arg(drawColor.blue()));
     }
+
+    saveCanvas(current_tf->canvas);
+    current_tf->createPreview(frameDim);
 }
 
 void MainWindow::setDrawColor(){
@@ -16,7 +19,57 @@ void MainWindow::setDrawColor(){
     ui->toolColor->setStyleSheet(QString("background-color: %1; border: 2px inset grey;").arg(drawColor.name()));
 }
 
-void MainWindow::renderCanvas(){
+void MainWindow::newCanvas(){
+
+    if(current_tf != NULL) saveCanvas(current_tf->canvas);
+
+    QVector<QColor> canvas;
+    for(int i = 0; i < canvasCells.length(); i++){
+        canvasCells[i]->setColor(Qt::black);
+        canvas.push_back(canvasCells[i]->getColor());
+    }
+
+    TimelineFrame *tf = new TimelineFrame(this, canvas, frameDim);
+    current_tf = tf;
+    connect(tf, SIGNAL(clicked(TimelineFrame*)), this, SLOT(loadCanvas(TimelineFrame*)));
+    loadCanvas(tf);
+
+    timeline.push_back(canvas);
+    ui->timeline->addWidget(tf);
+}
+
+//Func will take the colors of the canvas and save it to linked list
+void MainWindow::saveCanvas(QVector<QColor> &canvas){
+    for(int i = 0; i < canvasCells.length(); i++){
+        canvas[i] = canvasCells[i]->getColor();
+    }
+}
+
+//Func will populate canvas with appropriate colors
+void MainWindow::loadCanvas(TimelineFrame *tf){
+    QColor current;
+
+    //saveCanvas(current_tf->canvas);
+    current_tf = tf;
+
+    int i = 0;
+    for(int y = 0; y < frameDim.y() * 3; y++){
+        for(int x = 0; x < frameDim.x() * 3; x++){
+            current = tf->canvas[i];
+            canvasCells[i]->setColor(current);
+
+            if(x >= frameDim.x() && x < frameDim.x() * 2 && y >= frameDim.y() && y < frameDim.y() * 2){
+                canvasCells[i]->setStyleSheet(QString("background-color:rgba(%1,%2,%3,100%);").arg(current.red()).arg(current.green()).arg(current.blue()));
+            }else{
+                canvasCells[i]->setStyleSheet(QString("background-color:rgba(%1,%2,%3,25%);").arg(current.red()).arg(current.green()).arg(current.blue()));
+            }
+            i++;
+        }
+    }
+}
+
+//Func is called whenever we have a canvas size to work with(new or load proj)
+void MainWindow::populateCanvas(){
     //ui->canvasArea->setGeometry(QRect(0, 0, 12 * qRound(frameDim.x()) * 3, 12 * qRound(frameDim.y()) * 3));
     ui->canvas->setAlignment(Qt::AlignCenter);
 
@@ -39,8 +92,8 @@ void MainWindow::newFile(){
     frameDim = NewFileDialog::getFrameDim(this, tr("Frame Size"));
     //Create a linked list
     //Call the function that populates the canvas
-    renderCanvas();
-    //renderCanvas(linkedlist);
+    populateCanvas();
+    newCanvas();
 }
 
 void MainWindow::openFile(){
@@ -49,6 +102,8 @@ void MainWindow::openFile(){
                                                         tr("Text files (*.txt)"));
     //Call the function that loads .tan format into linked list
     //Call the function that populates the canvas
+    //populateCanvas();
+    //loadCanvas(timeline.front());
 }
 
 void MainWindow::saveFile(){
@@ -63,6 +118,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
 }
 
 MainWindow::~MainWindow()
