@@ -76,10 +76,13 @@ void MainWindow::loadCanvas(TimelineFrame *tf){
 
 
 
+
 //This function shifts every cell up one position and overwrites what was written there before
-void MainWindow::boxShiftUp (int top_left, int bot_right, QVector<QColor> &canvas)
+void MainWindow::boxShiftUp()
 {
-    int top_right, rows, width;
+    int top_right, top_left, bot_right, bot_left, rows, width;
+    top_left = 0;
+    bot_right = frameDim.x() * frameDim.y() * 9 - 1;
     width = frameDim.x() * 3;
     //The top right position of the box selected
     top_right = bot_right % width + top_left - top_left % width;
@@ -90,14 +93,14 @@ void MainWindow::boxShiftUp (int top_left, int bot_right, QVector<QColor> &canva
     {
         for(int j = (top_left + i*width); j <= (top_right + i*width); j++)
         {
-            if(j - width >= 0)  //Only copy value of rgb if the cell is not at the top of the canvas
+            if(j - width >= 0)  //Only copy value of rgb if the cell is not at the top of the current_tf->current_tf->canvas
             {
-                canvas[j - width] = canvas[j];
+                current_tf->canvas[j - width] = current_tf->canvas[j];
             }
             //Changed to i == rows-1 off by 1 error 3/28/2017
             if(i == rows)  //Overwrite the bottom row to the default rgb color
             {
-                canvas [j] = Qt::black;
+                current_tf->canvas [j] = Qt::black;
 
             }
         }
@@ -110,12 +113,20 @@ void MainWindow::boxShiftUp (int top_left, int bot_right, QVector<QColor> &canva
         top_left -= width;
         bot_right -= width;
     }
+
+
+     loadCanvas(current_tf);
+     current_tf->createPreview(frameDim);
 }
 
+
+
 //This function shifts every cell up one position and overwrites what was written there before
-void MainWindow::boxShiftDown (int top_left, int bot_right, QVector<QColor> &canvas)
+void MainWindow::boxShiftDown ()
 {
-    int bot_left, rows, width, height;
+    int top_right, top_left, bot_right, bot_left, rows, width, height;
+    top_left = 0;
+    bot_right = frameDim.x() * frameDim.y() * 9 - 1;
     width = frameDim.x() * 3;
     height = frameDim.y() * 3;
     //The number of rows in the box selected
@@ -128,14 +139,14 @@ void MainWindow::boxShiftDown (int top_left, int bot_right, QVector<QColor> &can
     {
         for(int j = bot_right - ((rows - i) * width); j >= bot_left - ((rows - i) * width - width); j--)
         {
-            if(j + width <= width * height) //Only copy value of rgb if the cell is not at the bottom of the canvas
+            if(j + width <= width * height - 1) //Only copy value of rgb if the cell is not at the bottom of the current_tf->canvas
             {
-                canvas[j + width] = canvas[j];
+                current_tf->canvas[j + width] = current_tf->canvas[j];
             }
             //Changed to i == 1 off by 1 error 3/28/2017
             if(i == 0)  //Overwrite the top row to the default rgb color
             {
-                canvas [j] = Qt::black;
+                current_tf->canvas [j] = Qt::black;
 
             }
         }
@@ -148,11 +159,17 @@ void MainWindow::boxShiftDown (int top_left, int bot_right, QVector<QColor> &can
         top_left += width;
         bot_right += width;
     }
+
+    loadCanvas(current_tf);
+    current_tf->createPreview(frameDim);
+
 }
 
-void MainWindow::boxShiftRight (int top_left, int bot_right, QVector<QColor> &canvas)
+void MainWindow::boxShiftRight ()
 {
-    int bot_left, rows, width;
+    int top_right, top_left, bot_right, bot_left, rows, width;
+    top_left = 0;
+    bot_right = frameDim.x() * frameDim.y() * 9 - 1;
     width = frameDim.x() * 3;
     //The number of rows in the box selected
     rows = (floor(bot_right/width))-(floor(top_left/width));
@@ -166,13 +183,13 @@ void MainWindow::boxShiftRight (int top_left, int bot_right, QVector<QColor> &ca
         {
             if((j % width) + 1 < width)    //Only copy value of rgb if the cell is not in the rightmost column
             {
-                canvas[j + 1] = canvas[j];
+                current_tf->canvas[j + 1] = current_tf->canvas[j];
             }
 
             if(j == bot_left - ((rows - i) * width - width)) //Overwrite the left column to the default rgb color
             {
 
-                canvas [j] = Qt::black;
+                current_tf->canvas [j] = Qt::black;
             }
         }
     }
@@ -184,11 +201,17 @@ void MainWindow::boxShiftRight (int top_left, int bot_right, QVector<QColor> &ca
         top_left += 1;
         bot_right += 1;
     }
+
+    loadCanvas(current_tf);
+    current_tf->createPreview(frameDim);
+
 }
 
-void MainWindow::boxShiftLeft (int top_left, int bot_right, QVector<QColor> &canvas)
+void MainWindow::boxShiftLeft ()
 {
-    int top_right, rows, width;
+    int top_right, top_left, bot_right, bot_left, rows, width;
+    top_left = 0;
+    bot_right = frameDim.x() * frameDim.y() * 9 - 1;
     width = frameDim.x() * 3;
     //The top right position of the box selected
     top_right = bot_right % width + top_left - top_left % width;
@@ -201,12 +224,12 @@ void MainWindow::boxShiftLeft (int top_left, int bot_right, QVector<QColor> &can
         {
             if((j % width) - 1 >= 0)    //Only copy value of rgb if the cell is not in the leftmost column
             {
-                canvas[j - 1] = canvas[j];
+                current_tf->canvas[j - 1] = current_tf->canvas[j];
             }
 
             if(j == (top_right + i*width))   //Overwrite the leftmost column to the default rgb color
             {
-                canvas [j] = Qt::black;
+                current_tf->canvas [j] = Qt::black;
             }
         }
     }
@@ -218,7 +241,12 @@ void MainWindow::boxShiftLeft (int top_left, int bot_right, QVector<QColor> &can
         top_left -= 1;
         bot_right -= 1;
     }
+
+    loadCanvas(current_tf);
+    current_tf->createPreview(frameDim);
+
 }
+
 
 
 

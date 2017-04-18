@@ -425,8 +425,8 @@
    <slot>setDrawColor()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>26</x>
-     <y>124</y>
+     <x>32</x>
+     <y>165</y>
     </hint>
     <hint type="destinationlabel">
      <x>-96</x>
@@ -450,6 +450,70 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>buttonUp</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>boxShiftUp()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>69</x>
+     <y>196</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>319</x>
+     <y>239</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonLeft</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>boxShiftLeft()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>25</x>
+     <y>239</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>319</x>
+     <y>239</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonRight</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>boxShiftRight()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>119</x>
+     <y>239</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>319</x>
+     <y>239</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonDown</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>boxShiftDown()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>72</x>
+     <y>286</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>319</x>
+     <y>239</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>openFile()</slot>
@@ -457,5 +521,9 @@
   <slot>newFile()</slot>
   <slot>setDrawColor()</slot>
   <slot>insertCanvas()</slot>
+  <slot>boxShiftUp()</slot>
+  <slot>boxShiftLeft()</slot>
+  <slot>boxShiftRight()</slot>
+  <slot>boxShiftDown()</slot>
  </slots>
 </ui>
