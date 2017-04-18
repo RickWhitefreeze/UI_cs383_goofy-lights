@@ -68,6 +68,169 @@ void MainWindow::loadCanvas(TimelineFrame *tf){
     }
 }
 
+
+
+/***********************************************************************
+ *                     Michael and Ruth 4/18/2017                      *
+ * ********************************************************************/
+
+
+
+//This function shifts every cell up one position and overwrites what was written there before
+void MainWindow::boxShiftUp (int top_left, int bot_right, QVector<QColor> &canvas)
+{
+    int top_right, rows, width;
+    width = frameDim.x() * 3;
+    //The top right position of the box selected
+    top_right = bot_right % width + top_left - top_left % width;
+    //The number of rows in the box selected
+    rows = (floor(bot_right/width))-(floor(top_left/width));
+    //Traversing the matrix defined by the box selected by user
+    for(int i = 0; i <= rows; i++)
+    {
+        for(int j = (top_left + i*width); j <= (top_right + i*width); j++)
+        {
+            if(j - width >= 0)  //Only copy value of rgb if the cell is not at the top of the canvas
+            {
+                canvas[j - width] = canvas[j];
+            }
+            //Changed to i == rows-1 off by 1 error 3/28/2017
+            if(i == rows)  //Overwrite the bottom row to the default rgb color
+            {
+                canvas [j] = Qt::black;
+
+            }
+        }
+    }
+    //If box selected would go out of bounds keep topLeft and move botRight
+    if (top_left - width < 0)
+    bot_right -= width;
+    else
+    {
+        top_left -= width;
+        bot_right -= width;
+    }
+}
+
+//This function shifts every cell up one position and overwrites what was written there before
+void MainWindow::boxShiftDown (int top_left, int bot_right, QVector<QColor> &canvas)
+{
+    int bot_left, rows, width, height;
+    width = frameDim.x() * 3;
+    height = frameDim.y() * 3;
+    //The number of rows in the box selected
+    rows = (floor(bot_right/width))-(floor(top_left/width));
+    //The bottom left position of the box selected
+    //subtracted another width to correctly find the bottom left 3/28/2017
+    bot_left = top_left + rows * width - width;
+    //Traversing the matrix defined by the box selected by user
+    for(int i = rows; i >= 0; i--)
+    {
+        for(int j = bot_right - ((rows - i) * width); j >= bot_left - ((rows - i) * width - width); j--)
+        {
+            if(j + width <= width * height) //Only copy value of rgb if the cell is not at the bottom of the canvas
+            {
+                canvas[j + width] = canvas[j];
+            }
+            //Changed to i == 1 off by 1 error 3/28/2017
+            if(i == 0)  //Overwrite the top row to the default rgb color
+            {
+                canvas [j] = Qt::black;
+
+            }
+        }
+    }
+    //If box selected would go out of bounds keep bot_right and move top_left
+    if (bot_right + width >= width*height)
+    top_left += width;
+    else
+    {
+        top_left += width;
+        bot_right += width;
+    }
+}
+
+void MainWindow::boxShiftRight (int top_left, int bot_right, QVector<QColor> &canvas)
+{
+    int bot_left, rows, width;
+    width = frameDim.x() * 3;
+    //The number of rows in the box selected
+    rows = (floor(bot_right/width))-(floor(top_left/width));
+    //The bottom left position of the box selected
+    //subtracted another width to correctly find the bottom left 3/28/2017
+    bot_left = top_left + rows * width - width;
+    //Traversing the matrix defined by the box selected by user
+    for(int i = rows; i >= 0; i--)
+    {
+        for(int j = bot_right - ((rows - i) * width); j >= bot_left - ((rows - i) * width - width); j--)
+        {
+            if((j % width) + 1 < width)    //Only copy value of rgb if the cell is not in the rightmost column
+            {
+                canvas[j + 1] = canvas[j];
+            }
+
+            if(j == bot_left - ((rows - i) * width - width)) //Overwrite the left column to the default rgb color
+            {
+
+                canvas [j] = Qt::black;
+            }
+        }
+    }
+    //If box selected would go out of bounds keep bot_right and move top_left
+    if (bot_right%width + 1 >= width)
+    top_left += 1;
+    else
+    {
+        top_left += 1;
+        bot_right += 1;
+    }
+}
+
+void MainWindow::boxShiftLeft (int top_left, int bot_right, QVector<QColor> &canvas)
+{
+    int top_right, rows, width;
+    width = frameDim.x() * 3;
+    //The top right position of the box selected
+    top_right = bot_right % width + top_left - top_left % width;
+    //The number of rows in the box selected
+    rows = (floor(bot_right/width))-(floor(top_left/width));
+    //Traversing the matrix defined by the box selected by user
+    for(int i = 0; i <= rows; i++)
+    {
+        for(int j = (top_left + i*width); j <= (top_right + i*width); j++)
+        {
+            if((j % width) - 1 >= 0)    //Only copy value of rgb if the cell is not in the leftmost column
+            {
+                canvas[j - 1] = canvas[j];
+            }
+
+            if(j == (top_right + i*width))   //Overwrite the leftmost column to the default rgb color
+            {
+                canvas [j] = Qt::black;
+            }
+        }
+    }
+    //If box selected would go out of bounds keep top_left and move bot_right
+    if (top_left%width - 1 < 0)
+    bot_right -= 1;
+    else
+    {
+        top_left -= 1;
+        bot_right -= 1;
+    }
+}
+
+
+
+
+
+
+/***********************************************************************
+ *                     Michael and Ruth 4/18/2017                      *
+ * ********************************************************************/
+
+
+
 //Func is called whenever we have a canvas size to work with(new or load proj)
 void MainWindow::populateCanvas(){
     //ui->canvasArea->setGeometry(QRect(0, 0, 12 * qRound(frameDim.x()) * 3, 12 * qRound(frameDim.y()) * 3));

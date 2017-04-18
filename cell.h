@@ -11,6 +11,7 @@ class Cell : public QWidget
     Q_OBJECT
 
 public:
+    QColor getColor(){return color;}
     void setColor(QColor c);
     explicit Cell(QWidget *parent = 0, const QVector2D &position = QVector2D());
     ~Cell();
@@ -26,6 +27,5 @@ signals:
     void clicked(QVector2D pos);
 
 };
-
 
 #endif // CELL_H

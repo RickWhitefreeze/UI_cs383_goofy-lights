@@ -38,6 +38,11 @@ public slots:
     void newCanvas();
     void loadCanvas(TimelineFrame *tf);
 
+    void boxShiftUp (int top_left, int bot_right, QVector<QColor> &canvas);
+    void boxShiftDown (int top_left, int bot_right, QVector<QColor> &canvas);
+    void boxShiftLeft (int top_left, int bot_right, QVector<QColor> &canvas);
+    void boxShiftRight (int top_left, int bot_right, QVector<QColor> &canvas);
+
 private:
     Ui::MainWindow *ui;
     QVector2D frameDim;
@@ -46,10 +51,14 @@ private:
     QLinkedList<QVector<QColor>> timeline;
 
     TimelineFrame *current_tf = NULL;
-
+    //Testing purposes only works with a 5 X 5 defined frame
+    int top_left = 0;
+    int bot_right = 224;
     void populateCanvas();
     void saveCanvas(QVector<QColor> &canvas);
 
 };
+
+
 
 #endif // MAINWINDOW_H
