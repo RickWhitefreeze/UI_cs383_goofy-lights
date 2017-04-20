@@ -26,11 +26,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp\
         mainwindow.cpp \
     newfiledialog.cpp \
-    cell.cpp
+    cell.cpp \
+    timelineframe.cpp
 
 HEADERS  += mainwindow.h \
     newfiledialog.h \
-    cell.h
+    cell.h \
+    timelineframe.h
 
 FORMS    += mainwindow.ui \
     newfiledialog.ui
