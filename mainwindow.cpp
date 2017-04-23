@@ -29,12 +29,12 @@ void MainWindow::newCanvas(){
         canvas.push_back(canvasCells[i]->getColor());
     }
 
-    TimelineFrame *tf = new TimelineFrame(this, canvas, frameDim);
+    TimelineFrame *tf = new TimelineFrame(this, canvas, frameDim, ui->timestamp->text());
     current_tf = tf;
     connect(tf, SIGNAL(clicked(TimelineFrame*)), this, SLOT(loadCanvas(TimelineFrame*)));
     loadCanvas(tf);
 
-    timeline.push_back(canvas);
+    timeline.push_back(tf);
     ui->timeline->addWidget(tf);
 }
 
@@ -43,6 +43,7 @@ void MainWindow::saveCanvas(QVector<QColor> &canvas){
     for(int i = 0; i < canvasCells.length(); i++){
         canvas[i] = canvasCells[i]->getColor();
     }
+    current_tf->timestamp = ui->timestamp->text();
 }
 
 //Func will populate canvas with appropriate colors
@@ -51,6 +52,8 @@ void MainWindow::loadCanvas(TimelineFrame *tf){
 
     //saveCanvas(current_tf->canvas);
     current_tf = tf;
+
+    ui->timestamp->setText(current_tf->timestamp);
 
     int i = 0;
     for(int y = 0; y < frameDim.y() * 3; y++){
@@ -272,7 +275,7 @@ void MainWindow::boxShiftLeft ()
 void MainWindow::populateCanvas(){
     //ui->canvasArea->setGeometry(QRect(0, 0, 12 * qRound(frameDim.x()) * 3, 12 * qRound(frameDim.y()) * 3));
     ui->canvas->setAlignment(Qt::AlignCenter);
-
+    ui->canvasArea->hide();
     for(int y = 0; y < frameDim.y() * 3; y++){
         for(int x = 0; x < frameDim.x() * 3; x++){
             QVector2D pos(x,y);
@@ -285,32 +288,75 @@ void MainWindow::populateCanvas(){
             ui->canvas->addWidget(temp, y, x);
         }
     }
+    ui->canvasArea->show();
 }
 
 //TODO: Change something so that adding a new file while one is open causes the old one to close
 void MainWindow::newFile(){
     frameDim = NewFileDialog::getFrameDim(this, tr("Frame Size"));
-    //Create a linked list
-    //Call the function that populates the canvas
-    populateCanvas();
-    newCanvas();
+
+    if(!frameDim.isNull()){
+        //Call the function that populates the canvas
+        populateCanvas();
+        newCanvas();
+    }
+
 }
 
 void MainWindow::openFile(){
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
                                                         QStandardPaths::displayName(QStandardPaths::DocumentsLocation),
                                                         tr("Text files (*.txt)"));
-    //Call the function that loads .tan format into linked list
-    //Call the function that populates the canvas
-    //populateCanvas();
-    //loadCanvas(timeline.front());
+
+    if(!fileName.isEmpty()){
+        int sizeX, sizeY;
+        QList<QColor> externalFrame;
+        QList<QString> timestamps;
+        loadProject(fileName, &sizeX, &sizeY, &externalFrame, &timestamps);
+        frameDim.setX(sizeX / 3);
+        frameDim.setY(sizeY / 3);
+        populateCanvas();
+
+        //Just no...
+        for(int i = 0; i < (externalFrame.size() + 1) / (sizeX * sizeY); i++){
+            QVector<QColor> c;
+            for(int j = 0; j < sizeX * sizeY; j++){
+                c.push_back(externalFrame[(i * sizeX * sizeY) + j]);
+            }
+            TimelineFrame *tf = new TimelineFrame(this, c, frameDim, timestamps[i]);
+            connect(tf, SIGNAL(clicked(TimelineFrame*)), this, SLOT(loadCanvas(TimelineFrame*)));
+            timeline.push_back(tf);
+            ui->timeline->addWidget(tf);
+        }
+
+        loadCanvas(timeline.front());
+    }
 }
 
 void MainWindow::saveFile(){
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
                                                         QStandardPaths::displayName(QStandardPaths::DocumentsLocation),
                                                         tr("Text files (*.txt)"));
-    //Call the function that saves the linked list to the .tan format
+    if(!fileName.isEmpty()){
+
+        saveCanvas(current_tf->canvas);
+
+        QList<QColor> list;
+        QList<QString> timestamp;
+
+        //Creating a QList from the timeline is not an optimal choice
+        for(int i = 0; i < timeline.size(); i++){
+            TimelineFrame *temp = timeline[i];
+            timestamp.append(temp->timestamp);
+            for(int j = 0; j < temp->canvas.size(); j++){
+                list.append(temp->canvas[j]);
+            }
+        }
+
+        saveProject(fileName, frameDim.x() * 3, frameDim.y() * 3, list, timestamp);
+
+        //Call the function that saves the linked list to the .tan format
+    }
 }
 
 MainWindow::MainWindow(QWidget *parent) :

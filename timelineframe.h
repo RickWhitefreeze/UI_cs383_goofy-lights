@@ -15,8 +15,9 @@ class TimelineFrame : public QToolButton
 
 public:
     void createPreview(const QVector2D &frameDim);
-    TimelineFrame(QWidget *parent, const QVector<QColor> &frame, const QVector2D &frameDim);
+    TimelineFrame(QWidget *parent, QVector<QColor> &frame, const QVector2D &frameDim, const QString time);
     QVector<QColor> canvas;
+    QString timestamp;
 
 private:
 

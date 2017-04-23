@@ -31,8 +31,8 @@ void TimelineFrame::mousePressEvent(QMouseEvent *event){
     }
 }
 
-TimelineFrame::TimelineFrame(QWidget *parent, const QVector<QColor> &frame,
-                             const QVector2D &frameDim) : QToolButton(parent), canvas(frame)
+TimelineFrame::TimelineFrame(QWidget *parent, QVector<QColor> &frame,
+                             const QVector2D &frameDim, const QString time) : QToolButton(parent), canvas(frame), timestamp(time)
 {
     setStyleSheet("padding: 4px;");
 

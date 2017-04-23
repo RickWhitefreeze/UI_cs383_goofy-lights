@@ -27,15 +27,18 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     newfiledialog.cpp \
     cell.cpp \
-    timelineframe.cpp
+    timelineframe.cpp \
+    fileio.cpp
 
 HEADERS  += mainwindow.h \
     newfiledialog.h \
     cell.h \
-    timelineframe.h
+    timelineframe.h \
+    fileio.h
 
 FORMS    += mainwindow.ui \
-    newfiledialog.ui
+    newfiledialog.ui \
+    mainwindow.ui
 
 RESOURCES += \
     resources.qrc

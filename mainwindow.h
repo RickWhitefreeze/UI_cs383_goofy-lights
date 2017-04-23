@@ -13,6 +13,7 @@
 
 #include "timelineframe.h"
 #include "newfiledialog.h"
+#include "fileio.h"
 #include "cell.h"
 
 namespace Ui {
@@ -48,7 +49,7 @@ private:
     QVector2D frameDim;
     QColor drawColor;
     QVector< Cell* > canvasCells;
-    QLinkedList<QVector<QColor>> timeline;
+    QList<TimelineFrame*> timeline;
 
     TimelineFrame *current_tf = NULL;
     //Testing purposes only works with a 5 X 5 defined frame

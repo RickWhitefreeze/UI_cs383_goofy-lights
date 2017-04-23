@@ -24,7 +24,7 @@ int maintest()
 
     int x, y;
 
-    loadProject("C:\\Users\\Toshi\\Desktop\\testfile.txt", &x, &y, & frame, timestamps);
+    loadProject("C:\\Users\\Toshi\\Desktop\\testfile.txt", &x, &y, & frame, &timestamps);
 
     exportFrame("C:\\Users\\Toshi\\Desktop\\testfile.tan", 9, 9, frame, timestamps);
 
@@ -50,7 +50,7 @@ void saveProject(QString fileName, int sizeX, int sizeY, QList<QColor> frame, QL
 
     out << "24.7\nNoAudioFile\n" << sizeX << " " << sizeY << endl;
 
-    for(int k = 0; k < (frame.size() - 1) / (sizeY*sizeX); k++){
+    for(int k = 0; k < (frame.size() + 1) / (sizeY*sizeX); k++){
 
         //write Timestamp
         out << timestamps[k] << "\n";
@@ -76,7 +76,7 @@ void saveProject(QString fileName, int sizeX, int sizeY, QList<QColor> frame, QL
 }
 
 //updates sizeX and sizeY passed in by reference so the parent function knows the frame size
-void loadProject(QString fileName, int * sizeX, int * sizeY, QList<QColor> * externalFrame, QList<QString> timestamps){
+void loadProject(QString fileName, int * sizeX, int * sizeY, QList<QColor> * externalFrame, QList<QString> *timestamps){
 
     QList<QColor> frame = * externalFrame;
     //clear vector to load new project
@@ -110,7 +110,7 @@ void loadProject(QString fileName, int * sizeX, int * sizeY, QList<QColor> * ext
         //read timestamp
         mFile.readLine(buffer, bufferLength);
         temp = buffer;
-        timestamps.append(temp.remove(temp.size() - 1,temp.size()));
+        timestamps->append(temp.remove(temp.size() - 1,temp.size()));
      //   qDebug() << timestamps[i];
 
         for(int j = 0; j < ( *sizeY ); j++){
