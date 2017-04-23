@@ -51,8 +51,9 @@ void MainWindow::loadCanvas(TimelineFrame *tf){
     QColor current;
 
     //saveCanvas(current_tf->canvas);
-    current_tf = tf;
 
+    if(current_tf != NULL) current_tf->timestamp = ui->timestamp->text();
+    current_tf = tf;
     ui->timestamp->setText(current_tf->timestamp);
 
     int i = 0;
