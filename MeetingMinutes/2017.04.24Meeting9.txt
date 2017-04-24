@@ -1,0 +1,9 @@
+meeting minutes 4/24/2017
+
+we talked about what we're turning in
+
+next meeting wednsday 2/26/2017 
+	Joey and Jocelyn - play button on timeline
+	Nick - work on bugs
+	Lance - get selection working
+	Ruth and Micheal - insertion of frames anywhere and deletion of frames
