@@ -36,13 +36,21 @@ public slots:
     void openFile();
     void saveFile();
 
-    void newCanvas();
+    void newCanvas(int pos);
+    void deleteFrame();
     void loadCanvas(TimelineFrame *tf);
 
     void boxShiftUp();
     void boxShiftDown();
     void boxShiftLeft();
     void boxShiftRight();
+
+private slots:
+    void on_actionInsert_After_triggered();
+
+    void on_actionInsert_Before_triggered();
+
+    void on_actionDelete_Frame_triggered();
 
 private:
     Ui::MainWindow *ui;
