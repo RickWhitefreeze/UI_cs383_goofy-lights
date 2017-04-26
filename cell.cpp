@@ -4,7 +4,7 @@ void Cell::setColor(QColor c){
     color = c;
 }
 
-void Cell::paintEvent(QPaintEvent *event)
+void Cell::paintEvent(QPaintEvent* event)
 {
     QPainter painter(this);
     QStyleOption styleOpt;
@@ -13,20 +13,29 @@ void Cell::paintEvent(QPaintEvent *event)
     style()->drawPrimitive(QStyle::PE_Widget, &styleOpt, &painter, this);
 }
 
-void Cell::boxevent(QMouseEvent *event){
-    //Here we could put the code for the stamps and just treat the box selecting as a stamp.
-}
-
 void Cell::mousePressEvent(QMouseEvent *event){
     if(event->buttons() == Qt::LeftButton){
         emit clicked(pos);
     }
-    else if (event->buttons()==Qt::RightButton){  //Mouse event happens is it right or left.
-        emit clicked(pos);
-        if(event->buttons()== Qt::RightButton){   //Looks for another right mouse event if it happens it makes two positions.
-            emit clicked(pos2);
-        }//This code is really the same for all so we could just have one function but made buttons on the window for the tools it could be a bool for what tool the mouse is using.
+    else if(event->buttons() == Qt::RightButton){
+     origin = event->pos();
+     if (!rubberBand)
+         rubberBand = new QRubberBand(QRubberBand::Rectangle, this);
+     rubberBand->setGeometry(QRect(origin, QSize()));
+     rubberBand->show();
     }
+}
+
+
+
+void Cell::mouseMoveEvent(QMouseEvent *event){
+    rubberBand->setGeometry(QRect(origin, event->pos()).normalized());
+}
+
+void Cell::mouseReleaseEvent(QMouseEvent *event)
+{
+    rubberBand->hide();
+
 }
 
 Cell::Cell(QWidget *parent, const QVector2D &position) : QWidget(parent), pos(position)
@@ -45,6 +54,7 @@ Cell::Cell(QWidget *parent, const QVector2D &position) : QWidget(parent), pos(po
 
     setStyleSheet("background-color:rgba(0,0,0,25%);");
     color = Qt::black;
+    rubberBand = 0;
 }
 
 Cell::~Cell()

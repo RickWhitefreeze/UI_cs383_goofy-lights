@@ -9,8 +9,11 @@
 #include <QColorDialog>
 #include <QVector>
 #include <QSignalMapper>
+#include <QLinkedList>
 
+#include "timelineframe.h"
 #include "newfiledialog.h"
+#include "fileio.h"
 #include "cell.h"
 
 namespace Ui {
@@ -33,18 +36,28 @@ public slots:
     void openFile();
     void saveFile();
 
-private slots:
-    void on_toolButton_3_clicked();  //we can also just make it a tool and set up the mouse to have a bool for what tool it is
+    void newCanvas();
+    void loadCanvas(TimelineFrame *tf);
 
+    void boxShiftUp();
+    void boxShiftDown();
+    void boxShiftLeft();
+    void boxShiftRight();
 
 private:
     Ui::MainWindow *ui;
     QVector2D frameDim;
     QColor drawColor;
     QVector< Cell* > canvasCells;
+    QList<TimelineFrame*> timeline;
 
-    void renderCanvas();
+    TimelineFrame *current_tf = NULL;
+    //Testing purposes only works with a 5 X 5 defined frame
+    void populateCanvas();
+    void saveCanvas(QVector<QColor> &canvas);
 
 };
+
+
 
 #endif // MAINWINDOW_H
