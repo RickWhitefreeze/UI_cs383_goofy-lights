@@ -29,7 +29,7 @@
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
-   <layout class="QGridLayout" name="gridLayout" rowstretch="12,1,4" columnstretch="0,0">
+   <layout class="QGridLayout" name="gridLayout" rowstretch="12,1,4,0,0" columnstretch="0,0,0">
     <property name="leftMargin">
      <number>0</number>
     </property>
@@ -48,7 +48,7 @@
     <property name="verticalSpacing">
      <number>2</number>
     </property>
-    <item row="2" column="1">
+    <item row="4" column="2">
      <widget class="QScrollArea" name="timelineScroll">
       <property name="minimumSize">
        <size>
@@ -77,7 +77,7 @@
          <x>0</x>
          <y>0</y>
          <width>533</width>
-         <height>104</height>
+         <height>85</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -88,7 +88,7 @@
       </widget>
      </widget>
     </item>
-    <item row="0" column="1">
+    <item row="0" column="2">
      <widget class="QScrollArea" name="canvasView">
       <property name="widgetResizable">
        <bool>true</bool>
@@ -99,7 +99,7 @@
          <x>0</x>
          <y>0</y>
          <width>533</width>
-         <height>315</height>
+         <height>334</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -132,7 +132,7 @@
       </widget>
      </widget>
     </item>
-    <item row="1" column="1">
+    <item row="1" column="2">
      <layout class="QHBoxLayout" name="horizontalLayout_6">
       <property name="spacing">
        <number>6</number>
@@ -429,6 +429,114 @@
        </layout>
       </item>
       <item>
+       <layout class="QGridLayout" name="gridLayout_6">
+        <item row="1" column="0">
+         <widget class="QPushButton" name="insertCopy">
+          <property name="minimumSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Insert copy of frame</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="resources.qrc">
+            <normaloff>:/images/icons/copy.png</normaloff>:/images/icons/copy.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QPushButton" name="deleteFrame">
+          <property name="minimumSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Delete frame</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="resources.qrc">
+            <normaloff>:/images/icons/delete.png</normaloff>:/images/icons/delete.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QPushButton" name="insertfBefore">
+          <property name="minimumSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Insert frame before</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="resources.qrc">
+            <normaloff>:/images/icons/insertBefore.png</normaloff>:/images/icons/insertBefore.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QPushButton" name="insertAfter">
+          <property name="minimumSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Insert frame after</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="resources.qrc">
+            <normaloff>:/images/icons/insertAfter.png</normaloff>:/images/icons/insertAfter.png</iconset>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
        <spacer name="verticalSpacer">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -468,10 +576,19 @@
     <property name="title">
      <string>Insert</string>
     </property>
-    <addaction name="actionNew_Frame"/>
+    <addaction name="actionInsert_After"/>
+    <addaction name="actionInsert_Before"/>
+    <addaction name="actionInsert_Copy"/>
+   </widget>
+   <widget class="QMenu" name="menuDelete">
+    <property name="title">
+     <string>Delete</string>
+    </property>
+    <addaction name="actionDelet_Frame"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuInsert"/>
+   <addaction name="menuDelete"/>
   </widget>
   <action name="actionMenuOpen">
    <property name="text">
@@ -517,6 +634,26 @@
   <action name="actionNew_Frame">
    <property name="text">
     <string>New Frame</string>
+   </property>
+  </action>
+  <action name="actionInsert_After">
+   <property name="text">
+    <string>Insert After</string>
+   </property>
+  </action>
+  <action name="actionInsert_Before">
+   <property name="text">
+    <string>Insert Before</string>
+   </property>
+  </action>
+  <action name="actionDelet_Frame">
+   <property name="text">
+    <string>Delete Frame</string>
+   </property>
+  </action>
+  <action name="actionInsert_Copy">
+   <property name="text">
+    <string>Insert Copy</string>
    </property>
   </action>
  </widget>
