@@ -47,6 +47,34 @@ void MainWindow::newCanvas(int pos)
     ui->timeline->insertWidget(index, tf);
 }
 
+//inserts copy of current frame after current frame
+//added 4/25/17 - RP
+void MainWindow::copyFrame()
+{
+    QColor current;
+    if(current_tf != NULL) saveCanvas(current_tf->canvas);
+
+    QVector<QColor> canvas;
+    for(int i = 0; i < canvasCells.length(); i++){
+        current = current_tf->canvas[i];
+        canvasCells[i]->setColor(current);
+        canvas.push_back(canvasCells[i]->getColor());
+    }
+
+    //get index of current frame
+    int index;
+
+    index = timeline.indexOf(current_tf) + 1; //for insert after current frame
+
+    TimelineFrame *tf = new TimelineFrame(this, canvas, frameDim, ui->timestamp->text());
+    current_tf = tf;
+    connect(tf, SIGNAL(clicked(TimelineFrame*)), this, SLOT(loadCanvas(TimelineFrame*)));
+    loadCanvas(tf);
+    timeline.insert(index, tf);
+    ui->timeline->insertWidget(index, tf);
+}
+
+
 //function to delete frame
 //added 4/25/17 - RP
 void MainWindow::deleteFrame()
@@ -445,4 +473,16 @@ void MainWindow::on_insertBefore_clicked()
 {
     if(current_tf != NULL)
         newCanvas(1);
+}
+
+void MainWindow::on_copyFrame_clicked()
+{
+    if(current_tf != NULL)
+        copyFrame();
+}
+
+void MainWindow::on_actionInsert_Copy_triggered()
+{
+    if(current_tf != NULL)
+        copyFrame();
 }

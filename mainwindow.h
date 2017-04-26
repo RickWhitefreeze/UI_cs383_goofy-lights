@@ -37,6 +37,7 @@ public slots:
     void saveFile();
 
     void newCanvas(int pos);
+    void copyFrame();
     void deleteFrame();
     void loadCanvas(TimelineFrame *tf);
 
@@ -57,6 +58,10 @@ private slots:
     void on_insertAfter_clicked();
 
     void on_insertBefore_clicked();
+
+    void on_copyFrame_clicked();
+
+    void on_actionInsert_Copy_triggered();
 
 private:
     Ui::MainWindow *ui;

@@ -450,8 +450,8 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset>
-            <normaloff>../../flipped2.png</normaloff>../../flipped2.png</iconset>
+           <iconset resource="resources.qrc">
+            <normaloff>:/images/icons/insertBefore.png</normaloff>:/images/icons/insertBefore.png</iconset>
           </property>
          </widget>
         </item>
@@ -473,8 +473,8 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset>
-            <normaloff>../../export-icon-11.png</normaloff>../../export-icon-11.png</iconset>
+           <iconset resource="resources.qrc">
+            <normaloff>:/images/icons/insertAfter.png</normaloff>:/images/icons/insertAfter.png</iconset>
           </property>
          </widget>
         </item>
@@ -496,8 +496,31 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset>
-            <normaloff>../../system-delete-icon.png</normaloff>../../system-delete-icon.png</iconset>
+           <iconset resource="resources.qrc">
+            <normaloff>:/images/icons/delete.png</normaloff>:/images/icons/delete.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QPushButton" name="copyFrame">
+          <property name="minimumSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="resources.qrc">
+            <normaloff>:/images/icons/copy.png</normaloff>:/images/icons/copy.png</iconset>
           </property>
          </widget>
         </item>
@@ -532,6 +555,7 @@
     </property>
     <addaction name="actionInsert_After"/>
     <addaction name="actionInsert_Before"/>
+    <addaction name="actionInsert_Copy"/>
    </widget>
    <widget class="QMenu" name="menuDelete">
     <property name="title">
@@ -602,6 +626,11 @@
   <action name="actionDelete_Frame">
    <property name="text">
     <string>Delete Frame</string>
+   </property>
+  </action>
+  <action name="actionInsert_Copy">
+   <property name="text">
+    <string>Insert Copy</string>
    </property>
   </action>
  </widget>
