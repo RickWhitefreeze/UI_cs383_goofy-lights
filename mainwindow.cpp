@@ -19,11 +19,8 @@ void MainWindow::setDrawColor(){
     ui->toolColor->setStyleSheet(QString("background-color: %1; border: 2px inset grey;").arg(drawColor.name()));
 }
 
+void MainWindow::newCanvas(){
 
-//Function to create new frame
-// 4/25/17 - update to allow insertion before and after current frame
-void MainWindow::newCanvas(int pos)
-{
     if(current_tf != NULL) saveCanvas(current_tf->canvas);
 
     QVector<QColor> canvas;
@@ -32,78 +29,13 @@ void MainWindow::newCanvas(int pos)
         canvas.push_back(canvasCells[i]->getColor());
     }
 
-    //get index of current frame
-    int index;
-    if(pos == 1)
-        index = timeline.indexOf(current_tf); //for insert before current frame
-    else if(pos == 2)
-        index = timeline.indexOf(current_tf) + 1; //for insert after current frame
-
     TimelineFrame *tf = new TimelineFrame(this, canvas, frameDim, ui->timestamp->text());
     current_tf = tf;
     connect(tf, SIGNAL(clicked(TimelineFrame*)), this, SLOT(loadCanvas(TimelineFrame*)));
     loadCanvas(tf);
-    timeline.insert(index, tf);
-    ui->timeline->insertWidget(index, tf);
-}
 
-//inserts copy of current frame after current frame
-//added 4/25/17 - RP
-void MainWindow::copyFrame()
-{
-    QColor current;
-    if(current_tf != NULL) saveCanvas(current_tf->canvas);
-
-    QVector<QColor> canvas;
-    for(int i = 0; i < canvasCells.length(); i++){
-        current = current_tf->canvas[i];
-        canvasCells[i]->setColor(current);
-        canvas.push_back(canvasCells[i]->getColor());
-    }
-
-    //get index of current frame
-    int index;
-
-    index = timeline.indexOf(current_tf) + 1; //for insert after current frame
-
-    TimelineFrame *tf = new TimelineFrame(this, canvas, frameDim, ui->timestamp->text());
-    current_tf = tf;
-    connect(tf, SIGNAL(clicked(TimelineFrame*)), this, SLOT(loadCanvas(TimelineFrame*)));
-    loadCanvas(tf);
-    timeline.insert(index, tf);
-    ui->timeline->insertWidget(index, tf);
-}
-
-
-//function to delete frame
-//added 4/25/17 - RP
-void MainWindow::deleteFrame()
-{
-    TimelineFrame *temp;
-    int index;
-
-    if(current_tf == NULL || timeline.size() == 1)
-        return;
-    //get index of current frame
-    index = timeline.indexOf(current_tf);
-
-    //remove thumbnail of timeline view
-    temp = ((TimelineFrame*)(ui->timeline->itemAt(index)->widget()));
-    ui->timeline->removeWidget(temp);
-    delete temp;
-    ui->timeline->update();
-
-    //remove frame from list
-    timeline.removeAt(index);
-
-    //set current_tf to frame before deleted frame
-    //if index is 0, set current_tf to point at first frame in list
-    if(index == 0)
-        current_tf = timeline[index];
-    else
-        current_tf = timeline[index - 1];
-
-    loadCanvas(current_tf);
+    timeline.push_back(tf);
+    ui->timeline->addWidget(tf);
 }
 
 //Func will take the colors of the canvas and save it to linked list
@@ -367,7 +299,7 @@ void MainWindow::newFile(){
     if(!frameDim.isNull()){
         //Call the function that populates the canvas
         populateCanvas();
-        newCanvas(2);
+        newCanvas();
     }
 
 }
@@ -440,51 +372,3 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-
-void MainWindow::on_actionInsert_After_triggered()
-{
-    if(current_tf != NULL)
-        newCanvas(2);
-}
-
-void MainWindow::on_actionInsert_Before_triggered()
-{
-    if(current_tf != NULL)
-        newCanvas(1);
-}
-
-void MainWindow::on_actionDelete_Frame_triggered()
-{
-    deleteFrame();
-}
-
-void MainWindow::on_deleteFrameButton_clicked()
-{
-    deleteFrame();
-}
-
-void MainWindow::on_insertAfter_clicked()
-{
-    if(current_tf != NULL)
-        newCanvas(2);
-}
-
-void MainWindow::on_insertBefore_clicked()
-{
-    if(current_tf != NULL)
-        newCanvas(1);
-}
-
-void MainWindow::on_copyFrame_clicked()
-{
-    if(current_tf != NULL)
-        copyFrame();
-}
-
-void MainWindow::on_actionInsert_Copy_triggered()
-{
-    if(current_tf != NULL)
-        copyFrame();
-}
-
