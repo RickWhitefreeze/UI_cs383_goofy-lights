@@ -36,7 +36,9 @@ public slots:
     void openFile();
     void saveFile();
 
-    void newCanvas();
+    void newCanvas(int pos);
+    void copyFrame();
+    void deleteFrame();
     void loadCanvas(TimelineFrame *tf);
 
     void boxShiftUp();
@@ -44,6 +46,23 @@ public slots:
     void boxShiftLeft();
     void boxShiftRight();
     void boxColorChange();
+
+private slots:
+    void on_actionInsert_After_triggered();
+
+    void on_actionInsert_Before_triggered();
+
+    void on_actionDelete_Frame_triggered();
+
+    void on_deleteFrameButton_clicked();
+
+    void on_insertAfter_clicked();
+
+    void on_insertBefore_clicked();
+
+    void on_copyFrame_clicked();
+
+    void on_actionInsert_Copy_triggered();
 
 private:
     Ui::MainWindow *ui;
@@ -53,7 +72,7 @@ private:
     QList<TimelineFrame*> timeline;
 
     TimelineFrame *current_tf = NULL;
-    //Testing purposes only works with a 5 X 5 defined frame
+
     void populateCanvas();
     void saveCanvas(QVector<QColor> &canvas);
 

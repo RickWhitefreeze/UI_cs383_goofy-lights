@@ -29,7 +29,7 @@
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
-   <layout class="QGridLayout" name="gridLayout" rowstretch="12,1,4" columnstretch="0,0">
+   <layout class="QGridLayout" name="gridLayout">
     <property name="leftMargin">
      <number>0</number>
     </property>
@@ -76,8 +76,10 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>533</width>
-         <height>104</height>
+
+         <width>535</width>
+         <height>85</height>
+
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -88,6 +90,7 @@
       </widget>
      </widget>
     </item>
+
     <item row="0" column="1">
      <widget class="QScrollArea" name="canvasView">
       <property name="widgetResizable">
@@ -254,8 +257,52 @@
       </item>
      </layout>
     </item>
+    <item row="0" column="1">
+     <widget class="QScrollArea" name="canvasView">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="canvasArea">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>535</width>
+         <height>334</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(65, 65, 65);</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <property name="leftMargin">
+         <number>6</number>
+        </property>
+        <property name="topMargin">
+         <number>6</number>
+        </property>
+        <property name="rightMargin">
+         <number>6</number>
+        </property>
+        <property name="bottomMargin">
+         <number>6</number>
+        </property>
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <item row="0" column="1">
+         <layout class="QGridLayout" name="canvas">
+          <property name="spacing">
+           <number>1</number>
+          </property>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
     <item row="0" column="0">
-     <layout class="QVBoxLayout" name="verticalLayout">
+     <layout class="QGridLayout" name="gridLayout_8">
       <property name="sizeConstraint">
        <enum>QLayout::SetDefaultConstraint</enum>
       </property>
@@ -268,7 +315,7 @@
       <property name="rightMargin">
        <number>6</number>
       </property>
-      <item>
+      <item row="0" column="0">
        <widget class="QToolButton" name="toolButton_4">
         <property name="minimumSize">
          <size>
@@ -291,7 +338,7 @@
         </property>
        </widget>
       </item>
-      <item>
+      <item row="1" column="0">
        <widget class="QToolButton" name="toolButton_3">
         <property name="minimumSize">
          <size>
@@ -314,7 +361,7 @@
         </property>
        </widget>
       </item>
-      <item>
+      <item row="2" column="0">
        <widget class="QToolButton" name="toolColor">
         <property name="minimumSize">
          <size>
@@ -337,7 +384,20 @@
         </property>
        </widget>
       </item>
-      <item>
+      <item row="6" column="0">
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="3" column="0">
        <layout class="QGridLayout" name="gridLayout_4">
         <item row="0" column="2">
          <widget class="QToolButton" name="buttonUp">
@@ -358,8 +418,9 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="2">
-         <widget class="QToolButton" name="buttonDown">
+
+        <item row="0" column="2">
+         <widget class="QToolButton" name="buttonUp">
           <property name="minimumSize">
            <size>
             <width>25</width>
@@ -373,12 +434,35 @@
            </size>
           </property>
           <property name="text">
-           <string>▼</string>
+
+           <string>▲</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="3">
+         <widget class="QToolButton" name="buttonRight">
+
+          <property name="minimumSize">
+           <size>
+            <width>25</width>
+            <height>25</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>25</width>
+            <height>25</height>
+           </size>
+          </property>
+          <property name="text">
+
+           <string>►</string>
           </property>
          </widget>
         </item>
         <item row="1" column="1">
          <widget class="QToolButton" name="buttonLeft">
+
           <property name="minimumSize">
            <size>
             <width>25</width>
@@ -396,25 +480,6 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="4">
-         <widget class="QToolButton" name="buttonRight">
-          <property name="minimumSize">
-           <size>
-            <width>25</width>
-            <height>25</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>25</width>
-            <height>25</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>►</string>
-          </property>
-         </widget>
-        </item>
         <item row="1" column="2">
          <widget class="QToolButton" name="boxColorChange">
           <property name="styleSheet">
@@ -428,18 +493,113 @@
         </item>
        </layout>
       </item>
-      <item>
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
+      <item row="5" column="0">
+       <layout class="QGridLayout" name="gridLayout_11">
+        <item row="1" column="1">
+         <widget class="QPushButton" name="insertBefore">
+          <property name="minimumSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Insert frame before</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="resources.qrc">
+            <normaloff>:/images/icons/insertBefore.png</normaloff>:/images/icons/insertBefore.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="insertAfter">
+          <property name="minimumSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Insert frame after</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="resources.qrc">
+            <normaloff>:/images/icons/insertAfter.png</normaloff>:/images/icons/insertAfter.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QPushButton" name="deleteFrameButton">
+          <property name="minimumSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Delete frame</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="resources.qrc">
+            <normaloff>:/images/icons/delete.png</normaloff>:/images/icons/delete.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QPushButton" name="copyFrame">
+          <property name="minimumSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>40</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Add copy of frame</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="resources.qrc">
+            <normaloff>:/images/icons/copy.png</normaloff>:/images/icons/copy.png</iconset>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </item>
@@ -466,12 +626,21 @@
    </widget>
    <widget class="QMenu" name="menuInsert">
     <property name="title">
-     <string>Insert</string>
+     <string>Insert Frame</string>
     </property>
-    <addaction name="actionNew_Frame"/>
+    <addaction name="actionInsert_After"/>
+    <addaction name="actionInsert_Before"/>
+    <addaction name="actionInsert_Copy"/>
+   </widget>
+   <widget class="QMenu" name="menuDelete">
+    <property name="title">
+     <string>Delete</string>
+    </property>
+    <addaction name="actionDelete_Frame"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuInsert"/>
+   <addaction name="menuDelete"/>
   </widget>
   <action name="actionMenuOpen">
    <property name="text">
@@ -517,6 +686,26 @@
   <action name="actionNew_Frame">
    <property name="text">
     <string>New Frame</string>
+   </property>
+  </action>
+  <action name="actionInsert_After">
+   <property name="text">
+    <string>Insert After</string>
+   </property>
+  </action>
+  <action name="actionInsert_Before">
+   <property name="text">
+    <string>Insert Before</string>
+   </property>
+  </action>
+  <action name="actionDelete_Frame">
+   <property name="text">
+    <string>Delete Frame</string>
+   </property>
+  </action>
+  <action name="actionInsert_Copy">
+   <property name="text">
+    <string>Insert Copy</string>
    </property>
   </action>
  </widget>
