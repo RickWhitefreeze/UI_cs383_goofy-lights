@@ -7,5 +7,9 @@
         <file>icons/color.png</file>
         <file>icons/pause.png</file>
         <file>icons/play.png</file>
+        <file>icons/copy.png</file>
+        <file>icons/delete.png</file>
+        <file>icons/insertAfter.png</file>
+        <file>icons/insertBefore.png</file>
     </qresource>
 </RCC>
