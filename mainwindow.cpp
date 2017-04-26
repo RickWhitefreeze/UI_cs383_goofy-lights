@@ -429,3 +429,20 @@ void MainWindow::on_actionDelete_Frame_triggered()
 {
     deleteFrame();
 }
+
+void MainWindow::on_deleteFrameButton_clicked()
+{
+    deleteFrame();
+}
+
+void MainWindow::on_insertAfter_clicked()
+{
+    if(current_tf != NULL)
+        newCanvas(2);
+}
+
+void MainWindow::on_insertBefore_clicked()
+{
+    if(current_tf != NULL)
+        newCanvas(1);
+}

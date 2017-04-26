@@ -52,6 +52,12 @@ private slots:
 
     void on_actionDelete_Frame_triggered();
 
+    void on_deleteFrameButton_clicked();
+
+    void on_insertAfter_clicked();
+
+    void on_insertBefore_clicked();
+
 private:
     Ui::MainWindow *ui;
     QVector2D frameDim;
@@ -60,7 +66,7 @@ private:
     QList<TimelineFrame*> timeline;
 
     TimelineFrame *current_tf = NULL;
-    //Testing purposes only works with a 5 X 5 defined frame
+
     void populateCanvas();
     void saveCanvas(QVector<QColor> &canvas);
 
