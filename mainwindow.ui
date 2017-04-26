@@ -76,8 +76,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>533</width>
-         <height>104</height>
+         <width>537</width>
+         <height>105</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -98,8 +98,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>533</width>
-         <height>315</height>
+         <width>537</width>
+         <height>319</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -339,25 +339,6 @@
       </item>
       <item>
        <layout class="QGridLayout" name="gridLayout_4">
-        <item row="0" column="2">
-         <widget class="QToolButton" name="buttonUp">
-          <property name="minimumSize">
-           <size>
-            <width>25</width>
-            <height>25</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>25</width>
-            <height>25</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>▲</string>
-          </property>
-         </widget>
-        </item>
         <item row="2" column="2">
          <widget class="QToolButton" name="buttonDown">
           <property name="minimumSize">
@@ -396,7 +377,26 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="4">
+        <item row="0" column="2">
+         <widget class="QToolButton" name="buttonUp">
+          <property name="minimumSize">
+           <size>
+            <width>25</width>
+            <height>25</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>25</width>
+            <height>25</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>▲</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="3">
          <widget class="QToolButton" name="buttonRight">
           <property name="minimumSize">
            <size>
@@ -412,17 +412,6 @@
           </property>
           <property name="text">
            <string>►</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="2">
-         <widget class="QToolButton" name="boxColorChange">
-          <property name="styleSheet">
-           <string notr="true">background-color: black;
- border: 2px inset grey;</string>
-          </property>
-          <property name="text">
-           <string/>
           </property>
          </widget>
         </item>
@@ -451,7 +440,7 @@
      <x>0</x>
      <y>0</y>
      <width>640</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -628,8 +617,8 @@
    <slot>boxShiftUp()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>63</x>
-     <y>198</y>
+     <x>69</x>
+     <y>196</y>
     </hint>
     <hint type="destinationlabel">
      <x>319</x>
@@ -644,8 +633,8 @@
    <slot>boxShiftLeft()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>31</x>
-     <y>230</y>
+     <x>25</x>
+     <y>239</y>
     </hint>
     <hint type="destinationlabel">
      <x>319</x>
@@ -660,8 +649,8 @@
    <slot>boxShiftRight()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>95</x>
-     <y>230</y>
+     <x>119</x>
+     <y>239</y>
     </hint>
     <hint type="destinationlabel">
      <x>319</x>
@@ -676,28 +665,12 @@
    <slot>boxShiftDown()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>63</x>
-     <y>262</y>
+     <x>72</x>
+     <y>286</y>
     </hint>
     <hint type="destinationlabel">
      <x>319</x>
      <y>239</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>boxColorChange</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>boxColorChange()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>52</x>
-     <y>215</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>824</x>
-     <y>76</y>
     </hint>
    </hints>
   </connection>
@@ -712,6 +685,5 @@
   <slot>boxShiftLeft()</slot>
   <slot>boxShiftRight()</slot>
   <slot>boxShiftDown()</slot>
-  <slot>boxColorChange()</slot>
  </slots>
 </ui>

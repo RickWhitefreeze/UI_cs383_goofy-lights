@@ -43,7 +43,6 @@ public slots:
     void boxShiftDown();
     void boxShiftLeft();
     void boxShiftRight();
-    void boxColorChange();
 
 private:
     Ui::MainWindow *ui;
