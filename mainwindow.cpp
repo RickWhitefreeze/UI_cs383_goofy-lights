@@ -17,6 +17,7 @@ void MainWindow::setCellColor(QVector2D pos){
 void MainWindow::setDrawColor(){
     drawColor = QColorDialog::getColor(Qt::black, this, QString("Select Color."));
     ui->toolColor->setStyleSheet(QString("background-color: %1; border: 2px inset grey;").arg(drawColor.name()));
+    ui->boxColorChange->setStyleSheet(QString("background-color: %1; border: 2px inset grey;").arg(drawColor.name()));
 }
 
 void MainWindow::newCanvas(){
@@ -74,6 +75,7 @@ void MainWindow::loadCanvas(TimelineFrame *tf){
 
 
 
+
 /***********************************************************************
  *                     Michael and Ruth 4/18/2017                      *
  * ********************************************************************/
@@ -86,7 +88,7 @@ void MainWindow::boxShiftUp()
 {
     if(current_tf != NULL)
     {
-        int top_right, top_left, bot_right, bot_left, rows, width;
+        int top_right, top_left, bot_right, rows, width;
         top_left = 0;
         bot_right = frameDim.x() * frameDim.y() * 9 - 1;
         width = frameDim.x() * 3;
@@ -128,12 +130,12 @@ void MainWindow::boxShiftUp()
 
 
 
-//This function shifts every cell up one position and overwrites what was written there before
+//This function shifts every cell down one position and overwrites what was written there before
 void MainWindow::boxShiftDown ()
 {
     if(current_tf != NULL)
     {
-        int top_right, top_left, bot_right, bot_left, rows, width, height;
+        int top_left, bot_right, bot_left, rows, width, height;
         top_left = 0;
         bot_right = frameDim.x() * frameDim.y() * 9 - 1;
         width = frameDim.x() * 3;
@@ -173,12 +175,12 @@ void MainWindow::boxShiftDown ()
         current_tf->createPreview(frameDim);
     }
 }
-
+//This function shifts every pixel right one position and overwrites what was written there before
 void MainWindow::boxShiftRight ()
 {
     if(current_tf != NULL)
     {
-        int top_right, top_left, bot_right, bot_left, rows, width;
+        int top_left, bot_right, bot_left, rows, width;
         top_left = 0;
         bot_right = frameDim.x() * frameDim.y() * 9 - 1;
         width = frameDim.x() * 3;
@@ -217,12 +219,12 @@ void MainWindow::boxShiftRight ()
         current_tf->createPreview(frameDim);
     }
 }
-
+//This function shifts every pixel left one position and overwrites what was written there before
 void MainWindow::boxShiftLeft ()
 {
     if(current_tf != NULL)
     {
-        int top_right, top_left, bot_right, bot_left, rows, width;
+        int top_right, top_left, bot_right, rows, width;
         top_left = 0;
         bot_right = frameDim.x() * frameDim.y() * 9 - 1;
         width = frameDim.x() * 3;
@@ -260,9 +262,34 @@ void MainWindow::boxShiftLeft ()
     }
 }
 
+//Func will change the box selected to the color currently selected
+void MainWindow::boxColorChange()
+{
+    if(current_tf != NULL)
+    {
+        int top_right, top_left, bot_right, rows, width;
+        top_left = 0;
+        bot_right = frameDim.x() * frameDim.y() * 9 - 1;
+        width = frameDim.x() * 3;
+        //The top right position of the box selected
+        top_right = bot_right % width + top_left - top_left % width;
+        //The number of rows in the box selected
+        rows = (floor(bot_right/width))-(floor(top_left/width));
+        //Traversing the matrix defined by the box selected by user
+        for(int i = 0; i <= rows; i++)
+        {
+            //Change every pixel in the box selected to the user defined rgb color
+            for(int j = (top_left + i*width); j <= (top_right + i*width); j++)
+            {
+                current_tf->canvas[j]= drawColor;
 
+            }
+        }
+        loadCanvas(current_tf);
+        current_tf->createPreview(frameDim);
+    }
 
-
+}
 
 
 
@@ -372,3 +399,4 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
