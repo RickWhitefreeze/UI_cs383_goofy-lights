@@ -446,6 +446,9 @@
             <height>40</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Insert frame before</string>
+          </property>
           <property name="text">
            <string/>
           </property>
@@ -468,6 +471,9 @@
             <width>40</width>
             <height>40</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string>Insert frame after</string>
           </property>
           <property name="text">
            <string/>
@@ -492,6 +498,9 @@
             <height>40</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Delete frame</string>
+          </property>
           <property name="text">
            <string/>
           </property>
@@ -514,6 +523,9 @@
             <width>40</width>
             <height>40</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string>Add copy of frame</string>
           </property>
           <property name="text">
            <string/>
