@@ -76,13 +76,60 @@
         <rect>
          <x>0</x>
          <y>0</y>
+
          <width>535</width>
          <height>85</height>
+
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
          <layout class="QHBoxLayout" name="timeline"/>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+
+    <item row="0" column="1">
+     <widget class="QScrollArea" name="canvasView">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="canvasArea">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>533</width>
+         <height>315</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(65, 65, 65);</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <property name="leftMargin">
+         <number>6</number>
+        </property>
+        <property name="topMargin">
+         <number>6</number>
+        </property>
+        <property name="rightMargin">
+         <number>6</number>
+        </property>
+        <property name="bottomMargin">
+         <number>6</number>
+        </property>
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <item row="0" column="1">
+         <layout class="QGridLayout" name="canvas">
+          <property name="spacing">
+           <number>1</number>
+          </property>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -352,25 +399,6 @@
       </item>
       <item row="3" column="0">
        <layout class="QGridLayout" name="gridLayout_4">
-        <item row="2" column="2">
-         <widget class="QToolButton" name="buttonDown">
-          <property name="minimumSize">
-           <size>
-            <width>25</width>
-            <height>25</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>25</width>
-            <height>25</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>▼</string>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="2">
          <widget class="QToolButton" name="buttonUp">
           <property name="minimumSize">
@@ -390,8 +418,9 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="3">
-         <widget class="QToolButton" name="buttonRight">
+
+        <item row="0" column="2">
+         <widget class="QToolButton" name="buttonUp">
           <property name="minimumSize">
            <size>
             <width>25</width>
@@ -405,12 +434,35 @@
            </size>
           </property>
           <property name="text">
+
+           <string>▲</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="3">
+         <widget class="QToolButton" name="buttonRight">
+
+          <property name="minimumSize">
+           <size>
+            <width>25</width>
+            <height>25</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>25</width>
+            <height>25</height>
+           </size>
+          </property>
+          <property name="text">
+
            <string>►</string>
           </property>
          </widget>
         </item>
         <item row="1" column="1">
          <widget class="QToolButton" name="buttonLeft">
+
           <property name="minimumSize">
            <size>
             <width>25</width>
@@ -425,6 +477,17 @@
           </property>
           <property name="text">
            <string>◄</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QToolButton" name="boxColorChange">
+          <property name="styleSheet">
+           <string notr="true">background-color: black;
+ border: 2px inset grey;</string>
+          </property>
+          <property name="text">
+           <string/>
           </property>
          </widget>
         </item>
@@ -754,8 +817,8 @@
    <slot>boxShiftUp()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>69</x>
-     <y>196</y>
+     <x>63</x>
+     <y>198</y>
     </hint>
     <hint type="destinationlabel">
      <x>319</x>
@@ -770,8 +833,8 @@
    <slot>boxShiftLeft()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>25</x>
-     <y>239</y>
+     <x>31</x>
+     <y>230</y>
     </hint>
     <hint type="destinationlabel">
      <x>319</x>
@@ -786,8 +849,8 @@
    <slot>boxShiftRight()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>119</x>
-     <y>239</y>
+     <x>95</x>
+     <y>230</y>
     </hint>
     <hint type="destinationlabel">
      <x>319</x>
@@ -802,12 +865,28 @@
    <slot>boxShiftDown()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>72</x>
-     <y>286</y>
+     <x>63</x>
+     <y>262</y>
     </hint>
     <hint type="destinationlabel">
      <x>319</x>
      <y>239</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>boxColorChange</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>boxColorChange()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>52</x>
+     <y>215</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>824</x>
+     <y>76</y>
     </hint>
    </hints>
   </connection>
@@ -822,5 +901,6 @@
   <slot>boxShiftLeft()</slot>
   <slot>boxShiftRight()</slot>
   <slot>boxShiftDown()</slot>
+  <slot>boxColorChange()</slot>
  </slots>
 </ui>

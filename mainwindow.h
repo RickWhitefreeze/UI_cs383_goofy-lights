@@ -45,6 +45,7 @@ public slots:
     void boxShiftDown();
     void boxShiftLeft();
     void boxShiftRight();
+    void boxColorChange();
 
 private slots:
     void on_actionInsert_After_triggered();
