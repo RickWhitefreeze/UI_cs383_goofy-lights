@@ -37,5 +37,6 @@ TimelineFrame::TimelineFrame(QWidget *parent, QVector<QColor> &frame,
     setStyleSheet("padding: 4px;");
 
     createPreview(frameDim);
-    setMaximumHeight(90);
+    setMaximumHeight(76);
+    setMaximumWidth(76);
 }

@@ -27,11 +27,12 @@ void MainWindow::newCanvas(int pos)
     if(current_tf != NULL) saveCanvas(current_tf->canvas);
 
     QVector<QColor> canvas;
+    ui->canvasArea->hide();
     for(int i = 0; i < canvasCells.length(); i++){
         canvasCells[i]->setColor(Qt::black);
         canvas.push_back(canvasCells[i]->getColor());
     }
-
+    ui->canvasArea->show();
     //get index of current frame
     int index;
     if(pos == 1)
@@ -69,7 +70,8 @@ void MainWindow::copyFrame()
     TimelineFrame *tf = new TimelineFrame(this, canvas, frameDim, ui->timestamp->text());
     current_tf = tf;
     connect(tf, SIGNAL(clicked(TimelineFrame*)), this, SLOT(loadCanvas(TimelineFrame*)));
-    loadCanvas(tf);
+    //Dont need to load canvas since the canvas itself doesn't change
+    //loadCanvas(tf);
     timeline.insert(index, tf);
     ui->timeline->insertWidget(index, tf);
 }
@@ -409,10 +411,12 @@ void MainWindow::cleanCanvas(){
 
 //TODO: Change something so that adding a new file while one is open causes the old one to close
 void MainWindow::newFile(){
-    frameDim = NewFileDialog::getFrameDim(this, tr("Frame Size"));
+    QVector2D temp = NewFileDialog::getFrameDim(this, tr("Frame Size"));
 
-    if(!frameDim.isNull()){
+    if(!temp.isNull()){
         
+        frameDim = temp;
+
         if(!timeline.isEmpty()) cleanCanvas();
         
         //Call the function that populates the canvas
@@ -486,7 +490,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
 }
 
 MainWindow::~MainWindow()
