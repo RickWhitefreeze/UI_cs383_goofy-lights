@@ -386,11 +386,35 @@ void MainWindow::populateCanvas(){
     ui->canvasArea->show();
 }
 
+void MainWindow::cleanCanvas(){
+    QLayoutItem *child;
+    ui->canvasArea->hide();
+    while ((child = ui->canvas->takeAt(0)) != 0) {
+        delete child->widget();
+        delete child;
+    }
+    ui->canvasArea->show();
+
+    ui->timelineArea->hide();
+    while ((child = ui->timeline->takeAt(0)) != 0) {
+        delete child->widget();
+        delete child;
+    }
+    ui->timelineArea->show();
+
+    current_tf = NULL;
+    timeline.clear();
+    canvasCells.clear();
+}
+
 //TODO: Change something so that adding a new file while one is open causes the old one to close
 void MainWindow::newFile(){
     frameDim = NewFileDialog::getFrameDim(this, tr("Frame Size"));
 
     if(!frameDim.isNull()){
+        
+        if(!timeline.isEmpty()) cleanCanvas();
+        
         //Call the function that populates the canvas
         populateCanvas();
         newCanvas(2);
@@ -404,6 +428,9 @@ void MainWindow::openFile(){
                                                         tr("Text files (*.txt)"));
 
     if(!fileName.isEmpty()){
+        
+        if(!timeline.isEmpty()) cleanCanvas();
+        
         int sizeX, sizeY;
         QList<QColor> externalFrame;
         QList<QString> timestamps;
