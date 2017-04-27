@@ -75,6 +75,7 @@ private:
 
     void populateCanvas();
     void saveCanvas(QVector<QColor> &canvas);
+    void cleanCanvas();
 
 };
 
