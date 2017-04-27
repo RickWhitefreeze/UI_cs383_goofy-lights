@@ -6,38 +6,6 @@
 
 #define bufferLength 400
 
-
-int maintest()
-{
-
-    QList<QColor> frame;
-    QList<QString> timestamps;
-
-    for(int i = 0; i <= 9*9*10; i++){
-        frame.append(QColor(i%256,(i+100)%256,(i+200)%256,255));
-    }
-    for(int i = 0; i < 10; i++){
-        timestamps.append("11.13.023");
-    }
-
-    //saveProject("C:\\Users\\Toshi\\Desktop\\testfile.txt", 9, 9, frame, timestamps);
-
-    int x, y;
-
-    loadProject("C:\\Users\\Toshi\\Desktop\\testfile.txt", &x, &y, & frame, &timestamps);
-
-    exportFrame("C:\\Users\\Toshi\\Desktop\\testfile.tan", 9, 9, frame, timestamps);
-
-    //saveStamp("C:\\Users\\Toshi\\Desktop\\testfile.stmp", 9, 9, 2, 2, 4, 3, 3, frame);
-
-    loadStamp("C:\\Users\\Toshi\\Desktop\\testfile.stmp", 9, 9, 4, 3, 3, & frame);
-
-    saveProject("C:\\Users\\Toshi\\Desktop\\testfile.txt", 9, 9, frame, timestamps);
-
-
-    return 1;
-}
-
 void saveProject(QString fileName, int sizeX, int sizeY, QList<QColor> frame, QList<QString> timestamps){
     QFile mFile(fileName);
 
@@ -101,9 +69,8 @@ void loadProject(QString fileName, int * sizeX, int * sizeY, QList<QColor> * ext
     QStringList tempList = temp.split(" ");
     *sizeX = tempList[0].toInt();
     *sizeY = tempList[1].toInt();
-    //qDebug() << frame.length() << " " << *sizeX << " " << *sizeY << "\n";
 
-    //for(int i = 0; i < frame.length()/(( *sizeX ) * ( *sizeY )); i++){
+
     int i = 0;
     while(!mFile.atEnd()){
 
@@ -111,7 +78,6 @@ void loadProject(QString fileName, int * sizeX, int * sizeY, QList<QColor> * ext
         mFile.readLine(buffer, bufferLength);
         temp = buffer;
         timestamps->append(temp.remove(temp.size() - 1,temp.size()));
-     //   qDebug() << timestamps[i];
 
         for(int j = 0; j < ( *sizeY ); j++){
 
@@ -125,11 +91,9 @@ void loadProject(QString fileName, int * sizeX, int * sizeY, QList<QColor> * ext
                 int green = rgbList[k+1].toInt();
                 int blue = rgbList[k+2].toInt();
 
-                //qDebug() << red << " | " << green << " | " << blue << " | ";
                 frame.append(QColor(red,green,blue));
             }
         }
-        //qDebug();
         i++;
     }
     * externalFrame = frame;
@@ -157,9 +121,7 @@ void exportFrame(QString fileName, int sizeX, int sizeY, QList<QColor> frame, QL
         }
     }
 
-    //exportList.append(QColor(1,1,1));
-    //exportList.pop_back();
-    saveProject("C:\\Users\\Toshi\\Desktop\\testfile.tan", sizeX/3, sizeY/3, exportList, timestamps);
+    saveProject(fileName, sizeX/3, sizeY/3, exportList, timestamps);
     return;
 }
 
@@ -218,9 +180,6 @@ void loadStamp(QString fileName, int cSizeX, int cSizeY, int posX, int posY, int
     int sSizeX = tempList[0].toInt();
     int sSizeY = tempList[1].toInt();
 
-    //frame.insert(0,QColor(111,222,111));
-    //frame.removeAt(0);
-
     for(int j = 0; j < ( sSizeY ); j++){
 
         mFile.readLine(buffer, bufferLength);
@@ -232,9 +191,6 @@ void loadStamp(QString fileName, int cSizeX, int cSizeY, int posX, int posY, int
             int red = rgbList[k].toInt();
             int green = rgbList[k+1].toInt();
             int blue = rgbList[k+2].toInt();
-
-            //qDebug() << red << " | " << green << " | " << blue << " | ";
-            //frame.append(QColor(red,green,blue));
 
             frame.removeAt((frameNum - 1)*cSizeY*cSizeX + cSizeX*(posY - 1) + j*cSizeX + (posX - 1) + i);
             frame.insert((frameNum - 1)*cSizeY*cSizeX + cSizeX*(posY - 1) + j*cSizeX + (posX - 1) + i, QColor(red,green, blue));

@@ -543,3 +543,41 @@ void MainWindow::on_deleteFrame_clicked()
 {
         deleteFrame();
 }
+
+void MainWindow::preview()
+{
+    int i = 0;
+    while(i < timeline.length()){
+    loadCanvas(timeline[i]);
+
+    QStringList time = timeline[i]->timestamp.split(':');
+    //qDebug() << time[0] << time[1];
+    usleep(500);
+    i++;
+    }
+}
+
+void MainWindow::exportFile(){
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Export File"),
+                                                        QStandardPaths::displayName(QStandardPaths::DocumentsLocation),
+                                                        tr("Tan files (*.tan)"));
+    if(!fileName.isEmpty()){
+
+        saveCanvas(current_tf->canvas);
+
+        QList<QColor> list;
+        QList<QString> timestamp;
+
+        //Creating a QList from the timeline is not an optimal choice
+        for(int i = 0; i < timeline.size(); i++){
+            TimelineFrame *temp = timeline[i];
+            timestamp.append(temp->timestamp);
+            for(int j = 0; j < temp->canvas.size(); j++){
+                list.append(temp->canvas[j]);
+            }
+        }
+        exportFrame(fileName, frameDim.x() * 3, frameDim.y() * 3, list, timestamp);
+
+        //Call the function that saves the linked list to the .tan format
+    }
+}
