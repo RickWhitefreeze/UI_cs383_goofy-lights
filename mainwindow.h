@@ -10,11 +10,14 @@
 #include <QVector>
 #include <QSignalMapper>
 #include <QLinkedList>
+#include <QTimer>
 
 #include "timelineframe.h"
 #include "newfiledialog.h"
 #include "fileio.h"
 #include "cell.h"
+#include <cmath>
+#include <unistd.h>
 
 namespace Ui {
 class MainWindow;
@@ -35,11 +38,13 @@ public slots:
     void newFile();
     void openFile();
     void saveFile();
+    void exportFile();
 
     void newCanvas(int pos);
     void copyFrame();
     void deleteFrame();
     void loadCanvas(TimelineFrame *tf);
+    void preview();
 
     void boxShiftUp();
     void boxShiftDown();
