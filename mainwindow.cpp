@@ -548,12 +548,27 @@ void MainWindow::preview()
 {
     int i = 0;
     while(i < timeline.length()){
-    loadCanvas(timeline[i]);
+        current_tf = timeline[i];
+        loadCanvas(current_tf);
+        qApp->processEvents();
+        this->repaint();
 
-    QStringList time = timeline[i]->timestamp.split(':');
-    //qDebug() << time[0] << time[1];
-    usleep(500);
-    i++;
+
+    //code works, timestamp currently has a bug that lets the initial timestamp
+    //save over all timestamps, will include when bug is fixed
+
+    //QStringList temp;// = ((timeline[i]->timestamp).split('.'))[0].split(':');
+
+    //temp.append(((timeline[i]->timestamp).split('.'))[0].split(':')[0]);
+    //temp.append(((timeline[i]->timestamp).split('.'))[0].split(':')[1]);
+    //temp.append(((timeline[i]->timestamp).split('.'))[1]);
+    //qDebug() << i << " is the run" << timeline[i]->timestamp;
+    //for(int j = 0; j < temp.length(); j++){
+        //qDebug() << temp[j];
+    //}
+
+        usleep(33333);
+        i++;
     }
 }
 
