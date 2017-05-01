@@ -1,22 +1,23 @@
 #include "timelineframe.h"
 
 void TimelineFrame::createPreview(const QVector2D &frameDim){
-    QImage image(frameDim.x() * 3, frameDim.y() * 3, QImage::Format_RGB16);
+    QImage image(frameDim.x(), frameDim.y(), QImage::Format_RGB16);
 
-    int i = 0;
-    for(int y = 0; y < frameDim.y() * 3; y++){
-        for(int x = 0; x < frameDim.x() * 3; x++){
+    int i = frameDim.x() * 3 * frameDim.y() + frameDim.x();
+    for(int y = 0; y < frameDim.y(); y++){
+        for(int x = 0; x < frameDim.x(); x++){
             image.setPixelColor(x, y, canvas[i++]);
         }
+        i += frameDim.x() * 2;
     }
 
-    QPixmap pixmap(frameDim.x() * 3, frameDim.y() * 3);
+    QPixmap pixmap(frameDim.x(), frameDim.y());
     pixmap.convertFromImage(image);
-    pixmap = pixmap.scaled(64, 64, Qt::IgnoreAspectRatio, Qt::FastTransformation);
+    pixmap = pixmap.scaled(64, 64 * frameDim.y() / frameDim.x(), Qt::IgnoreAspectRatio, Qt::FastTransformation);
 
     QIcon icon(pixmap);
     setIcon(icon);
-    setIconSize(QSize(frameDim.x() * 12, frameDim.y() * 12));
+    setIconSize(QSize(frameDim.x() * 12, frameDim.y() * frameDim.y() / frameDim.x() * 12));
 }
 
 void TimelineFrame::mousePressEvent(QMouseEvent *event){
@@ -37,6 +38,6 @@ TimelineFrame::TimelineFrame(QWidget *parent, QVector<QColor> &frame,
     setStyleSheet("padding: 4px;");
 
     createPreview(frameDim);
-    setMaximumHeight(76);
+    setMaximumHeight(76 * frameDim.y() / frameDim.x());
     setMaximumWidth(76);
 }
