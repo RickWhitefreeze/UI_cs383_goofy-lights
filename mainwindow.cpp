@@ -553,7 +553,6 @@ void MainWindow::preview()
         qApp->processEvents();
         this->repaint();
 
-
     //code works, timestamp currently has a bug that lets the initial timestamp
     //save over all timestamps, will include when bug is fixed
 
@@ -567,7 +566,8 @@ void MainWindow::preview()
         //qDebug() << temp[j];
     //}
 
-        usleep(33333);
+        QThread::usleep(33333);
+
         i++;
     }
 }
