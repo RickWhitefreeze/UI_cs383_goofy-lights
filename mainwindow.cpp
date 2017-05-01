@@ -532,7 +532,6 @@ void MainWindow::preview()
         //QStringList time = timeline[i]->timestamp.split(':');
         //qDebug() << time[0] << time[1];
 
-        //usleep(500);
         QThread::usleep(33333);
         i++;
     }
