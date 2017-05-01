@@ -76,8 +76,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>529</width>
-         <height>77</height>
+         <width>533</width>
+         <height>85</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -420,8 +420,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>529</width>
-         <height>348</height>
+         <width>533</width>
+         <height>336</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -595,7 +595,7 @@
      <x>0</x>
      <y>0</y>
      <width>640</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -613,15 +613,15 @@
     <property name="title">
      <string>Insert</string>
     </property>
-    <addaction name="actionInsert_After"/>
-    <addaction name="actionInsert_Before"/>
-    <addaction name="actionInsert_Copy"/>
+    <addaction name="actionInsertAfter"/>
+    <addaction name="actionInsertBefore"/>
+    <addaction name="actionInsertCopy"/>
    </widget>
    <widget class="QMenu" name="menuDelete">
     <property name="title">
      <string>Delete</string>
     </property>
-    <addaction name="actionDelet_Frame"/>
+    <addaction name="actionDeletFrame"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuInsert"/>
@@ -673,22 +673,22 @@
     <string>New Frame</string>
    </property>
   </action>
-  <action name="actionInsert_After">
+  <action name="actionInsertAfter">
    <property name="text">
     <string>Insert After</string>
    </property>
   </action>
-  <action name="actionInsert_Before">
+  <action name="actionInsertBefore">
    <property name="text">
     <string>Insert Before</string>
    </property>
   </action>
-  <action name="actionDelet_Frame">
+  <action name="actionDeletFrame">
    <property name="text">
     <string>Delete Frame</string>
    </property>
   </action>
-  <action name="actionInsert_Copy">
+  <action name="actionInsertCopy">
    <property name="text">
     <string>Insert Copy</string>
    </property>
@@ -824,7 +824,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>31</x>
-     <y>230</y>
+     <y>229</y>
     </hint>
     <hint type="destinationlabel">
      <x>319</x>
@@ -839,8 +839,8 @@
    <slot>boxShiftRight()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>95</x>
-     <y>230</y>
+     <x>97</x>
+     <y>229</y>
     </hint>
     <hint type="destinationlabel">
      <x>319</x>
@@ -856,7 +856,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>63</x>
-     <y>262</y>
+     <y>260</y>
     </hint>
     <hint type="destinationlabel">
      <x>319</x>
@@ -912,6 +912,134 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionInsertAfter</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>insertAfter()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>319</x>
+     <y>239</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>insertCopy</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>copyFrame()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>31</x>
+     <y>349</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>18</x>
+     <y>372</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>insertfBefore</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>insertBefore()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>37</x>
+     <y>285</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>7</x>
+     <y>258</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>insertAfter</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>insertAfter()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>79</x>
+     <y>279</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>97</x>
+     <y>246</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>deleteFrame</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>deleteFrame()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>75</x>
+     <y>347</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>78</x>
+     <y>366</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionInsertBefore</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>insertBefore()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>319</x>
+     <y>239</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionInsertCopy</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>copyFrame()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>319</x>
+     <y>239</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDeletFrame</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>deleteFrame()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>319</x>
+     <y>239</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>openFile()</slot>
@@ -926,5 +1054,9 @@
   <slot>boxColorChange()</slot>
   <slot>preview()</slot>
   <slot>exportFile()</slot>
+  <slot>copyFrame()</slot>
+  <slot>deleteFrame()</slot>
+  <slot>insertAfter()</slot>
+  <slot>insertBefore()</slot>
  </slots>
 </ui>
