@@ -524,13 +524,16 @@ void MainWindow::preview()
     int i = 0;
     while(i < timeline.length())
     {
-        loadCanvas(timeline[i]);
+        current_tf = timeline[i];
+        loadCanvas(current_tf);
+        qApp->processEvents();
+        this->repaint();
 
-        QStringList time = timeline[i]->timestamp.split(':');
+        //QStringList time = timeline[i]->timestamp.split(':');
         //qDebug() << time[0] << time[1];
 
         //usleep(500);
-        QThread::usleep(500);
+        QThread::usleep(33333);
         i++;
     }
 }
