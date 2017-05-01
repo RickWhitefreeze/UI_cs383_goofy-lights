@@ -48,10 +48,29 @@ void MainWindow::newCanvas(int pos)
     ui->timeline->insertWidget(index, tf);
 }
 
+//Insert new frame after current frame
+//Function calls newCanvas with a 2 for insertion after current frame
+// Added 4/27/17 - RP
+void MainWindow::insertAfter()
+{
+    if(current_tf != NULL)
+        newCanvas(2);
+}
+
+//Insert new frame before current frame
+//Funciton calls newCanvas with a 1 for insertion before current frame
+// Added 4/27/17 - RP
+void MainWindow::insertBefore()
+{
+    if(current_tf != NULL)
+        newCanvas(1);
+}
+
 //inserts copy of current frame after current frame
 //added 4/25/17 - RP
 void MainWindow::copyFrame()
 {
+    if(current_tf == NULL) return;
     QColor current;
     if(current_tf != NULL) saveCanvas(current_tf->canvas);
 
@@ -68,10 +87,10 @@ void MainWindow::copyFrame()
     index = timeline.indexOf(current_tf) + 1; //for insert after current frame
 
     TimelineFrame *tf = new TimelineFrame(this, canvas, frameDim, ui->timestamp->text());
+    tf->timestamp = current_tf->timestamp; //set timestamp the same as timestamp of frame being copied
     current_tf = tf;
     connect(tf, SIGNAL(clicked(TimelineFrame*)), this, SLOT(loadCanvas(TimelineFrame*)));
-    //Dont need to load canvas since the canvas itself doesn't change
-    //loadCanvas(tf);
+
     timeline.insert(index, tf);
     ui->timeline->insertWidget(index, tf);
 }
@@ -98,12 +117,14 @@ void MainWindow::deleteFrame()
     //remove frame from list
     timeline.removeAt(index);
 
-    //set current_tf to frame before deleted frame
-    //if index is 0, set current_tf to point at first frame in list
-    if(index == 0)
-        current_tf = timeline[index];
-    else
+    //sets the current frame to the frame after frame deleted
+    //unless the last frame was deleted then sets it to the
+    //new last frame.
+    //changed from setting to frame before deleted frame 4/27/17 - RP
+    if(index >= timeline.size())
         current_tf = timeline[index - 1];
+    else
+        current_tf = timeline[index];
 
     loadCanvas(current_tf);
 }
@@ -498,51 +519,6 @@ MainWindow::~MainWindow()
 }
 
 
-void MainWindow::on_actionInsert_After_triggered()
-{
-    if(current_tf != NULL)
-        newCanvas(2);
-}
-
-void MainWindow::on_actionInsert_Before_triggered()
-{
-    if(current_tf != NULL)
-        newCanvas(1);
-}
-
-void MainWindow::on_actionDelet_Frame_triggered()
-{
-    deleteFrame();
-}
-
-void MainWindow::on_actionInsert_Copy_triggered()
-{
-    if(current_tf != NULL)
-        copyFrame();
-}
-
-void MainWindow::on_insertAfter_clicked()
-{
-    if(current_tf != NULL)
-        newCanvas(2);
-}
-
-void MainWindow::on_insertfBefore_clicked()
-{
-    if(current_tf != NULL)
-        newCanvas(1);
-}
-
-void MainWindow::on_insertCopy_clicked()
-{
-    if(current_tf != NULL)
-        copyFrame();
-}
-
-void MainWindow::on_deleteFrame_clicked()
-{
-        deleteFrame();
-}
 
 void MainWindow::preview()
 {
