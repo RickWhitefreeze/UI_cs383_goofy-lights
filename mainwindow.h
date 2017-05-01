@@ -17,8 +17,7 @@
 #include "fileio.h"
 #include "cell.h"
 #include <cmath>
-//#include <unistd.h>
-#include <QThread>
+#include <unistd.h>
 
 namespace Ui {
 class MainWindow;
@@ -42,9 +41,6 @@ public slots:
     void exportFile();
 
     void newCanvas(int pos);
-    void insertAfter();
-    void insertBefore();
-
     void copyFrame();
     void deleteFrame();
     void loadCanvas(TimelineFrame *tf);
@@ -56,7 +52,22 @@ public slots:
     void boxShiftRight();
     void boxColorChange();
 
+private slots:
+    void on_actionInsert_After_triggered();
 
+    void on_actionInsert_Before_triggered();
+
+    void on_actionDelet_Frame_triggered();
+
+    void on_actionInsert_Copy_triggered();
+
+    void on_insertAfter_clicked();
+
+    void on_insertfBefore_clicked();
+
+    void on_insertCopy_clicked();
+
+    void on_deleteFrame_clicked();
 
 private:
     Ui::MainWindow *ui;
