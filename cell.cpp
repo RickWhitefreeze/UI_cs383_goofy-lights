@@ -22,7 +22,7 @@ void Cell::mousePressEvent(QMouseEvent *event){
 Cell::Cell(QWidget *parent, const QVector2D &position) : QWidget(parent), pos(position)
 {
     QSizePolicy cellPolicy;
-    QSize cellSize(25,25);
+    QSize cellSize(12,12);
 
     cellPolicy.setHorizontalPolicy(QSizePolicy::Fixed);
     cellPolicy.setHorizontalStretch(1);
