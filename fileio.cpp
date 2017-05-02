@@ -4,9 +4,10 @@
 
 #include "fileio.h"
 
+
 #define bufferLength 400
 
-void saveProject(QString fileName, int sizeX, int sizeY, QList<QColor> frame, QList<QString> timestamps){
+void saveProject(QString fileName, int sizeX, int sizeY, QList<QColor> frame, QList<QString> timestamps, QList<TimelineFrame*> timeline){
     QFile mFile(fileName);
 
     if(!mFile.open(QFile::ReadWrite | QFile::Text)){
@@ -18,10 +19,35 @@ void saveProject(QString fileName, int sizeX, int sizeY, QList<QColor> frame, QL
 
     out << "24.7\nNoAudioFile\n" << sizeX << " " << sizeY << endl;
 
+    int minutes = 0;
+    int seconds = 0;
+    int miliseconds = 0;
+    
     for(int k = 0; k < (frame.size() + 1) / (sizeY*sizeX); k++){
+       
+        QStringList temp;
+        
+        temp.append(((timeline[k]->timestamp).split('.'))[0].split(':')[0]);
+        temp.append(((timeline[k]->timestamp).split('.'))[0].split(':')[1]);
+        temp.append(((timeline[k]->timestamp).split('.'))[1]);
+        
+        miliseconds = (miliseconds + temp[2].toInt());
+        int carry = miliseconds/100;
+        miliseconds = miliseconds%100;
 
+        seconds = (seconds + carry + temp[1].toInt());
+        carry = seconds/60;
+        seconds = seconds%60;
+
+        minutes = (minutes + carry + temp[0].toInt())%60;
+        
+        QString output, tempString;
+        output.append(tempString.sprintf("%02d:", minutes));
+        output.append(tempString.sprintf("%02d.", seconds));
+        output.append(tempString.sprintf("%02d", miliseconds));
+         
         //write Timestamp
-        out << timestamps[k] << "\n";
+        out << output << "\n";
 
         //write RGB Data
         for(int i = 0; i < sizeY; i++){
@@ -101,7 +127,7 @@ void loadProject(QString fileName, int * sizeX, int * sizeY, QList<QColor> * ext
     mFile.close();
 }
 
-void exportFrame(QString fileName, int sizeX, int sizeY, QList<QColor> frame, QList<QString> timestamps){
+void exportFrame(QString fileName, int sizeX, int sizeY, QList<QColor> frame, QList<QString> timestamps, QList<TimelineFrame*> timeline){
     QList<QColor> exportList;
 
     for(int k = 0; k < (frame.size() - 1) / (sizeY*sizeX); k++){
@@ -121,7 +147,7 @@ void exportFrame(QString fileName, int sizeX, int sizeY, QList<QColor> frame, QL
         }
     }
 
-    saveProject(fileName, sizeX/3, sizeY/3, exportList, timestamps);
+    saveProject(fileName, sizeX/3, sizeY/3, exportList, timestamps, timeline);
     return;
 }
 

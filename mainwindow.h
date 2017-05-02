@@ -13,6 +13,7 @@
 #include <QTimer>
 #include <QThread>
 #include <cmath>
+#include <unistd.h>
 
 #include "timelineframe.h"
 #include "newfiledialog.h"
@@ -48,6 +49,7 @@ public slots:
     void deleteFrame();
     void loadCanvas(TimelineFrame *tf);
     void preview();
+    void stop();
 
     void boxShiftUp();
     void boxShiftDown();
@@ -64,6 +66,7 @@ private:
     QList<TimelineFrame*> timeline;
 
     TimelineFrame *current_tf = NULL;
+    bool stopped;
 
     void populateCanvas();
     void saveCanvas(QVector<QColor> &canvas);
