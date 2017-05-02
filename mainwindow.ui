@@ -76,8 +76,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>529</width>
-         <height>77</height>
+         <width>537</width>
+         <height>94</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -420,8 +420,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>529</width>
-         <height>348</height>
+         <width>537</width>
+         <height>332</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -595,7 +595,7 @@
      <x>0</x>
      <y>0</y>
      <width>640</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -781,22 +781,6 @@
     <hint type="destinationlabel">
      <x>-96</x>
      <y>-36</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionNew_Frame</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>newCanvas()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>319</x>
-     <y>239</y>
     </hint>
    </hints>
   </connection>

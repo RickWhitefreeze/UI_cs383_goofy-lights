@@ -17,6 +17,9 @@ void Cell::mousePressEvent(QMouseEvent *event){
     if(event->buttons() == Qt::LeftButton){
         emit clicked(pos);
     }
+    if(event->buttons() == Qt::RightButton){
+        emit clickedr(pos);
+    }
 }
 
 Cell::Cell(QWidget *parent, const QVector2D &position) : QWidget(parent), pos(position)

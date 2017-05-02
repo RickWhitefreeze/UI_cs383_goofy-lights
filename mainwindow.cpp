@@ -1,6 +1,31 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+//Used to create the selection box for most canvas operations
+void MainWindow::setBox(QVector2D pos){
+    if(_switch){
+        selectTop = pos;
+        selectBottom = pos;
+        _switch = !_switch;
+    }else{
+        if(pos.x() >= selectTop.x() && pos.y() >= selectTop.y()){
+            selectBottom = pos;
+        }else if(pos.x() < selectTop.x() && pos.y() <= selectTop.y()){
+            selectBottom = selectTop;
+            selectTop = pos;
+        }else if(pos.x() < selectTop.x() && pos.y() > selectTop.y()){
+            selectBottom.setX(selectTop.x());
+            selectBottom.setY(pos.y());
+            selectTop.setX(pos.x());
+        }else if(pos.x() > selectTop.x() && pos.y() < selectTop.y()){
+            selectBottom.setX(pos.x());
+            selectBottom.setY(selectTop.y());
+            selectTop.setY(pos.y());
+        }
+        _switch = !_switch;
+    }
+}
+
 void MainWindow::setCellColor(QVector2D pos){
     canvasCells[pos.x() + pos.y() * frameDim.x() * 3]->setColor(drawColor);
 
@@ -179,8 +204,10 @@ void MainWindow::boxShiftUp()
     if(current_tf != NULL)
     {
         int top_right, top_left, bot_right, rows, width;
-        top_left = 0;
-        bot_right = frameDim.x() * frameDim.y() * 9 - 1;
+        //top_left = 0;
+        top_left = selectTop.x() + selectTop.y() * frameDim.x() * 3;
+        //bot_right = frameDim.x() * frameDim.y() * 9 - 1;
+        bot_right = selectBottom.x() + selectBottom.y() * frameDim.x() * 3;
         width = frameDim.x() * 3;
         //The top right position of the box selected
         top_right = bot_right % width + top_left - top_left % width;
@@ -226,8 +253,10 @@ void MainWindow::boxShiftDown ()
     if(current_tf != NULL)
     {
         int top_left, bot_right, bot_left, rows, width, height;
-        top_left = 0;
-        bot_right = frameDim.x() * frameDim.y() * 9 - 1;
+        //top_left = 0;
+        top_left = selectTop.x() + selectTop.y() * frameDim.x() * 3;
+        //bot_right = frameDim.x() * frameDim.y() * 9 - 1;
+        bot_right = selectBottom.x() + selectBottom.y() * frameDim.x() * 3;
         width = frameDim.x() * 3;
         height = frameDim.y() * 3;
         //The number of rows in the box selected
@@ -271,8 +300,10 @@ void MainWindow::boxShiftRight ()
     if(current_tf != NULL)
     {
         int top_left, bot_right, bot_left, rows, width;
-        top_left = 0;
-        bot_right = frameDim.x() * frameDim.y() * 9 - 1;
+        //top_left = 0;
+        top_left = selectTop.x() + selectTop.y() * frameDim.x() * 3;
+        //bot_right = frameDim.x() * frameDim.y() * 9 - 1;
+        bot_right = selectBottom.x() + selectBottom.y() * frameDim.x() * 3;
         width = frameDim.x() * 3;
         //The number of rows in the box selected
         rows = (floor(bot_right/width))-(floor(top_left/width));
@@ -315,8 +346,10 @@ void MainWindow::boxShiftLeft ()
     if(current_tf != NULL)
     {
         int top_right, top_left, bot_right, rows, width;
-        top_left = 0;
-        bot_right = frameDim.x() * frameDim.y() * 9 - 1;
+        //top_left = 0;
+        top_left = selectTop.x() + selectTop.y() * frameDim.x() * 3;
+        //bot_right = frameDim.x() * frameDim.y() * 9 - 1;
+        bot_right = selectBottom.x() + selectBottom.y() * frameDim.x() * 3;
         width = frameDim.x() * 3;
         //The top right position of the box selected
         top_right = bot_right % width + top_left - top_left % width;
@@ -358,8 +391,10 @@ void MainWindow::boxColorChange()
     if(current_tf != NULL)
     {
         int top_right, top_left, bot_right, rows, width;
-        top_left = 0;
-        bot_right = frameDim.x() * frameDim.y() * 9 - 1;
+        //top_left = 0;
+        top_left = selectTop.x() + selectTop.y() * frameDim.x() * 3;
+        //bot_right = frameDim.x() * frameDim.y() * 9 - 1;
+        bot_right = selectBottom.x() + selectBottom.y() * frameDim.x() * 3;
         width = frameDim.x() * 3;
         //The top right position of the box selected
         top_right = bot_right % width + top_left - top_left % width;
@@ -399,6 +434,7 @@ void MainWindow::populateCanvas(){
             QVector2D pos(x,y);
             Cell *temp = new Cell(this, pos);
             connect(temp, SIGNAL(clicked(QVector2D)), this, SLOT(setCellColor(QVector2D)));
+            connect(temp, SIGNAL(clickedr(QVector2D)), this, SLOT(setBox(QVector2D)));
             canvasCells.push_back(temp);
             if(x >= frameDim.x() && x < frameDim.x() * 2 && y >= frameDim.y() && y < frameDim.y() * 2){
                 temp->setStyleSheet("background-color:rgba(0,0,0,100%);");

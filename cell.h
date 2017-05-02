@@ -25,6 +25,7 @@ private:
 
 signals:
     void clicked(QVector2D pos);
+    void clickedr(QVector2D pos);
 
 };
 

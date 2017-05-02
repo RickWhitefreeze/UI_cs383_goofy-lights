@@ -12,8 +12,10 @@
 #include <QLinkedList>
 #include <QTimer>
 #include <QThread>
+
 #include <cmath>
 #include <unistd.h>
+
 
 #include "timelineframe.h"
 #include "newfiledialog.h"
@@ -35,6 +37,8 @@ public:
 public slots:
     void setDrawColor();
     void setCellColor(QVector2D pos);
+
+    void setBox(QVector2D pos);
 
     void newFile();
     void openFile();
@@ -61,7 +65,7 @@ public slots:
 private:
     Ui::MainWindow *ui;
     QVector2D frameDim;
-    QColor drawColor;
+    QColor drawColor = Qt::black;
     QVector< Cell* > canvasCells;
     QList<TimelineFrame*> timeline;
 
@@ -71,6 +75,9 @@ private:
     void populateCanvas();
     void saveCanvas(QVector<QColor> &canvas);
     void cleanCanvas();
+
+    bool _switch = 1;
+    QVector2D selectTop, selectBottom;
 
 };
 
