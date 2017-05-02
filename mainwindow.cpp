@@ -66,7 +66,11 @@ void MainWindow::newCanvas(int pos)
         index = timeline.indexOf(current_tf) + 1; //for insert after current frame
 
     TimelineFrame *tf = new TimelineFrame(this, canvas, frameDim, ui->timestamp->text());
+
+    if(current_tf != NULL) current_tf->setChecked(0);
     current_tf = tf;
+    current_tf->setChecked(1);
+
     connect(tf, SIGNAL(clicked(TimelineFrame*)), this, SLOT(loadCanvas(TimelineFrame*)));
     loadCanvas(tf);
     timeline.insert(index, tf);
@@ -113,7 +117,11 @@ void MainWindow::copyFrame()
 
     TimelineFrame *tf = new TimelineFrame(this, canvas, frameDim, ui->timestamp->text());
     tf->timestamp = current_tf->timestamp; //set timestamp the same as timestamp of frame being copied
+
+    current_tf->setChecked(0);
     current_tf = tf;
+    current_tf->setChecked(1);
+
     connect(tf, SIGNAL(clicked(TimelineFrame*)), this, SLOT(loadCanvas(TimelineFrame*)));
 
     timeline.insert(index, tf);
@@ -169,7 +177,9 @@ void MainWindow::loadCanvas(TimelineFrame *tf){
     //saveCanvas(current_tf->canvas);
 
     if(current_tf != NULL) current_tf->timestamp = ui->timestamp->text();
+    current_tf->setChecked(0);
     current_tf = tf;
+    current_tf->setChecked(1);
     ui->timestamp->setText(current_tf->timestamp);
 
     int i = 0;

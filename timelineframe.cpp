@@ -40,4 +40,6 @@ TimelineFrame::TimelineFrame(QWidget *parent, QVector<QColor> &frame,
     createPreview(frameDim);
     setMaximumHeight(76 * frameDim.y() / frameDim.x());
     setMaximumWidth(76);
+    setAutoRaise(true);
+    setCheckable(true);
 }
