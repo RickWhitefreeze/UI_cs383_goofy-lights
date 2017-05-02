@@ -21,7 +21,7 @@ void saveProject(QString fileName, int sizeX, int sizeY, QList<QColor> frame, QL
 
     int minutes = 0;
     int seconds = 0;
-    int miliseconds = 0;
+    int milliseconds = 0;
     
     for(int k = 0; k < (frame.size() + 1) / (sizeY*sizeX); k++){
        
@@ -31,9 +31,9 @@ void saveProject(QString fileName, int sizeX, int sizeY, QList<QColor> frame, QL
         temp.append(((timeline[k]->timestamp).split('.'))[0].split(':')[1]);
         temp.append(((timeline[k]->timestamp).split('.'))[1]);
         
-        miliseconds = (miliseconds + temp[2].toInt());
-        int carry = miliseconds/100;
-        miliseconds = miliseconds%100;
+        milliseconds = (milliseconds + temp[2].toInt());
+        int carry = milliseconds/100;
+        milliseconds = milliseconds%100;
 
         seconds = (seconds + carry + temp[1].toInt());
         carry = seconds/60;
@@ -44,7 +44,7 @@ void saveProject(QString fileName, int sizeX, int sizeY, QList<QColor> frame, QL
         QString output, tempString;
         output.append(tempString.sprintf("%02d:", minutes));
         output.append(tempString.sprintf("%02d.", seconds));
-        output.append(tempString.sprintf("%02d", miliseconds));
+        output.append(tempString.sprintf("%02d", milliseconds));
          
         //write Timestamp
         out << output << "\n";
@@ -85,6 +85,10 @@ void loadProject(QString fileName, int * sizeX, int * sizeY, QList<QColor> * ext
 
     char buffer[bufferLength];
 
+    int minutes = 0;
+    int seconds = 0;
+    int milliseconds = 0;
+
     //skip version number
     mFile.readLine();
     //skip audio/no audio
@@ -96,14 +100,36 @@ void loadProject(QString fileName, int * sizeX, int * sizeY, QList<QColor> * ext
     *sizeX = tempList[0].toInt();
     *sizeY = tempList[1].toInt();
 
-
     int i = 0;
     while(!mFile.atEnd()){
 
         //read timestamp
         mFile.readLine(buffer, bufferLength);
         temp = buffer;
-        timestamps->append(temp.remove(temp.size() - 1,temp.size()));
+
+        QStringList tempbuff;
+
+        tempbuff.append(((temp).split('.'))[0].split(':')[0]);
+        tempbuff.append(((temp).split('.'))[0].split(':')[1]);
+        tempbuff.append(((temp).split('.'))[1]);
+
+
+        QString output, tempString;
+        output.append(tempString.sprintf("%02d:", tempbuff[0].toInt() - minutes));
+        output.append(tempString.sprintf("%02d.", tempbuff[1].toInt() - seconds));
+        output.append(tempString.sprintf("%02d", tempbuff[2].toInt() - milliseconds));
+
+        timestamps->append(output);
+
+        milliseconds = (milliseconds + tempbuff[2].toInt() - milliseconds);
+        int carry = milliseconds/100;
+        milliseconds = milliseconds%100;
+
+        seconds = (seconds + carry + tempbuff[1].toInt() - seconds);
+        carry = seconds/60;
+        seconds = seconds%60;
+
+        minutes = (minutes + carry + tempbuff[0].toInt() - minutes)%60;
 
         for(int j = 0; j < ( *sizeY ); j++){
 
