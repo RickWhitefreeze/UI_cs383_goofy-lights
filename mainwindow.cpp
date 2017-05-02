@@ -500,7 +500,7 @@ void MainWindow::saveFile(){
             }
         }
 
-        saveProject(fileName, frameDim.x() * 3, frameDim.y() * 3, list, timestamp);
+        saveProject(fileName, frameDim.x() * 3, frameDim.y() * 3, list, timestamp, timeline);
 
         //Call the function that saves the linked list to the .tan format
     }
@@ -518,34 +518,39 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
-
 void MainWindow::preview()
 {
+    stopped = false;
     int i = 0;
-    while(i < timeline.length()){
-        current_tf = timeline[i];
-        loadCanvas(current_tf);
+    bool isFirst = true;
+    while(i < timeline.length() && !stopped){
+        loadCanvas(timeline[i]);
         qApp->processEvents();
         this->repaint();
 
-    //code works, timestamp currently has a bug that lets the initial timestamp
-    //save over all timestamps, will include when bug is fixed
 
-    //QStringList temp;// = ((timeline[i]->timestamp).split('.'))[0].split(':');
+        if(isFirst){
+            isFirst = false;
+            QThread::usleep(1);
+        }else{
 
-    //temp.append(((timeline[i]->timestamp).split('.'))[0].split(':')[0]);
-    //temp.append(((timeline[i]->timestamp).split('.'))[0].split(':')[1]);
-    //temp.append(((timeline[i]->timestamp).split('.'))[1]);
-    //qDebug() << i << " is the run" << timeline[i]->timestamp;
-    //for(int j = 0; j < temp.length(); j++){
-        //qDebug() << temp[j];
-    //}
+        QStringList temp;// = ((timeline[i]->timestamp).split('.'))[0].split(':');
 
-        QThread::usleep(33333);
+        temp.append(((timeline[i-1]->timestamp).split('.'))[0].split(':')[0]);
+        temp.append(((timeline[i-1]->timestamp).split('.'))[0].split(':')[1]);
+        temp.append(((timeline[i-1]->timestamp).split('.'))[1]);
 
+        int duration = (temp[0].toInt()*60*100 + temp[1].toInt()*100 + temp[0].toInt())*10000;
+
+
+        QThread::usleep(duration);
+        }
         i++;
     }
+}
+
+void MainWindow::stop(){
+    stopped = true;
 }
 
 void MainWindow::exportFile(){
@@ -567,7 +572,7 @@ void MainWindow::exportFile(){
                 list.append(temp->canvas[j]);
             }
         }
-        exportFrame(fileName, frameDim.x() * 3, frameDim.y() * 3, list, timestamp);
+        exportFrame(fileName, frameDim.x() * 3, frameDim.y() * 3, list, timestamp, timeline);
 
         //Call the function that saves the linked list to the .tan format
     }

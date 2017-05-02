@@ -76,8 +76,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>533</width>
-         <height>85</height>
+         <width>529</width>
+         <height>77</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -420,8 +420,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>533</width>
-         <height>336</height>
+         <width>529</width>
+         <height>348</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -595,7 +595,7 @@
      <x>0</x>
      <y>0</y>
      <width>640</width>
-     <height>26</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -1040,6 +1040,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>toolButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>stop()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>167</x>
+     <y>378</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>43</x>
+     <y>424</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>openFile()</slot>
@@ -1058,5 +1074,6 @@
   <slot>deleteFrame()</slot>
   <slot>insertAfter()</slot>
   <slot>insertBefore()</slot>
+  <slot>stop()</slot>
  </slots>
 </ui>

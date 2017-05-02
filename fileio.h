@@ -11,10 +11,12 @@
 #include <QVariant>
 #include <stdio.h>
 
+#include "mainwindow.h"
+
 void saveStamp(QString fileName, int cSizeX, int cSizeY,int sSizeX, int sSizeY, int posX, int posY, int frameNum, QList<QColor> frame);
-void saveProject(QString fileName, int sizeX, int sizeY, QList<QColor> frame, QList<QString> timestamps);
+void saveProject(QString fileName, int sizeX, int sizeY, QList<QColor> frame, QList<QString> timestamps, QList<TimelineFrame *> timeline);
 void loadProject(QString fileName, int * sizeX, int * sizeY, QList<QColor> * externalFrame, QList<QString> *timestamps);
-void exportFrame(QString fileName, int sizeX, int sizeY, QList<QColor> frame, QList<QString> timestamps);
+void exportFrame(QString fileName, int sizeX, int sizeY, QList<QColor> frame, QList<QString> timestamps, QList<TimelineFrame*> timeline);
 void loadStamp(QString fileName, int cSizeX, int cSizeY, int posX, int posY, int frameNum, QList<QColor> * externalFrame);
 int maintest();
 
