@@ -4,9 +4,9 @@
 
 #include "fileio.h"
 
-
 #define bufferLength 400
 
+//function saves entire project including canvas, frame, and timestamp
 void saveProject(QString fileName, int sizeX, int sizeY, QList<QColor> frame, QList<QString> timestamps, QList<TimelineFrame*> timeline){
     QFile mFile(fileName);
 
@@ -23,6 +23,7 @@ void saveProject(QString fileName, int sizeX, int sizeY, QList<QColor> frame, QL
     int seconds = 0;
     int milliseconds = 0;
     
+   //keeps a running total of duration for all frames and saves in the correct format
     for(int k = 0; k < (frame.size() + 1) / (sizeY*sizeX); k++){
        
         QStringList temp;
@@ -66,7 +67,6 @@ void saveProject(QString fileName, int sizeX, int sizeY, QList<QColor> frame, QL
     }
 
     mFile.close();
-
 }
 
 //updates sizeX and sizeY passed in by reference so the parent function knows the frame size
@@ -109,6 +109,7 @@ void loadProject(QString fileName, int * sizeX, int * sizeY, QList<QColor> * ext
 
         QStringList tempbuff;
 
+        //loads each frame with the correct duration it should run for
         tempbuff.append(((temp).split('.'))[0].split(':')[0]);
         tempbuff.append(((temp).split('.'))[0].split(':')[1]);
         tempbuff.append(((temp).split('.'))[1]);
@@ -121,15 +122,15 @@ void loadProject(QString fileName, int * sizeX, int * sizeY, QList<QColor> * ext
 
         timestamps->append(output);
 
-        milliseconds = (milliseconds + tempbuff[2].toInt() - milliseconds);
+        milliseconds = tempbuff[2].toInt();
         int carry = milliseconds/100;
         milliseconds = milliseconds%100;
 
-        seconds = (seconds + carry + tempbuff[1].toInt() - seconds);
+        seconds = (carry + tempbuff[1].toInt());
         carry = seconds/60;
         seconds = seconds%60;
 
-        minutes = (minutes + carry + tempbuff[0].toInt() - minutes)%60;
+        minutes = (carry + tempbuff[0].toInt())%60;
 
         for(int j = 0; j < ( *sizeY ); j++){
 
@@ -153,6 +154,7 @@ void loadProject(QString fileName, int * sizeX, int * sizeY, QList<QColor> * ext
     mFile.close();
 }
 
+//exports frame only to a tan file for project use
 void exportFrame(QString fileName, int sizeX, int sizeY, QList<QColor> frame, QList<QString> timestamps, QList<TimelineFrame*> timeline){
     QList<QColor> exportList;
 
@@ -212,6 +214,7 @@ void saveStamp(QString fileName, int cSizeX, int cSizeY,int sSizeX, int sSizeY, 
 
 }
 
+//loads previously saved stamp
 void loadStamp(QString fileName, int cSizeX, int cSizeY, int posX, int posY, int frameNum, QList<QColor> *externalFrame){
 
     QList<QColor> frame = * externalFrame;
