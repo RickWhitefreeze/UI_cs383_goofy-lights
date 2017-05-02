@@ -42,7 +42,7 @@ void MainWindow::setCellColor(QVector2D pos){
 void MainWindow::setDrawColor(){
     drawColor = QColorDialog::getColor(Qt::black, this, QString("Select Color."));
     ui->toolColor->setStyleSheet(QString("background-color: %1; border: 2px inset grey;").arg(drawColor.name()));
-    ui->boxColorChange->setStyleSheet(QString("background-color: %1; border: 2px inset grey;").arg(drawColor.name()));
+    //ui->boxColorChange->setStyleSheet(QString("background-color: %1; border: 2px inset grey;").arg(drawColor.name()));
 }
 
 //Function to create new frame
