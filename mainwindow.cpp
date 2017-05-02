@@ -1,12 +1,15 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+int first = 0;  //this is what I am using for a bool
+//#include "cell.h" don't really need this
 
 void MainWindow::setCellColor(QVector2D pos){
     canvasCells[pos.x() + pos.y() * frameDim.x() * 3]->setColor(drawColor);
 
     if(pos.x() >= frameDim.x() && pos.x() < frameDim.x() * 2 && pos.y() >= frameDim.y() && pos.y() < frameDim.y() * 2){
         canvasCells[pos.x() + pos.y() * frameDim.x() * 3]->setStyleSheet(QString("background-color: rgb(%1,%2,%3);").arg(drawColor.red()).arg(drawColor.green()).arg(drawColor.blue()));
-    }else{
+    }
+    else{
         canvasCells[pos.x() + pos.y() * frameDim.x() * 3]->setStyleSheet(QString("background-color: rgba(%1,%2,%3,25%);").arg(drawColor.red()).arg(drawColor.green()).arg(drawColor.blue()));
     }
 
@@ -20,113 +23,23 @@ void MainWindow::setDrawColor(){
     ui->boxColorChange->setStyleSheet(QString("background-color: %1; border: 2px inset grey;").arg(drawColor.name()));
 }
 
-//Function to create new frame
-// 4/25/17 - update to allow insertion before and after current frame
-void MainWindow::newCanvas(int pos)
-{
+void MainWindow::newCanvas(){
+
     if(current_tf != NULL) saveCanvas(current_tf->canvas);
 
     QVector<QColor> canvas;
-    ui->canvasArea->hide();
     for(int i = 0; i < canvasCells.length(); i++){
         canvasCells[i]->setColor(Qt::black);
         canvas.push_back(canvasCells[i]->getColor());
     }
-    ui->canvasArea->show();
-    //get index of current frame
-    int index;
-    if(pos == 1)
-        index = timeline.indexOf(current_tf); //for insert before current frame
-    else if(pos == 2)
-        index = timeline.indexOf(current_tf) + 1; //for insert after current frame
 
     TimelineFrame *tf = new TimelineFrame(this, canvas, frameDim, ui->timestamp->text());
     current_tf = tf;
     connect(tf, SIGNAL(clicked(TimelineFrame*)), this, SLOT(loadCanvas(TimelineFrame*)));
     loadCanvas(tf);
-    timeline.insert(index, tf);
-    ui->timeline->insertWidget(index, tf);
-}
 
-//Insert new frame after current frame
-//Function calls newCanvas with a 2 for insertion after current frame
-// Added 4/27/17 - RP
-void MainWindow::insertAfter()
-{
-    if(current_tf != NULL)
-        newCanvas(2);
-}
-
-//Insert new frame before current frame
-//Funciton calls newCanvas with a 1 for insertion before current frame
-// Added 4/27/17 - RP
-void MainWindow::insertBefore()
-{
-    if(current_tf != NULL)
-        newCanvas(1);
-}
-
-//inserts copy of current frame after current frame
-//added 4/25/17 - RP
-void MainWindow::copyFrame()
-{
-    if(current_tf == NULL) return;
-    QColor current;
-    if(current_tf != NULL) saveCanvas(current_tf->canvas);
-
-    QVector<QColor> canvas;
-    for(int i = 0; i < canvasCells.length(); i++){
-        current = current_tf->canvas[i];
-        canvasCells[i]->setColor(current);
-        canvas.push_back(canvasCells[i]->getColor());
-    }
-
-    //get index of current frame
-    int index;
-
-    index = timeline.indexOf(current_tf) + 1; //for insert after current frame
-
-    TimelineFrame *tf = new TimelineFrame(this, canvas, frameDim, ui->timestamp->text());
-    tf->timestamp = current_tf->timestamp; //set timestamp the same as timestamp of frame being copied
-    current_tf = tf;
-    connect(tf, SIGNAL(clicked(TimelineFrame*)), this, SLOT(loadCanvas(TimelineFrame*)));
-
-    timeline.insert(index, tf);
-    ui->timeline->insertWidget(index, tf);
-}
-
-
-//function to delete frame
-//added 4/25/17 - RP
-void MainWindow::deleteFrame()
-{
-    TimelineFrame *temp;
-    int index;
-
-    if(current_tf == NULL || timeline.size() == 1)
-        return;
-    //get index of current frame
-    index = timeline.indexOf(current_tf);
-
-    //remove thumbnail of timeline view
-    temp = ((TimelineFrame*)(ui->timeline->itemAt(index)->widget()));
-    ui->timeline->removeWidget(temp);
-    delete temp;
-    ui->timeline->update();
-
-    //remove frame from list
-    timeline.removeAt(index);
-
-    //sets the current frame to the frame after frame deleted
-    //unless the last frame was deleted then sets it to the
-    //new last frame.
-    //changed from setting to frame before deleted frame 4/27/17 - RP
-    if(index >= timeline.size())
-        current_tf = timeline[index - 1];
-    else
-        current_tf = timeline[index];
-
-    loadCanvas(current_tf);
+    timeline.push_back(tf);
+    ui->timeline->addWidget(tf);
 }
 
 //Func will take the colors of the canvas and save it to linked list
@@ -163,14 +76,33 @@ void MainWindow::loadCanvas(TimelineFrame *tf){
     }
 }
 
-
-
-
 /***********************************************************************
  *                     Michael and Ruth 4/18/2017                      *
  * ********************************************************************/
-
-
+void MainWindow::getstuff(QVector2D pos, int boxseti){       //gets the vector from the cell
+if(first == 0){
+    posx = pos.x();  //gets the first right click pos
+    posy = pos.y();
+    boxset = boxseti;
+    first = 1;
+}
+else if(first == 1){
+    pos2x = pos.x(); //gets the second right click pos
+    pos2y = pos.y();
+    first = 0;
+    boxset = 1;
+}
+qDebug()<<" "<<posx;
+qDebug()<<" "<<posy;
+qDebug()<<" "<<pos2x;
+qDebug()<<" "<<pos2y;
+/*
+QMessageBox::information(
+            this,
+            tr("test"),
+            tr("this means the getstuff slot was used"));
+*/
+}
 
 
 //This function shifts every cell up one position and overwrites what was written there before
@@ -179,9 +111,25 @@ void MainWindow::boxShiftUp()
     if(current_tf != NULL)
     {
         int top_right, top_left, bot_right, rows, width;
+        if(boxset == 1){ //this might be the problem area for why it does not move after the box is made.
+         top_left = posx * posy;
+         bot_right = pos2x * pos2y;
+
+         width = pos2x - posx;
+
+       }
+       else{
         top_left = 0;
         bot_right = frameDim.x() * frameDim.y() * 9 - 1;
         width = frameDim.x() * 3;
+       }
+
+     /*
+       top_left = 0;
+       bot_right = frameDim.x() * frameDim.y() * 9 -1;
+       width = frameDim.x() * 3;
+      */
+       // width = frameDim.x() * 3;
         //The top right position of the box selected
         top_right = bot_right % width + top_left - top_left % width;
         //The number of rows in the box selected
@@ -217,19 +165,33 @@ void MainWindow::boxShiftUp()
          current_tf->createPreview(frameDim);
     }
 }
+/*
+void MainWindow::selcShifUp(){
+     int top_right, top_left, bot_right, rows, width;
+     top_left = posx * posy;
+     bot_right = pos2x * pos2y;
 
-
-
+     width = pos2x - posx;
+}
+*/
 //This function shifts every cell down one position and overwrites what was written there before
-void MainWindow::boxShiftDown ()
+void MainWindow::boxShiftDown (/*QVector2D pos, QVector2D pos2*/)
 {
     if(current_tf != NULL)
     {
-        int top_left, bot_right, bot_left, rows, width, height;
+       int top_left, bot_right, bot_left, rows, width, height;
+        if(boxset == 1){
+         top_left = posx * posy;
+         bot_right = pos2x * pos2y;
+         height = pos2y - posy;
+         width = pos2x - posx;
+       }
+        else{
         top_left = 0;
         bot_right = frameDim.x() * frameDim.y() * 9 - 1;
         width = frameDim.x() * 3;
         height = frameDim.y() * 3;
+        }
         //The number of rows in the box selected
         rows = (floor(bot_right/width))-(floor(top_left/width));
         //The bottom left position of the box selected
@@ -266,14 +228,21 @@ void MainWindow::boxShiftDown ()
     }
 }
 //This function shifts every pixel right one position and overwrites what was written there before
-void MainWindow::boxShiftRight ()
+void MainWindow::boxShiftRight (/*QVector2D pos, QVector2D pos2*/)
 {
     if(current_tf != NULL)
     {
         int top_left, bot_right, bot_left, rows, width;
+        if(boxset == 1){
+         top_left = posx * posy;
+         bot_right = pos2x * pos2y;
+         width = pos2x - posx;
+       }
+       else{
         top_left = 0;
         bot_right = frameDim.x() * frameDim.y() * 9 - 1;
         width = frameDim.x() * 3;
+        }
         //The number of rows in the box selected
         rows = (floor(bot_right/width))-(floor(top_left/width));
         //The bottom left position of the box selected
@@ -310,14 +279,22 @@ void MainWindow::boxShiftRight ()
     }
 }
 //This function shifts every pixel left one position and overwrites what was written there before
-void MainWindow::boxShiftLeft ()
+void MainWindow::boxShiftLeft (/*QVector2D pos, QVector2D pos2*/)
 {
     if(current_tf != NULL)
     {
-        int top_right, top_left, bot_right, rows, width;
-        top_left = 0;
-        bot_right = frameDim.x() * frameDim.y() * 9 - 1;
-        width = frameDim.x() * 3;
+      int top_right, top_left, bot_right, rows, width;
+       if(boxset == 1){
+         top_left = posx * posy;
+         bot_right = pos2x * pos2y;
+
+         width = pos2x - posx;
+       }
+        else{
+         top_left = 0;
+         bot_right = frameDim.x() * frameDim.y() * 9 - 1;
+         width = frameDim.x() * 3;
+        }
         //The top right position of the box selected
         top_right = bot_right % width + top_left - top_left % width;
         //The number of rows in the box selected
@@ -399,6 +376,7 @@ void MainWindow::populateCanvas(){
             QVector2D pos(x,y);
             Cell *temp = new Cell(this, pos);
             connect(temp, SIGNAL(clicked(QVector2D)), this, SLOT(setCellColor(QVector2D)));
+            connect(temp, SIGNAL(Rclick(QVector2D, int)), this, SLOT(getstuff(QVector2D,int))); //this is the connection for right clicking don't know of a better place and this works
             canvasCells.push_back(temp);
             if(x >= frameDim.x() && x < frameDim.x() * 2 && y >= frameDim.y() && y < frameDim.y() * 2){
                 temp->setStyleSheet("background-color:rgba(0,0,0,100%);");
@@ -409,40 +387,14 @@ void MainWindow::populateCanvas(){
     ui->canvasArea->show();
 }
 
-void MainWindow::cleanCanvas(){
-    QLayoutItem *child;
-    ui->canvasArea->hide();
-    while ((child = ui->canvas->takeAt(0)) != 0) {
-        delete child->widget();
-        delete child;
-    }
-    ui->canvasArea->show();
-
-    ui->timelineArea->hide();
-    while ((child = ui->timeline->takeAt(0)) != 0) {
-        delete child->widget();
-        delete child;
-    }
-    ui->timelineArea->show();
-
-    current_tf = NULL;
-    timeline.clear();
-    canvasCells.clear();
-}
-
 //TODO: Change something so that adding a new file while one is open causes the old one to close
 void MainWindow::newFile(){
-    QVector2D temp = NewFileDialog::getFrameDim(this, tr("Frame Size"));
+    frameDim = NewFileDialog::getFrameDim(this, tr("Frame Size"));
 
-    if(!temp.isNull()){
-        
-        frameDim = temp;
-
-        if(!timeline.isEmpty()) cleanCanvas();
-        
+    if(!frameDim.isNull()){
         //Call the function that populates the canvas
         populateCanvas();
-        newCanvas(2);
+        newCanvas();
     }
 
 }
@@ -453,9 +405,6 @@ void MainWindow::openFile(){
                                                         tr("Text files (*.txt)"));
 
     if(!fileName.isEmpty()){
-        
-        if(!timeline.isEmpty()) cleanCanvas();
-        
         int sizeX, sizeY;
         QList<QColor> externalFrame;
         QList<QString> timestamps;
@@ -500,7 +449,7 @@ void MainWindow::saveFile(){
             }
         }
 
-        saveProject(fileName, frameDim.x() * 3, frameDim.y() * 3, list, timestamp, timeline);
+        saveProject(fileName, frameDim.x() * 3, frameDim.y() * 3, list, timestamp);
 
         //Call the function that saves the linked list to the .tan format
     }
@@ -511,6 +460,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+
 }
 
 MainWindow::~MainWindow()
@@ -518,62 +469,3 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::preview()
-{
-    stopped = false;
-    int i = 0;
-    bool isFirst = true;
-    while(i < timeline.length() && !stopped){
-        loadCanvas(timeline[i]);
-        qApp->processEvents();
-        this->repaint();
-
-
-        if(isFirst){
-            isFirst = false;
-            QThread::usleep(1);
-        }else{
-
-        QStringList temp;// = ((timeline[i]->timestamp).split('.'))[0].split(':');
-
-        temp.append(((timeline[i-1]->timestamp).split('.'))[0].split(':')[0]);
-        temp.append(((timeline[i-1]->timestamp).split('.'))[0].split(':')[1]);
-        temp.append(((timeline[i-1]->timestamp).split('.'))[1]);
-
-        int duration = (temp[0].toInt()*60*100 + temp[1].toInt()*100 + temp[0].toInt())*10000;
-
-
-        QThread::usleep(duration);
-        }
-        i++;
-    }
-}
-
-void MainWindow::stop(){
-    stopped = true;
-}
-
-void MainWindow::exportFile(){
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Export File"),
-                                                        QStandardPaths::displayName(QStandardPaths::DocumentsLocation),
-                                                        tr("Tan files (*.tan)"));
-    if(!fileName.isEmpty()){
-
-        saveCanvas(current_tf->canvas);
-
-        QList<QColor> list;
-        QList<QString> timestamp;
-
-        //Creating a QList from the timeline is not an optimal choice
-        for(int i = 0; i < timeline.size(); i++){
-            TimelineFrame *temp = timeline[i];
-            timestamp.append(temp->timestamp);
-            for(int j = 0; j < temp->canvas.size(); j++){
-                list.append(temp->canvas[j]);
-            }
-        }
-        exportFrame(fileName, frameDim.x() * 3, frameDim.y() * 3, list, timestamp, timeline);
-
-        //Call the function that saves the linked list to the .tan format
-    }
-}

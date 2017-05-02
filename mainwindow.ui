@@ -29,7 +29,7 @@
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
-   <layout class="QGridLayout" name="gridLayout" rowstretch="3,0,0,0,1" columnstretch="0,0,0">
+   <layout class="QGridLayout" name="gridLayout" rowstretch="12,1,4" columnstretch="0,0">
     <property name="leftMargin">
      <number>0</number>
     </property>
@@ -48,7 +48,7 @@
     <property name="verticalSpacing">
      <number>2</number>
     </property>
-    <item row="4" column="2">
+    <item row="2" column="1">
      <widget class="QScrollArea" name="timelineScroll">
       <property name="minimumSize">
        <size>
@@ -76,42 +76,183 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>529</width>
-         <height>77</height>
+         <width>533</width>
+         <height>104</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <layout class="QHBoxLayout" name="timeline"/>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QScrollArea" name="canvasView">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="canvasArea">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>533</width>
+         <height>315</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(65, 65, 65);</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_2">
         <property name="leftMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="bottomMargin">
+         <number>6</number>
+        </property>
+        <property name="spacing">
          <number>0</number>
         </property>
-        <item>
-         <layout class="QHBoxLayout" name="timeline">
+        <item row="0" column="1">
+         <layout class="QGridLayout" name="canvas">
           <property name="spacing">
-           <number>9</number>
-          </property>
-          <property name="leftMargin">
-           <number>9</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>9</number>
+           <number>1</number>
           </property>
          </layout>
         </item>
        </layout>
       </widget>
      </widget>
+    </item>
+    <item row="1" column="1">
+     <layout class="QHBoxLayout" name="horizontalLayout_6">
+      <property name="spacing">
+       <number>6</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>6</number>
+      </property>
+      <item>
+       <widget class="Line" name="line">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="toolButton">
+        <property name="minimumSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="resources.qrc">
+          <normaloff>:/images/icons/play.png</normaloff>:/images/icons/play.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>12</width>
+          <height>12</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="toolButton_2">
+        <property name="minimumSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>...</string>
+        </property>
+        <property name="icon">
+         <iconset resource="resources.qrc">
+          <normaloff>:/images/icons/pause.png</normaloff>:/images/icons/pause.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>12</width>
+          <height>12</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="timestamp">
+        <property name="minimumSize">
+         <size>
+          <width>60</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>0</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="inputMask">
+         <string>99:99.99</string>
+        </property>
+        <property name="text">
+         <string>00:00.00</string>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string/>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
     <item row="0" column="0">
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -288,114 +429,6 @@
        </layout>
       </item>
       <item>
-       <layout class="QGridLayout" name="gridLayout_6">
-        <item row="1" column="0">
-         <widget class="QPushButton" name="insertCopy">
-          <property name="minimumSize">
-           <size>
-            <width>40</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>40</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string>Insert copy of frame</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="resources.qrc">
-            <normaloff>:/images/icons/copy.png</normaloff>:/images/icons/copy.png</iconset>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QPushButton" name="deleteFrame">
-          <property name="minimumSize">
-           <size>
-            <width>40</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>40</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string>Delete frame</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="resources.qrc">
-            <normaloff>:/images/icons/delete.png</normaloff>:/images/icons/delete.png</iconset>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0">
-         <widget class="QPushButton" name="insertfBefore">
-          <property name="minimumSize">
-           <size>
-            <width>40</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>40</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string>Insert frame before</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="resources.qrc">
-            <normaloff>:/images/icons/insertBefore.png</normaloff>:/images/icons/insertBefore.png</iconset>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QPushButton" name="insertAfter">
-          <property name="minimumSize">
-           <size>
-            <width>40</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>40</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string>Insert frame after</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="resources.qrc">
-            <normaloff>:/images/icons/insertAfter.png</normaloff>:/images/icons/insertAfter.png</iconset>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
        <spacer name="verticalSpacer">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -410,183 +443,6 @@
       </item>
      </layout>
     </item>
-    <item row="0" column="2">
-     <widget class="QScrollArea" name="canvasView">
-      <property name="widgetResizable">
-       <bool>true</bool>
-      </property>
-      <widget class="QWidget" name="canvasArea">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>529</width>
-         <height>348</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(65, 65, 65);</string>
-       </property>
-       <layout class="QGridLayout" name="gridLayout_2">
-        <property name="leftMargin">
-         <number>6</number>
-        </property>
-        <property name="topMargin">
-         <number>6</number>
-        </property>
-        <property name="rightMargin">
-         <number>6</number>
-        </property>
-        <property name="bottomMargin">
-         <number>6</number>
-        </property>
-        <property name="spacing">
-         <number>0</number>
-        </property>
-        <item row="0" column="1">
-         <layout class="QGridLayout" name="canvas">
-          <property name="spacing">
-           <number>1</number>
-          </property>
-         </layout>
-        </item>
-       </layout>
-      </widget>
-     </widget>
-    </item>
-    <item row="2" column="2">
-     <widget class="QWidget" name="previewView" native="true">
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>37</height>
-       </size>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="Line" name="line">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QToolButton" name="toolButton">
-         <property name="minimumSize">
-          <size>
-           <width>25</width>
-           <height>25</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>25</width>
-           <height>25</height>
-          </size>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="resources.qrc">
-           <normaloff>:/images/icons/play.png</normaloff>:/images/icons/play.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>12</width>
-           <height>12</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QToolButton" name="toolButton_2">
-         <property name="minimumSize">
-          <size>
-           <width>25</width>
-           <height>25</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>25</width>
-           <height>25</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>...</string>
-         </property>
-         <property name="icon">
-          <iconset resource="resources.qrc">
-           <normaloff>:/images/icons/pause.png</normaloff>:/images/icons/pause.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>12</width>
-           <height>12</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="timestamp">
-         <property name="minimumSize">
-          <size>
-           <width>60</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>0</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="inputMask">
-          <string>99:99.99</string>
-         </property>
-         <property name="text">
-          <string>00:00.00</string>
-         </property>
-         <property name="frame">
-          <bool>true</bool>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-         <property name="placeholderText">
-          <string/>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -595,7 +451,7 @@
      <x>0</x>
      <y>0</y>
      <width>640</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -605,7 +461,6 @@
     <addaction name="actionMenuOpen"/>
     <addaction name="actionMenuNew"/>
     <addaction name="actionMenuSave"/>
-    <addaction name="actionExport"/>
     <addaction name="separator"/>
     <addaction name="actionMenuExit"/>
    </widget>
@@ -613,19 +468,10 @@
     <property name="title">
      <string>Insert</string>
     </property>
-    <addaction name="actionInsertAfter"/>
-    <addaction name="actionInsertBefore"/>
-    <addaction name="actionInsertCopy"/>
-   </widget>
-   <widget class="QMenu" name="menuDelete">
-    <property name="title">
-     <string>Delete</string>
-    </property>
-    <addaction name="actionDeletFrame"/>
+    <addaction name="actionNew_Frame"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuInsert"/>
-   <addaction name="menuDelete"/>
   </widget>
   <action name="actionMenuOpen">
    <property name="text">
@@ -671,31 +517,6 @@
   <action name="actionNew_Frame">
    <property name="text">
     <string>New Frame</string>
-   </property>
-  </action>
-  <action name="actionInsertAfter">
-   <property name="text">
-    <string>Insert After</string>
-   </property>
-  </action>
-  <action name="actionInsertBefore">
-   <property name="text">
-    <string>Insert Before</string>
-   </property>
-  </action>
-  <action name="actionDeletFrame">
-   <property name="text">
-    <string>Delete Frame</string>
-   </property>
-  </action>
-  <action name="actionInsertCopy">
-   <property name="text">
-    <string>Insert Copy</string>
-   </property>
-  </action>
-  <action name="actionExport">
-   <property name="text">
-    <string>Export</string>
    </property>
   </action>
  </widget>
@@ -775,8 +596,8 @@
    <slot>setDrawColor()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>38</x>
-     <y>163</y>
+     <x>32</x>
+     <y>165</y>
     </hint>
     <hint type="destinationlabel">
      <x>-96</x>
@@ -824,7 +645,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>31</x>
-     <y>229</y>
+     <y>230</y>
     </hint>
     <hint type="destinationlabel">
      <x>319</x>
@@ -839,8 +660,8 @@
    <slot>boxShiftRight()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>97</x>
-     <y>229</y>
+     <x>95</x>
+     <y>230</y>
     </hint>
     <hint type="destinationlabel">
      <x>319</x>
@@ -856,7 +677,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>63</x>
-     <y>260</y>
+     <y>262</y>
     </hint>
     <hint type="destinationlabel">
      <x>319</x>
@@ -880,182 +701,6 @@
     </hint>
    </hints>
   </connection>
-  <connection>
-   <sender>actionExport</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>exportFile()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>319</x>
-     <y>239</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>toolButton</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>preview()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>134</x>
-     <y>390</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>86</x>
-     <y>398</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionInsertAfter</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>insertAfter()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>319</x>
-     <y>239</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>insertCopy</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>copyFrame()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>31</x>
-     <y>349</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>18</x>
-     <y>372</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>insertfBefore</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>insertBefore()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>37</x>
-     <y>285</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>7</x>
-     <y>258</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>insertAfter</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>insertAfter()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>79</x>
-     <y>279</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>97</x>
-     <y>246</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>deleteFrame</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>deleteFrame()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>75</x>
-     <y>347</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>78</x>
-     <y>366</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionInsertBefore</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>insertBefore()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>319</x>
-     <y>239</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionInsertCopy</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>copyFrame()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>319</x>
-     <y>239</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionDeletFrame</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>deleteFrame()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>319</x>
-     <y>239</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>toolButton_2</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>stop()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>167</x>
-     <y>378</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>43</x>
-     <y>424</y>
-    </hint>
-   </hints>
-  </connection>
  </connections>
  <slots>
   <slot>openFile()</slot>
@@ -1068,12 +713,5 @@
   <slot>boxShiftRight()</slot>
   <slot>boxShiftDown()</slot>
   <slot>boxColorChange()</slot>
-  <slot>preview()</slot>
-  <slot>exportFile()</slot>
-  <slot>copyFrame()</slot>
-  <slot>deleteFrame()</slot>
-  <slot>insertAfter()</slot>
-  <slot>insertBefore()</slot>
-  <slot>stop()</slot>
  </slots>
 </ui>
