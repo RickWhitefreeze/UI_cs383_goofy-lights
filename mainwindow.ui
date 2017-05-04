@@ -295,8 +295,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>537</width>
-         <height>321</height>
+         <width>535</width>
+         <height>317</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -357,8 +357,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>537</width>
-         <height>105</height>
+         <width>535</width>
+         <height>104</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -512,6 +512,38 @@
           </property>
          </widget>
         </item>
+        <item row="1" column="2">
+         <widget class="QToolButton" name="boxColorChange">
+          <property name="minimumSize">
+           <size>
+            <width>25</width>
+            <height>25</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>25</width>
+            <height>25</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="resources.qrc">
+            <normaloff>:/images/icons/paint-bucket-64.png</normaloff>:/images/icons/paint-bucket-64.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>16</width>
+            <height>16</height>
+           </size>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item alignment="Qt::AlignHCenter">
@@ -540,38 +572,6 @@
         <property name="icon">
          <iconset resource="resources.qrc">
           <normaloff>:/images/icons/text.png</normaloff>:/images/icons/text.png</iconset>
-        </property>
-       </widget>
-      </item>
-      <item alignment="Qt::AlignHCenter">
-       <widget class="QToolButton" name="boxColorChange">
-        <property name="minimumSize">
-         <size>
-          <width>46</width>
-          <height>46</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>40</width>
-          <height>40</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="resources.qrc">
-          <normaloff>:/images/icons/bucket.png</normaloff>:/images/icons/bucket.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>16</width>
-          <height>16</height>
-         </size>
         </property>
        </widget>
       </item>
@@ -624,7 +624,7 @@
      <x>0</x>
      <y>0</y>
      <width>640</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
