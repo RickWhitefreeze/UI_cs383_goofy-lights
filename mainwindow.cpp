@@ -3,6 +3,9 @@
 
 //Used to create the selection box for most canvas operations
 void MainWindow::setBox(QVector2D pos){
+
+    eliminateBorder();
+
     if(_switch){
         selectTop = pos;
         selectBottom = pos;
@@ -24,7 +27,57 @@ void MainWindow::setBox(QVector2D pos){
         }
         _switch = !_switch;
     }
+
+
+    setBoxBorder();
 }
+
+
+
+void MainWindow::eliminateBorder()
+{
+    if(current_tf != NULL)
+    {
+        int top_right, top_left, bot_right, rows, width, x, y;
+        QColor color;
+        //top_left = 0;
+        top_left = selectTop.x() + selectTop.y() * frameDim.x() * 3;
+        //bot_right = frameDim.x() * frameDim.y() * 9 - 1;
+        bot_right = selectBottom.x() + selectBottom.y() * frameDim.x() * 3;
+        width = frameDim.x() * 3;
+        //The top right position of the box selected
+        top_right = bot_right % width + top_left - top_left % width;
+        //The number of rows in the box selected
+        rows = (floor(bot_right/width))-(floor(top_left/width));
+        //Traversing the matrix defined by the box selected by user
+        for(int i = 0; i <= rows; i++)
+        {
+            //Change every pixel in the box selected to the user defined rgb color
+            for(int j = (top_left + i*width); j <= (top_right + i*width); j++)
+            {
+                color = current_tf->canvas[j];
+                x = j % width;
+                y = floor(j/width);
+                if(x >= frameDim.x() && x < frameDim.x() * 2 && y >= frameDim.y() && y < frameDim.y() * 2){
+
+                    canvasCells[j]->setStyleSheet(QString("background-color: rgb(%1,%2,%3);").arg(color.red()).arg(color.green()).arg(color.blue()));
+                }else{
+
+                    canvasCells[j]->setStyleSheet(QString("background-color: rgba(%1,%2,%3,33%);").arg(color.red()).arg(color.green()).arg(color.blue()));
+                }
+            }
+        }
+
+        //loadCanvas(current_tf);
+        //current_tf->createPreview(frameDim);
+    }
+
+
+}
+
+
+
+
 
 void MainWindow::setCellColor(QVector2D pos){
     canvasCells[pos.x() + pos.y() * frameDim.x() * 3]->setColor(drawColor);
@@ -38,6 +91,37 @@ void MainWindow::setCellColor(QVector2D pos){
     saveCanvas(current_tf->canvas);
     current_tf->createPreview(frameDim);
 }
+
+
+void MainWindow::setNewCellColor(int pos)
+{
+    QColor newColor;
+    newColor = current_tf->canvas[pos];
+    canvasCells[pos]->setColor(newColor);
+    //canvasCells[pos.x() + pos.y() * frameDim.x() * 3]->setColor(drawColor);
+
+    int x,y, width;
+
+    width = frameDim.x() * 3;
+    x = pos % width;
+    y = floor(pos/width);
+
+    if(x >= frameDim.x() && x < frameDim.x() * 2 && y >= frameDim.y() && y < frameDim.y() * 2){
+        if(x >= selectTop.x() && x <= selectBottom.x() && y >= selectTop.y() && y <= selectBottom.y())
+            canvasCells[pos]->setStyleSheet(QString("border: 2px solid gray; background-color:rgba(%1,%2,%3,100%);").arg(newColor.red()).arg(newColor.green()).arg(newColor.blue()));
+        else
+            canvasCells[pos]->setStyleSheet(QString("background-color: rgb(%1,%2,%3);").arg(newColor.red()).arg(newColor.green()).arg(newColor.blue()));
+    }else{
+        if(x >= selectTop.x() && x <= selectBottom.x() && y >= selectTop.y() && y <= selectBottom.y())
+            canvasCells[pos]->setStyleSheet(QString("border: 2px solid gray; background-color:rgba(%1,%2,%3,33%);").arg(newColor.red()).arg(newColor.green()).arg(newColor.blue()));
+        else
+            canvasCells[pos]->setStyleSheet(QString("background-color: rgba(%1,%2,%3,33%);").arg(newColor.red()).arg(newColor.green()).arg(newColor.blue()));
+    }
+
+    saveCanvas(current_tf->canvas);
+    //current_tf->createPreview(frameDim);
+}
+
 
 void MainWindow::setDrawColor(){
     drawColor = QColorDialog::getColor(Qt::black, this, QString("Select Color."));
@@ -176,8 +260,12 @@ void MainWindow::loadCanvas(TimelineFrame *tf){
 
     //saveCanvas(current_tf->canvas);
 
-    if(current_tf != NULL) current_tf->timestamp = ui->timestamp->text();
-    current_tf->setChecked(0);
+    if(current_tf != NULL)
+    {
+        current_tf->timestamp = ui->timestamp->text();
+        current_tf->setChecked(0);
+    }
+
     current_tf = tf;
     current_tf->setChecked(1);
     ui->timestamp->setText(current_tf->timestamp);
@@ -223,6 +311,22 @@ void MainWindow::boxShiftUp()
         top_right = bot_right % width + top_left - top_left % width;
         //The number of rows in the box selected
         rows = (floor(bot_right/width))-(floor(top_left/width));
+
+
+        //If box selected would go out of bounds keep topLeft and move botRight
+        if(selectBottom.y() - 1 < 0)
+        {
+            //do nothing
+        }
+        else if (selectTop.y() - 1 < 0)
+            selectBottom.setY(selectBottom.y() - 1);
+        else
+        {
+            selectTop.setY(selectTop.y() - 1);
+            selectBottom.setY(selectBottom.y() - 1);
+        }
+
+
         //Traversing the matrix defined by the box selected by user
         for(int i = 0; i <= rows; i++)
         {
@@ -231,27 +335,23 @@ void MainWindow::boxShiftUp()
                 if(j - width >= 0)  //Only copy value of rgb if the cell is not at the top of the current_tf->current_tf->canvas
                 {
                     current_tf->canvas[j - width] = current_tf->canvas[j];
+                    setNewCellColor(j - width);
                 }
                 //Changed to i == rows-1 off by 1 error 3/28/2017
                 if(i == rows)  //Overwrite the bottom row to the default rgb color
                 {
                     current_tf->canvas [j] = Qt::black;
+                    setNewCellColor(j);
 
                 }
             }
         }
-        //If box selected would go out of bounds keep topLeft and move botRight
-        if (top_left - width < 0)
-        bot_right -= width;
-        else
-        {
-            top_left -= width;
-            bot_right -= width;
-        }
 
 
-         loadCanvas(current_tf);
-         current_tf->createPreview(frameDim);
+        //loadCanvas(current_tf);
+        current_tf->createPreview(frameDim);
+
+
     }
 }
 
@@ -274,6 +374,22 @@ void MainWindow::boxShiftDown ()
         //The bottom left position of the box selected
         //subtracted another width to correctly find the bottom left 3/28/2017
         bot_left = top_left + rows * width - width;
+
+
+        //If box selected would go out of bounds keep bot_right and move top_left
+        if(selectTop.y() + 1 >= frameDim.y() * 3)
+        {
+            //do nothing
+        }
+        else if (selectBottom.y() + 1 >= frameDim.y() * 3)
+            selectTop.setY(selectTop.y() + 1);
+        else
+        {
+            selectTop.setY(selectTop.y() + 1);
+            selectBottom.setY(selectBottom.y() + 1);
+        }
+
+
         //Traversing the matrix defined by the box selected by user
         for(int i = rows; i >= 0; i--)
         {
@@ -282,25 +398,19 @@ void MainWindow::boxShiftDown ()
                 if(j + width <= width * height - 1) //Only copy value of rgb if the cell is not at the bottom of the current_tf->canvas
                 {
                     current_tf->canvas[j + width] = current_tf->canvas[j];
+                    setNewCellColor(j + width);
                 }
                 //Changed to i == 1 off by 1 error 3/28/2017
                 if(i == 0)  //Overwrite the top row to the default rgb color
                 {
                     current_tf->canvas [j] = Qt::black;
+                    setNewCellColor(j);
 
                 }
             }
         }
-        //If box selected would go out of bounds keep bot_right and move top_left
-        if (bot_right + width >= width*height)
-        top_left += width;
-        else
-        {
-            top_left += width;
-            bot_right += width;
-        }
 
-        loadCanvas(current_tf);
+        //loadCanvas(current_tf);
         current_tf->createPreview(frameDim);
     }
 }
@@ -320,6 +430,18 @@ void MainWindow::boxShiftRight ()
         //The bottom left position of the box selected
         //subtracted another width to correctly find the bottom left 3/28/2017
         bot_left = top_left + rows * width - width;
+
+        //If box selected would go out of bounds keep bot_right and move top_left
+        if(selectTop.x() + 1 >= frameDim.x() * 3)
+        {
+        }else if(selectBottom.x() + 1 >= frameDim.x() * 3)
+            selectTop.setX(selectTop.x() + 1);
+        else
+        {
+            selectTop.setX(selectTop.x() + 1);
+            selectBottom.setX(selectBottom.x() + 1);
+        }
+
         //Traversing the matrix defined by the box selected by user
         for(int i = rows; i >= 0; i--)
         {
@@ -328,25 +450,21 @@ void MainWindow::boxShiftRight ()
                 if((j % width) + 1 < width)    //Only copy value of rgb if the cell is not in the rightmost column
                 {
                     current_tf->canvas[j + 1] = current_tf->canvas[j];
+                    setNewCellColor(j + 1);
                 }
 
                 if(j == bot_left - ((rows - i) * width - width)) //Overwrite the left column to the default rgb color
                 {
 
                     current_tf->canvas [j] = Qt::black;
+                    setNewCellColor(j);
                 }
             }
         }
-        //If box selected would go out of bounds keep bot_right and move top_left
-        if (bot_right%width + 1 >= width)
-        top_left += 1;
-        else
-        {
-            top_left += 1;
-            bot_right += 1;
-        }
 
-        loadCanvas(current_tf);
+
+
+        //loadCanvas(current_tf);
         current_tf->createPreview(frameDim);
     }
 }
@@ -365,6 +483,19 @@ void MainWindow::boxShiftLeft ()
         top_right = bot_right % width + top_left - top_left % width;
         //The number of rows in the box selected
         rows = (floor(bot_right/width))-(floor(top_left/width));
+
+        //If box selected would go out of bounds keep top_left and move bot_right
+        if(selectBottom.x() - 1 < 0)
+        {//do nothing
+        }
+        else if (selectTop.x() - 1 < 0)
+            selectBottom.setX(selectBottom.x() - 1);
+        else
+        {
+            selectTop.setX(selectTop.x() - 1);
+            selectBottom.setX(selectBottom.x() - 1);
+        }
+
         //Traversing the matrix defined by the box selected by user
         for(int i = 0; i <= rows; i++)
         {
@@ -373,24 +504,20 @@ void MainWindow::boxShiftLeft ()
                 if((j % width) - 1 >= 0)    //Only copy value of rgb if the cell is not in the leftmost column
                 {
                     current_tf->canvas[j - 1] = current_tf->canvas[j];
+                    setNewCellColor(j - 1);
                 }
 
                 if(j == (top_right + i*width))   //Overwrite the leftmost column to the default rgb color
                 {
                     current_tf->canvas [j] = Qt::black;
+                    setNewCellColor(j);
                 }
             }
         }
-        //If box selected would go out of bounds keep top_left and move bot_right
-        if (top_left%width - 1 < 0)
-        bot_right -= 1;
-        else
-        {
-            top_left -= 1;
-            bot_right -= 1;
-        }
 
-        loadCanvas(current_tf);
+
+
+       // loadCanvas(current_tf);
         current_tf->createPreview(frameDim);
     }
 }
@@ -416,17 +543,50 @@ void MainWindow::boxColorChange()
             //Change every pixel in the box selected to the user defined rgb color
             for(int j = (top_left + i*width); j <= (top_right + i*width); j++)
             {
-                current_tf->canvas[j]= drawColor;
+                current_tf->canvas[j] = drawColor;
+                setNewCellColor(j);
 
             }
         }
-        loadCanvas(current_tf);
+
+        //loadCanvas(current_tf);
         current_tf->createPreview(frameDim);
     }
 
 }
 
 
+void MainWindow::setBoxBorder()
+{
+    if(current_tf != NULL)
+    {
+        int top_right, top_left, bot_right, rows, width;
+        //top_left = 0;
+        top_left = selectTop.x() + selectTop.y() * frameDim.x() * 3;
+        //bot_right = frameDim.x() * frameDim.y() * 9 - 1;
+        bot_right = selectBottom.x() + selectBottom.y() * frameDim.x() * 3;
+        width = frameDim.x() * 3;
+        //The top right position of the box selected
+        top_right = bot_right % width + top_left - top_left % width;
+        //The number of rows in the box selected
+        rows = (floor(bot_right/width))-(floor(top_left/width));
+        //Traversing the matrix defined by the box selected by user
+        for(int i = 0; i <= rows; i++)
+        {
+            //Change every pixel in the box selected to the user defined rgb color
+            for(int j = (top_left + i*width); j <= (top_right + i*width); j++)
+            {
+                setNewCellColor(j);
+
+            }
+        }
+
+        //loadCanvas(current_tf);
+        current_tf->createPreview(frameDim);
+    }
+
+
+}
 
 /***********************************************************************
  *                     Michael and Ruth 4/18/2017                      *
@@ -447,7 +607,9 @@ void MainWindow::populateCanvas(){
             connect(temp, SIGNAL(clickedr(QVector2D)), this, SLOT(setBox(QVector2D)));
             canvasCells.push_back(temp);
             if(x >= frameDim.x() && x < frameDim.x() * 2 && y >= frameDim.y() && y < frameDim.y() * 2){
+
                 temp->setStyleSheet("background-color:rgba(0,0,0,100%);");
+
             }
             ui->canvas->addWidget(temp, y, x);
         }
@@ -471,6 +633,10 @@ void MainWindow::cleanCanvas(){
     }
     ui->timelineArea->show();
 
+    selectTop.setX(0);
+    selectTop.setY(0);
+    selectBottom.setX(0);
+    selectBottom.setY(0);
     current_tf = NULL;
     timeline.clear();
     canvasCells.clear();
@@ -521,7 +687,6 @@ void MainWindow::openFile(){
             timeline.push_back(tf);
             ui->timeline->addWidget(tf);
         }
-
         loadCanvas(timeline.front());
     }
 }
