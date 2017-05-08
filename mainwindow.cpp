@@ -28,6 +28,7 @@ void MainWindow::setBox(QVector2D pos){
         _switch = !_switch;
     }
 
+
     setBoxBorder();
 }
 
@@ -77,19 +78,14 @@ void MainWindow::eliminateBorder()
 
 
 
+
 void MainWindow::setCellColor(QVector2D pos){
     canvasCells[pos.x() + pos.y() * frameDim.x() * 3]->setColor(drawColor);
 
     if(pos.x() >= frameDim.x() && pos.x() < frameDim.x() * 2 && pos.y() >= frameDim.y() && pos.y() < frameDim.y() * 2){
-        if(pos.x() >= selectTop.x() && pos.x() <= selectBottom.x() && pos.y() >= selectTop.y() && pos.y() <= selectBottom.y())
-            canvasCells[pos.x() + pos.y() * frameDim.x() * 3]->setStyleSheet(QString("border: 2px solid gray; background-color:rgba(%1,%2,%3,100%);").arg(drawColor.red()).arg(drawColor.green()).arg(drawColor.blue()));
-        else
-            canvasCells[pos.x() + pos.y() * frameDim.x() * 3]->setStyleSheet(QString("background-color: rgb(%1,%2,%3);").arg(drawColor.red()).arg(drawColor.green()).arg(drawColor.blue()));
+        canvasCells[pos.x() + pos.y() * frameDim.x() * 3]->setStyleSheet(QString("background-color: rgb(%1,%2,%3);").arg(drawColor.red()).arg(drawColor.green()).arg(drawColor.blue()));
     }else{
-        if(pos.x() >= selectTop.x() && pos.x() <= selectBottom.x() && pos.y() >= selectTop.y() && pos.y() <= selectBottom.y())
-            canvasCells[pos.x() + pos.y() * frameDim.x() * 3]->setStyleSheet(QString("border: 2px solid gray; background-color:rgba(%1,%2,%3,33%);").arg(drawColor.red()).arg(drawColor.green()).arg(drawColor.blue()));
-        else
-            canvasCells[pos.x() + pos.y() * frameDim.x() * 3]->setStyleSheet(QString("background-color: rgba(%1,%2,%3,33%);").arg(drawColor.red()).arg(drawColor.green()).arg(drawColor.blue()));
+        canvasCells[pos.x() + pos.y() * frameDim.x() * 3]->setStyleSheet(QString("background-color: rgba(%1,%2,%3,25%);").arg(drawColor.red()).arg(drawColor.green()).arg(drawColor.blue()));
     }
 
     saveCanvas(current_tf->canvas);
@@ -137,11 +133,6 @@ void MainWindow::setDrawColor(){
 // 4/25/17 - update to allow insertion before and after current frame
 void MainWindow::newCanvas(int pos)
 {
-    selectTop.setX(frameDim.x());
-    selectTop.setY(frameDim.y());
-    selectBottom.setX((frameDim.x() * 2) - 1);
-    selectBottom.setY((frameDim.y() * 2) - 1);
-
     if(current_tf != NULL) saveCanvas(current_tf->canvas);
 
     QVector<QColor> canvas;
@@ -151,7 +142,7 @@ void MainWindow::newCanvas(int pos)
         canvas.push_back(canvasCells[i]->getColor());
     }
     ui->canvasArea->show();
-    //get index of current
+    //get index of current frame
     int index;
     if(pos == 1)
         index = timeline.indexOf(current_tf); //for insert before current frame
@@ -286,20 +277,13 @@ void MainWindow::loadCanvas(TimelineFrame *tf){
             canvasCells[i]->setColor(current);
 
             if(x >= frameDim.x() && x < frameDim.x() * 2 && y >= frameDim.y() && y < frameDim.y() * 2){
-                if(x >= selectTop.x() && x <= selectBottom.x() && y >= selectTop.y() && y <= selectBottom.y())
-                    canvasCells[i]->setStyleSheet(QString("border: 2px solid gray; background-color:rgba(%1,%2,%3,100%);").arg(current.red()).arg(current.green()).arg(current.blue()));
-                else
-                    canvasCells[i]->setStyleSheet(QString("background-color:rgba(%1,%2,%3,100%);").arg(current.red()).arg(current.green()).arg(current.blue()));
+                canvasCells[i]->setStyleSheet(QString("background-color:rgba(%1,%2,%3,100%);").arg(current.red()).arg(current.green()).arg(current.blue()));
             }else{
-                if(x >= selectTop.x() && x <= selectBottom.x() && y >= selectTop.y() && y <= selectBottom.y())
-                    canvasCells[i]->setStyleSheet(QString("border: 2px solid gray; background-color:rgba(%1,%2,%3,33%);").arg(current.red()).arg(current.green()).arg(current.blue()));
-                else
-                    canvasCells[i]->setStyleSheet(QString("background-color:rgba(%1,%2,%3,33%);").arg(current.red()).arg(current.green()).arg(current.blue()));
+                canvasCells[i]->setStyleSheet(QString("background-color:rgba(%1,%2,%3,25%);").arg(current.red()).arg(current.green()).arg(current.blue()));
             }
             i++;
         }
     }
-
 }
 
 
@@ -363,8 +347,10 @@ void MainWindow::boxShiftUp()
             }
         }
 
+
         //loadCanvas(current_tf);
         current_tf->createPreview(frameDim);
+
 
     }
 }
@@ -477,6 +463,7 @@ void MainWindow::boxShiftRight ()
         }
 
 
+
         //loadCanvas(current_tf);
         current_tf->createPreview(frameDim);
     }
@@ -529,6 +516,7 @@ void MainWindow::boxShiftLeft ()
         }
 
 
+
        // loadCanvas(current_tf);
         current_tf->createPreview(frameDim);
     }
@@ -564,7 +552,6 @@ void MainWindow::boxColorChange()
         //loadCanvas(current_tf);
         current_tf->createPreview(frameDim);
     }
-
 
 }
 
@@ -620,7 +607,9 @@ void MainWindow::populateCanvas(){
             connect(temp, SIGNAL(clickedr(QVector2D)), this, SLOT(setBox(QVector2D)));
             canvasCells.push_back(temp);
             if(x >= frameDim.x() && x < frameDim.x() * 2 && y >= frameDim.y() && y < frameDim.y() * 2){
-                temp->setStyleSheet( "background-color:rgba(0,0,0,100%);");
+
+                temp->setStyleSheet("background-color:rgba(0,0,0,100%);");
+
             }
             ui->canvas->addWidget(temp, y, x);
         }

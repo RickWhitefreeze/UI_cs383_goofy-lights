@@ -20,7 +20,6 @@ private:
     QColor color;
     QVector2D pos;
 
-
     void paintEvent(QPaintEvent* event);
     void mousePressEvent(QMouseEvent *event);
 

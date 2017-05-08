@@ -12,7 +12,10 @@
 #include <QLinkedList>
 #include <QTimer>
 #include <QThread>
+
 #include <cmath>
+#include <unistd.h>
+
 
 #include "timelineframe.h"
 #include "newfiledialog.h"

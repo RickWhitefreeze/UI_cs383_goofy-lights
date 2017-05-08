@@ -297,6 +297,7 @@
          <y>0</y>
          <width>1175</width>
          <height>497</height>
+
         </rect>
        </property>
        <property name="styleSheet">
@@ -357,8 +358,10 @@
         <rect>
          <x>0</x>
          <y>0</y>
+
          <width>1175</width>
          <height>164</height>
+
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -512,38 +515,6 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="2">
-         <widget class="QToolButton" name="boxColorChange">
-          <property name="minimumSize">
-           <size>
-            <width>25</width>
-            <height>25</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>25</width>
-            <height>25</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true"/>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="resources.qrc">
-            <normaloff>:/images/icons/paint-bucket-64.png</normaloff>:/images/icons/paint-bucket-64.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>16</width>
-            <height>16</height>
-           </size>
-          </property>
-         </widget>
-        </item>
        </layout>
       </item>
       <item alignment="Qt::AlignHCenter">
@@ -594,8 +565,10 @@
     <rect>
      <x>0</x>
      <y>0</y>
+
      <width>1280</width>
      <height>26</height>
+
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

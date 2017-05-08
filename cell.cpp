@@ -19,7 +19,6 @@ void Cell::mousePressEvent(QMouseEvent *event){
     }
     if(event->buttons() == Qt::RightButton){
         emit clickedr(pos);
-
     }
 }
 
