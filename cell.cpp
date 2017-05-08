@@ -19,7 +19,6 @@ void Cell::mousePressEvent(QMouseEvent *event){
     }
     if(event->buttons() == Qt::RightButton){
         emit clickedr(pos);
-
     }
 }
 
@@ -37,7 +36,7 @@ Cell::Cell(QWidget *parent, const QVector2D &position) : QWidget(parent), pos(po
     setMinimumSize(cellSize);
     setSizePolicy(cellPolicy);
 
-    setStyleSheet(" border: 5px solid red;");
+    setStyleSheet("background-color:rgba(0,0,0,25%);");
     color = Qt::black;
 }
 
