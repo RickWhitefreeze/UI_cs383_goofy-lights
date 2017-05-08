@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
-    <height>480</height>
+    <width>1280</width>
+    <height>720</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -295,8 +295,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>535</width>
-         <height>317</height>
+         <width>1175</width>
+         <height>497</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -357,8 +357,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>535</width>
-         <height>104</height>
+         <width>1175</width>
+         <height>164</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -547,35 +547,6 @@
        </layout>
       </item>
       <item alignment="Qt::AlignHCenter">
-       <widget class="QToolButton" name="toolButton_3">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>46</width>
-          <height>46</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>40</width>
-          <height>40</height>
-         </size>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="resources.qrc">
-          <normaloff>:/images/icons/text.png</normaloff>:/images/icons/text.png</iconset>
-        </property>
-       </widget>
-      </item>
-      <item alignment="Qt::AlignHCenter">
        <widget class="QToolButton" name="toolColor">
         <property name="minimumSize">
          <size>
@@ -623,7 +594,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>640</width>
+     <width>1280</width>
      <height>26</height>
     </rect>
    </property>
@@ -770,6 +741,11 @@
     <string>Save Sprite</string>
    </property>
   </action>
+  <action name="actionHelp">
+   <property name="text">
+    <string>Help!!!!!</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
@@ -847,12 +823,12 @@
    <slot>setDrawColor()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>38</x>
-     <y>163</y>
+     <x>66</x>
+     <y>263</y>
     </hint>
     <hint type="destinationlabel">
-     <x>-96</x>
-     <y>-36</y>
+     <x>0</x>
+     <y>0</y>
     </hint>
    </hints>
   </connection>
@@ -864,7 +840,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>63</x>
-     <y>198</y>
+     <y>71</y>
     </hint>
     <hint type="destinationlabel">
      <x>319</x>
@@ -880,7 +856,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>31</x>
-     <y>229</y>
+     <y>103</y>
     </hint>
     <hint type="destinationlabel">
      <x>319</x>
@@ -895,8 +871,8 @@
    <slot>boxShiftRight()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>97</x>
-     <y>229</y>
+     <x>95</x>
+     <y>103</y>
     </hint>
     <hint type="destinationlabel">
      <x>319</x>
@@ -912,7 +888,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>63</x>
-     <y>260</y>
+     <y>135</y>
     </hint>
     <hint type="destinationlabel">
      <x>319</x>
@@ -927,8 +903,8 @@
    <slot>boxColorChange()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>52</x>
-     <y>215</y>
+     <x>63</x>
+     <y>103</y>
     </hint>
     <hint type="destinationlabel">
      <x>824</x>
@@ -959,8 +935,8 @@
    <slot>preview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>134</x>
-     <y>390</y>
+     <x>137</x>
+     <y>551</y>
     </hint>
     <hint type="destinationlabel">
      <x>86</x>
@@ -991,8 +967,8 @@
    <slot>copyFrame()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>31</x>
-     <y>349</y>
+     <x>1241</x>
+     <y>551</y>
     </hint>
     <hint type="destinationlabel">
      <x>18</x>
@@ -1007,8 +983,8 @@
    <slot>insertBefore()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>37</x>
-     <y>285</y>
+     <x>1177</x>
+     <y>551</y>
     </hint>
     <hint type="destinationlabel">
      <x>7</x>
@@ -1023,8 +999,8 @@
    <slot>insertAfter()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>79</x>
-     <y>279</y>
+     <x>1209</x>
+     <y>551</y>
     </hint>
     <hint type="destinationlabel">
      <x>97</x>
@@ -1039,8 +1015,8 @@
    <slot>deleteFrame()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>75</x>
-     <y>347</y>
+     <x>1273</x>
+     <y>551</y>
     </hint>
     <hint type="destinationlabel">
      <x>78</x>
@@ -1087,8 +1063,8 @@
    <slot>stop()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>167</x>
-     <y>378</y>
+     <x>169</x>
+     <y>551</y>
     </hint>
     <hint type="destinationlabel">
      <x>43</x>
@@ -1112,6 +1088,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionHelp</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>help()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>639</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>openFile()</slot>
@@ -1131,5 +1123,6 @@
   <slot>insertAfter()</slot>
   <slot>insertBefore()</slot>
   <slot>stop()</slot>
+  <slot>help()</slot>
  </slots>
 </ui>

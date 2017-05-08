@@ -122,6 +122,7 @@ void loadProject(QString fileName, int * sizeX, int * sizeY, QList<QColor> * ext
 
         timestamps->append(output);
 
+
         milliseconds = tempbuff[2].toInt();
         int carry = milliseconds/100;
         milliseconds = milliseconds%100;

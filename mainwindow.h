@@ -34,6 +34,8 @@ public:
 public slots:
     void setDrawColor();
     void setCellColor(QVector2D pos);
+    void setNewCellColor(int pos);
+    void eliminateBorder();
 
     void setBox(QVector2D pos);
 
@@ -57,6 +59,7 @@ public slots:
     void boxShiftLeft();
     void boxShiftRight();
     void boxColorChange();
+    void setBoxBorder();
 
 
 private:

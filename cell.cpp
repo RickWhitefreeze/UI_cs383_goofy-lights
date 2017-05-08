@@ -37,7 +37,6 @@ Cell::Cell(QWidget *parent, const QVector2D &position) : QWidget(parent), pos(po
     setMinimumSize(cellSize);
     setSizePolicy(cellPolicy);
 
-    setStyleSheet(" border: 5px solid red;");
     color = Qt::black;
 }
 
