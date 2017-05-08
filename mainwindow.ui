@@ -297,7 +297,6 @@
          <y>0</y>
          <width>1175</width>
          <height>497</height>
-
         </rect>
        </property>
        <property name="styleSheet">
@@ -358,10 +357,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-
          <width>1175</width>
          <height>164</height>
-
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -515,6 +512,29 @@
           </property>
          </widget>
         </item>
+        <item row="1" column="2">
+         <widget class="QToolButton" name="boxColorChange">
+          <property name="minimumSize">
+           <size>
+            <width>25</width>
+            <height>25</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>25</width>
+            <height>25</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset resource="resources.qrc">
+            <normaloff>:/images/icons/paintBucket.png</normaloff>:/images/icons/paintBucket.png</iconset>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item alignment="Qt::AlignHCenter">
@@ -565,10 +585,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-
      <width>1280</width>
      <height>26</height>
-
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -870,22 +888,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>boxColorChange</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>boxColorChange()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>63</x>
-     <y>103</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>824</x>
-     <y>76</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>actionExport</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
@@ -1070,6 +1072,22 @@
     <hint type="sourcelabel">
      <x>-1</x>
      <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>639</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>boxColorChange</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>boxColorChange()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>51</x>
+     <y>91</y>
     </hint>
     <hint type="destinationlabel">
      <x>639</x>
