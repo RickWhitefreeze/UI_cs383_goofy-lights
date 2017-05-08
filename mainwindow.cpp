@@ -32,8 +32,42 @@ void MainWindow::setBox(QVector2D pos){
     setBoxBorder();
 }
 
+//sets border color for box selected portion of canvas
+// added 5/8/17 - MM and RP
+void MainWindow::setBoxBorder()
+{
+    if(current_tf != NULL)
+    {
+        int top_right, top_left, bot_right, rows, width;
+        //top_left = 0;
+        top_left = selectTop.x() + selectTop.y() * frameDim.x() * 3;
+        //bot_right = frameDim.x() * frameDim.y() * 9 - 1;
+        bot_right = selectBottom.x() + selectBottom.y() * frameDim.x() * 3;
+        width = frameDim.x() * 3;
+        //The top right position of the box selected
+        top_right = bot_right % width + top_left - top_left % width;
+        //The number of rows in the box selected
+        rows = (floor(bot_right/width))-(floor(top_left/width));
+        //Traversing the matrix defined by the box selected by user
+        for(int i = 0; i <= rows; i++)
+        {
+            //Change every pixel in the box selected to the user defined rgb color
+            for(int j = (top_left + i*width); j <= (top_right + i*width); j++)
+            {
+                setNewCellColor(j);
+
+            }
+        }
+
+        //loadCanvas(current_tf);
+        current_tf->createPreview(frameDim);
+    }
 
 
+}
+
+//remove border for box selected portion of canvas
+//added 5/8/17 - MM and RP
 void MainWindow::eliminateBorder()
 {
     if(current_tf != NULL)
@@ -76,16 +110,20 @@ void MainWindow::eliminateBorder()
 }
 
 
-
-
-
+//sets cell to current drawcolor
 void MainWindow::setCellColor(QVector2D pos){
     canvasCells[pos.x() + pos.y() * frameDim.x() * 3]->setColor(drawColor);
 
     if(pos.x() >= frameDim.x() && pos.x() < frameDim.x() * 2 && pos.y() >= frameDim.y() && pos.y() < frameDim.y() * 2){
-        canvasCells[pos.x() + pos.y() * frameDim.x() * 3]->setStyleSheet(QString("background-color: rgb(%1,%2,%3);").arg(drawColor.red()).arg(drawColor.green()).arg(drawColor.blue()));
+        if(pos.x() >= selectTop.x() && pos.x() <= selectBottom.x() && pos.y() >= selectTop.y() && pos.y() <= selectBottom.y())
+            canvasCells[pos.x() + pos.y() * frameDim.x() * 3]->setStyleSheet(QString("border: 2px solid gray; background-color:rgba(%1,%2,%3,100%);").arg(drawColor.red()).arg(drawColor.green()).arg(drawColor.blue()));
+        else
+            canvasCells[pos.x() + pos.y() * frameDim.x() * 3]->setStyleSheet(QString("background-color: rgb(%1,%2,%3);").arg(drawColor.red()).arg(drawColor.green()).arg(drawColor.blue()));
     }else{
-        canvasCells[pos.x() + pos.y() * frameDim.x() * 3]->setStyleSheet(QString("background-color: rgba(%1,%2,%3,25%);").arg(drawColor.red()).arg(drawColor.green()).arg(drawColor.blue()));
+        if(pos.x() >= selectTop.x() && pos.x() <= selectBottom.x() && pos.y() >= selectTop.y() && pos.y() <= selectBottom.y())
+            canvasCells[pos.x() + pos.y() * frameDim.x() * 3]->setStyleSheet(QString("border: 2px solid gray; background-color:rgba(%1,%2,%3,33%);").arg(drawColor.red()).arg(drawColor.green()).arg(drawColor.blue()));
+        else
+            canvasCells[pos.x() + pos.y() * frameDim.x() * 3]->setStyleSheet(QString("background-color: rgba(%1,%2,%3,33%);").arg(drawColor.red()).arg(drawColor.green()).arg(drawColor.blue()));
     }
 
     saveCanvas(current_tf->canvas);
@@ -93,6 +131,8 @@ void MainWindow::setCellColor(QVector2D pos){
 }
 
 
+//updates cell color for use with box select functions
+//added 5/8/17 - MM and RP
 void MainWindow::setNewCellColor(int pos)
 {
     QColor newColor;
@@ -122,7 +162,7 @@ void MainWindow::setNewCellColor(int pos)
     //current_tf->createPreview(frameDim);
 }
 
-
+//sets draw color
 void MainWindow::setDrawColor(){
     drawColor = QColorDialog::getColor(Qt::black, this, QString("Select Color."));
     ui->toolColor->setStyleSheet(QString("background-color: %1; border: 2px inset grey;").arg(drawColor.name()));
@@ -134,6 +174,11 @@ void MainWindow::setDrawColor(){
 void MainWindow::newCanvas(int pos)
 {
     if(current_tf != NULL) saveCanvas(current_tf->canvas);
+
+    selectTop.setX(frameDim.x());
+    selectTop.setY(frameDim.y());
+    selectBottom.setX((frameDim.x() * 2) - 1);
+    selectBottom.setY((frameDim.y() * 2) - 1);
 
     QVector<QColor> canvas;
     ui->canvasArea->hide();
@@ -277,9 +322,15 @@ void MainWindow::loadCanvas(TimelineFrame *tf){
             canvasCells[i]->setColor(current);
 
             if(x >= frameDim.x() && x < frameDim.x() * 2 && y >= frameDim.y() && y < frameDim.y() * 2){
-                canvasCells[i]->setStyleSheet(QString("background-color:rgba(%1,%2,%3,100%);").arg(current.red()).arg(current.green()).arg(current.blue()));
+                if(x >= selectTop.x() && x <= selectBottom.x() && y >= selectTop.y() && y <= selectBottom.y())
+                    canvasCells[i]->setStyleSheet(QString("border: 2px solid gray; background-color:rgba(%1,%2,%3,100%);").arg(current.red()).arg(current.green()).arg(current.blue()));
+                else
+                    canvasCells[i]->setStyleSheet(QString("background-color:rgba(%1,%2,%3,100%);").arg(current.red()).arg(current.green()).arg(current.blue()));
             }else{
-                canvasCells[i]->setStyleSheet(QString("background-color:rgba(%1,%2,%3,25%);").arg(current.red()).arg(current.green()).arg(current.blue()));
+                if(x >= selectTop.x() && x <= selectBottom.x() && y >= selectTop.y() && y <= selectBottom.y())
+                    canvasCells[i]->setStyleSheet(QString("border: 2px solid gray; background-color:rgba(%1,%2,%3,33%);").arg(current.red()).arg(current.green()).arg(current.blue()));
+                else
+                    canvasCells[i]->setStyleSheet(QString("background-color:rgba(%1,%2,%3,33%);").arg(current.red()).arg(current.green()).arg(current.blue()));
             }
             i++;
         }
@@ -555,38 +606,6 @@ void MainWindow::boxColorChange()
 
 }
 
-
-void MainWindow::setBoxBorder()
-{
-    if(current_tf != NULL)
-    {
-        int top_right, top_left, bot_right, rows, width;
-        //top_left = 0;
-        top_left = selectTop.x() + selectTop.y() * frameDim.x() * 3;
-        //bot_right = frameDim.x() * frameDim.y() * 9 - 1;
-        bot_right = selectBottom.x() + selectBottom.y() * frameDim.x() * 3;
-        width = frameDim.x() * 3;
-        //The top right position of the box selected
-        top_right = bot_right % width + top_left - top_left % width;
-        //The number of rows in the box selected
-        rows = (floor(bot_right/width))-(floor(top_left/width));
-        //Traversing the matrix defined by the box selected by user
-        for(int i = 0; i <= rows; i++)
-        {
-            //Change every pixel in the box selected to the user defined rgb color
-            for(int j = (top_left + i*width); j <= (top_right + i*width); j++)
-            {
-                setNewCellColor(j);
-
-            }
-        }
-
-        //loadCanvas(current_tf);
-        current_tf->createPreview(frameDim);
-    }
-
-
-}
 
 /***********************************************************************
  *                     Michael and Ruth 4/18/2017                      *

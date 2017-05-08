@@ -11,5 +11,6 @@
         <file>icons/delete.png</file>
         <file>icons/insertAfter.png</file>
         <file>icons/insertBefore.png</file>
+        <file>icons/paintBucket.png</file>
     </qresource>
 </RCC>

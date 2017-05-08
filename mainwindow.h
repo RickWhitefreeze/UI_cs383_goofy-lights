@@ -14,7 +14,6 @@
 #include <QThread>
 
 #include <cmath>
-#include <unistd.h>
 
 
 #include "timelineframe.h"
