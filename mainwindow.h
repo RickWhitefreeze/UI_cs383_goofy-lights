@@ -45,6 +45,8 @@ public slots:
     void openFile();
     void saveFile();
     void exportFile();
+    void SsaveStamp();
+    void LloadStamp();
 
     void newCanvas(int pos);
     void insertAfter();

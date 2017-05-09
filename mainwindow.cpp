@@ -710,6 +710,35 @@ void MainWindow::openFile(){
     }
 }
 
+void MainWindow::SsaveStamp(){
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save Stamp")),
+            QStandardPaths::displayName(QStandardPaths::DocumentsLocation),
+            tr("Stamp files (*.stp)");
+    int top_leftX, top_leftY, bot_rightX, bot_rightY, cXsize, cYsize, sXsize, sYsize;
+    int index = timeline.indexOf(current_tf);
+    QVector<QColor> list;
+        top_leftX = selectTop.x();
+        top_leftY = selectTop.y();
+        bot_rightX= selectBottom.x();
+        bot_rightY= selectBottom.y();
+        cXsize = bot_rightX - top_leftX;
+        cYsize = bot_rightY - top_leftY;
+        sXsize = cXsize;
+        sYsize = cYsize;
+         TimelineFrame *temp = timeline[index];
+        for(int j = 0; j <sXsize*sYsize; j++){
+            list.append(temp->canvas[j]);
+        }
+
+     saveStamp(fileName,cXsize, cYsize, sXsize, sYsize, top_leftX, top_leftY, index, list);
+}
+
+void MainWindow::LloadStamp(){
+        int top_leftx = selectTop.x();
+        int top_lefty = selectTop.y();
+
+}
+
 void MainWindow::saveFile(){
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
                                                         QStandardPaths::displayName(QStandardPaths::DocumentsLocation),

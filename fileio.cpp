@@ -187,7 +187,7 @@ void saveStamp(QString fileName, int cSizeX, int cSizeY,int sSizeX, int sSizeY, 
         qDebug() << "error opening file";
         return;
     }
-
+    qDebug() << "befor wrighting";
     QTextStream out(&mFile);
 
     out << sSizeX << " " << sSizeY << endl;
@@ -209,11 +209,12 @@ void saveStamp(QString fileName, int cSizeX, int cSizeY,int sSizeX, int sSizeY, 
     }
 
     mFile.close();
+    qDebug() <<"after wrighting";
 
 
 }
-
-void loadStamp(QString fileName, int cSizeX, int cSizeY, int posX, int posY, int frameNum, QList<QColor> *externalFrame){
+//should not need the size get size from file
+void loadStamp(QString fileName, int posX, int posY, int frameNum, QList<QColor> *externalFrame){
 
     QList<QColor> frame = * externalFrame;
 

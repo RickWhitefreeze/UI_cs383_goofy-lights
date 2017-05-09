@@ -18,6 +18,7 @@ public:
     TimelineFrame(QWidget *parent, QVector<QColor> &frame, const QVector2D &frameDim, const QString time);
     QVector<QColor> canvas;
     QString timestamp;
+    int frameNum;
 
 private:
 

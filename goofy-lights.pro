@@ -43,4 +43,5 @@ FORMS    += mainwindow.ui \
 RESOURCES += \
     resources.qrc
 
-DISTFILES +=
+DISTFILES += \
+    StampdialogForm.ui.qml
